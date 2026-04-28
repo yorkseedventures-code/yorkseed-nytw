@@ -36,13 +36,17 @@
   --smoke: #666;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-padding-top: 180px; }
+html {
+  scroll-padding-top: 180px;
+  overflow-y: scroll;
+}
 
 body {
   font-family: 'Sora', sans-serif;
   background: #fafafa;
   color: var(--black);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ── HEADER ── */
@@ -196,7 +200,7 @@ body {
 /* ── STICKY CONTROLS ── */
 .sticky-controls {
   position: sticky;
-  top: 52px;
+  top: var(--header-height, 52px);
   z-index: 89;
   background: white;
   border-bottom: 1px solid var(--border);
@@ -653,7 +657,7 @@ input[type="text"]::placeholder { color: var(--gray-300); }
   .info-panel { padding: 16px 14px; }
   .info-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
 
-  .sticky-controls { top: 52px; }
+  .sticky-controls { top: var(--header-height, 52px); }
   .controls-inner { padding: 0; }
   .search-row {
     flex-direction: column; align-items: stretch;
@@ -976,11 +980,12 @@ function loadSheetData(){
       sheetUpdates=data.updates||[];
       sheetLoaded=true;
       applySheetUpdates();
-      render();
-      // Rebuild day tabs to include any new dates from sheet
-      document.getElementById('dayTabs').innerHTML='';
+      // Rebuild day tabs cleanly (clear first to avoid duplicates)
+      const tabsEl=document.getElementById('dayTabs');
+      tabsEl.innerHTML='';
       buildDayTabs();
-      document.getElementById('headerCount').textContent=allEvents().length+' events';
+      render();
+      updateHeaderCount();
     }catch(e){console.warn('Sheet parse failed:',e);}
   };
   const s=document.createElement('script');
@@ -1078,8 +1083,11 @@ document.querySelectorAll('.filter-chip[data-type]').forEach(chip=>{chip.addEven
 document.querySelectorAll('.filter-chip[data-free]').forEach(chip=>{chip.addEventListener('click',()=>{const val=chip.dataset.freeVal;if(freeFilter===val){freeFilter=null;chip.classList.remove('active');}else{document.querySelectorAll('.filter-chip[data-free]').forEach(c=>c.classList.remove('active'));freeFilter=val;chip.classList.add('active');}render();});});
 document.querySelectorAll('.filter-chip[data-ys]').forEach(chip=>{chip.addEventListener('click',()=>{ysFilter=!ysFilter;chip.classList.toggle('active',ysFilter);render();});});
 document.getElementById('searchInput').addEventListener('input',function(){searchTerm=this.value.trim();render();});
-buildDayTabs();render();
-document.getElementById('headerCount').textContent=allEvents().length+' events';
+buildDayTabs();
+render();
+// Header pill shows total event count (all events, unfiltered)
+function updateHeaderCount(){ document.getElementById('headerCount').textContent=allEvents().length+' events'; }
+updateHeaderCount();
 loadSheetData();
 
 // EMAIL GATE
@@ -1114,8 +1122,18 @@ function findEventByRsvp(){const rsvp=document.getElementById('upd-rsvp').value.
 async function submitUpdate(){if(!updTargetEvent){alert('No event found to update.');return;}const newDate=document.getElementById('upd-date').value,newTime=document.getElementById('upd-time').value.trim(),newVenue=document.getElementById('upd-venue').value.trim(),newHost=document.getElementById('upd-host').value.trim(),newNotes=document.getElementById('upd-notes').value.trim();if(!newDate&&!newTime&&!newVenue&&!newHost&&!newNotes){alert('Please fill in at least one field.');return;}const btn=document.getElementById('updateBtn');btn.disabled=true;btn.textContent='Applying…';if(newDate){updTargetEvent.date=newDate;updTargetEvent.day=dayLabelFromISO(newDate);}if(newTime)updTargetEvent.time=newTime;if(newVenue)updTargetEvent.venue=newVenue;if(newHost)updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}btn.disabled=false;btn.textContent='Apply Update';showSuccess('updated');render();if(SCRIPT_URL&&!SCRIPT_URL.includes('YOUR_APPS')){try{const p=new URLSearchParams({action:'update',original_rsvp:updTargetEvent.rsvp,new_date:newDate,new_time:newTime,new_venue:newVenue,new_host:newHost,new_notes:newNotes});await fetch(SCRIPT_URL+'?'+p.toString());}catch(err){console.warn('Sheet update failed:',err);}}}
 function showSuccess(type){const icon=document.getElementById('successIcon'),title=document.getElementById('successTitle'),msg=document.getElementById('successMsg');if(type==='added'){icon.textContent='✅';title.textContent='Event Added!';msg.textContent='Your event has been added to the NY Tech Week list.';}else if(type==='duplicate'){icon.textContent='🔀';title.textContent='Merged with Existing Event';msg.textContent='A similar event already exists. Your details have been merged in.';}else if(type==='updated'){icon.textContent='✏️';title.textContent='Event Updated!';msg.textContent='The event has been updated. Changes are live.';}else if(type==='out-of-range'){icon.textContent='📅';title.textContent='Outside Date Range';msg.textContent='This event falls outside May 25 – June 8, 2026.';}document.getElementById('formSubmit').style.display='none';document.getElementById('formUpdate').style.display='none';document.getElementById('successState').classList.add('show');}
 
-// Sticky header height fix
-(function(){function fix(){const h=document.querySelector('.header');if(h)document.documentElement.style.setProperty('--header-height',h.offsetHeight+'px');}fix();window.addEventListener('resize',fix);window.addEventListener('orientationchange',()=>setTimeout(fix,250));})();
+// Sticky header height fix — runs immediately so sticky-controls top is correct
+(function(){
+  function fix(){
+    const h=document.querySelector('.header');
+    if(h) document.documentElement.style.setProperty('--header-height', h.offsetHeight+'px');
+  }
+  fix();
+  window.addEventListener('resize', fix);
+  window.addEventListener('orientationchange', ()=>setTimeout(fix, 250));
+  // Also fix after fonts load (can change header height)
+  if(document.fonts) document.fonts.ready.then(fix);
+})();
 </script>
 
 <!-- SUBMIT / UPDATE MODAL -->
