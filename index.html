@@ -1065,7 +1065,7 @@ let sheetLoaded     = false;
 async function loadSheetData() {
   if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_APPS')) return;
   try {
-    const res  = await fetch(SCRIPT_URL, { cache: 'no-store' });
+    const res  = await fetch(SCRIPT_URL + '?action=read', { cache: 'no-store' });
     const data = await res.json();
 
     // Map submitted rows → event objects
@@ -1433,8 +1433,9 @@ async function submitEvent(){
   // Push to Google Sheet in background
   if(SCRIPT_URL && !SCRIPT_URL.includes('YOUR_APPS')){
     try{
-      await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'submit',name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],ticket,drinks,food,notes,rsvp:finalRsvp})});
-    }catch(err){console.warn('Sheet POST failed:',err);}
+      const p=new URLSearchParams({action:'submit',name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:type,ticket,drinks:drinks?'true':'false',food:food?'true':'false',notes,rsvp:finalRsvp});
+      await fetch(SCRIPT_URL+'?'+p.toString());
+    }catch(err){console.warn('Sheet submit failed:',err);}
   }
 }
 let updTargetEvent=null;
@@ -1455,8 +1456,9 @@ async function submitUpdate(){
   // Push update to Google Sheet in background
   if(SCRIPT_URL && !SCRIPT_URL.includes('YOUR_APPS')){
     try{
-      await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'update',original_rsvp:updTargetEvent.rsvp,new_date:newDate,new_time:newTime,new_venue:newVenue,new_host:newHost,new_notes:newNotes})});
-    }catch(err){console.warn('Sheet update POST failed:',err);}
+      const p=new URLSearchParams({action:'update',original_rsvp:updTargetEvent.rsvp,new_date:newDate,new_time:newTime,new_venue:newVenue,new_host:newHost,new_notes:newNotes});
+      await fetch(SCRIPT_URL+'?'+p.toString());
+    }catch(err){console.warn('Sheet update failed:',err);}
   }
 }
 function showSuccess(type){const icon=document.getElementById('successIcon'),title=document.getElementById('successTitle'),msg=document.getElementById('successMsg');if(type==='added'){icon.textContent='✅';title.textContent='Event Added!';msg.textContent='Your event has been added to the NY Tech Week list.';}else if(type==='duplicate'){icon.textContent='🔀';title.textContent='Merged with Existing Event';msg.textContent='A similar event already exists. Your details have been merged in.';}else if(type==='updated'){icon.textContent='✏️';title.textContent='Event Updated!';msg.textContent='The event has been updated. Changes are live.';}else if(type==='out-of-range'){icon.textContent='📅';title.textContent='Outside Date Range';msg.textContent='This event falls outside May 25 – June 8, 2026.';}document.getElementById('formSubmit').style.display='none';document.getElementById('formUpdate').style.display='none';document.getElementById('successState').classList.add('show');}
