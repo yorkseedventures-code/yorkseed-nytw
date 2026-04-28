@@ -305,20 +305,28 @@ input[type="text"]::placeholder { color: var(--smoke); }
 }
 .event-card:hover { border-color: rgba(200,169,110,0.4); box-shadow: var(--shadow); }
 .event-card.expanded { border-color: var(--red); box-shadow: 0 4px 24px rgba(255,10,10,0.08); }
-.event-main { display: flex; align-items: flex-start; padding: 13px 16px; gap: 14px; }
+.event-main { display: flex; align-items: flex-start; padding: 11px 14px; gap: 12px; }
 .event-time-col {
-  min-width: 66px; font-family: 'DM Mono', monospace;
-  font-size: 10.5px; color: var(--smoke); padding-top: 2px; white-space: nowrap;
+  min-width: 58px; font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--smoke); padding-top: 2px; white-space: nowrap; flex-shrink: 0;
 }
-.event-time-col .time { color: var(--ink); font-weight: 500; }
-.event-body { flex: 1; min-width: 0; }
-.event-name { font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.3; margin-bottom: 3px; }
-.event-host { font-size: 11px; color: var(--smoke); margin-bottom: 7px; }
+.event-time-col .time { color: var(--ink); font-weight: 500; font-size: 10.5px; }
+.event-body { flex: 1; min-width: 0; overflow: hidden; }
+.event-name { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.3; margin-bottom: 2px; }
+.event-host { font-size: 10.5px; color: var(--smoke); margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 .event-host span { font-style: italic; }
-.event-tags { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.event-tags-row {
+  display: flex; gap: 3px; align-items: center;
+  flex-wrap: wrap; overflow: hidden;
+  max-height: 20px; /* one line only */
+  margin-top: 5px;
+}
+.event-badge-row { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
+.event-badge-row:empty { display: none; }
 .tag {
-  font-size: 9.5px; font-weight: 600; padding: 2px 7px; border-radius: 2px;
-  letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  font-size: 9px; font-weight: 600; padding: 1px 5px; border-radius: 2px;
+  letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap;
+  flex-shrink: 0; line-height: 1.5;
 }
 .tag-ai { background: #edf5ff; color: #1a56a8; }
 .tag-fintech { background: #fdf0e8; color: #a84f1a; }
@@ -338,8 +346,15 @@ input[type="text"]::placeholder { color: var(--smoke); }
 .tag-invite { background: #fdfae8; color: #6a5000; }
 .tag-women { background: #fff0f8; color: #8a1a5a; }
 .tag-marketing { background: #f0f8ff; color: #1a5a8a; }
-.event-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 80px; }
-.event-venue-short { font-size: 10.5px; color: var(--smoke); text-align: right; line-height: 1.3; }
+.tag-saas { background: #f0f4ff; color: #3a2a9a; }
+.tag-deeptech { background: #e8f5ff; color: #0a3a7a; }
+.tag-crypto { background: #f5f0ff; color: #5a0a8a; }
+.tag-dinner { background: #fff3e8; color: #8a3a00; }
+.tag-breakfast { background: #fffbe8; color: #7a5a00; }
+.tag-hackathon { background: #e8fff8; color: #006a4a; }
+.tag-rooftop { background: #fff0f5; color: #8a0050; }
+.event-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 44px; flex-shrink: 0; }
+.event-venue-short { font-size: 9.5px; color: var(--smoke); text-align: right; line-height: 1.3; }
 .chevron { color: var(--smoke); font-size: 11px; transition: transform 0.2s; }
 .event-card.expanded .chevron { transform: rotate(180deg); color: var(--red); }
 
@@ -370,21 +385,33 @@ input[type="text"]::placeholder { color: var(--smoke); }
 .event-card.ys-passport .event-notes { background: rgba(200,169,110,0.08); border-left-color: var(--gold); color: rgba(255,255,255,0.6); }
 .event-card.ys-passport .update-event-btn { border-color: rgba(200,169,110,0.3); color: var(--gold); background: transparent; }
 .event-card.ys-passport .update-event-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+.event-card.ys-passport .event-tags-row .tag { opacity: 0.85; }
+.event-card.ys-passport .event-host { color: rgba(232,213,170,0.7); }
 
 /* ── YORKSEED COMMUNITY PARTNER CARD ── */
 .event-card.ys-partner {
   background: #fffcf8;
   border: 1px solid rgba(200,169,110,0.4);
   border-left: 3px solid var(--red);
+  position: relative;
+}
+.event-card.ys-partner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--red), var(--gold));
+  border-radius: 3px 0 0 3px;
+  pointer-events: none;
 }
 .event-card.ys-partner:hover {
   border-left-color: var(--red);
-  box-shadow: 0 3px 20px rgba(255,10,10,0.07);
+  box-shadow: 0 3px 20px rgba(200,169,110,0.14);
 }
 .event-card.ys-partner.expanded {
   border-color: rgba(200,169,110,0.6);
   border-left-color: var(--red);
-  box-shadow: 0 4px 24px rgba(255,10,10,0.1);
+  box-shadow: 0 4px 24px rgba(200,169,110,0.18);
 }
 
 /* ── YORKSEED BADGES ── */
@@ -394,8 +421,18 @@ input[type="text"]::placeholder { color: var(--smoke); }
   padding: 2px 8px; border-radius: 2px; letter-spacing: 0.07em;
   text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
 }
-.ys-badge-passport { background: var(--gold); color: var(--ink); }
-.ys-badge-partner  { background: var(--red); color: white; }
+/* Passport: gold fill — premium */
+.ys-badge-passport {
+  background: var(--gold);
+  color: var(--ink);
+}
+/* Community Partner: outlined in red — distinct from passport, distinct from plain tags */
+.ys-badge-partner {
+  background: transparent;
+  color: var(--red);
+  border: 1.5px solid var(--red);
+  font-weight: 700;
+}
 
 /* ── YORKSEED FILTER CHIP ── */
 .filter-chip[data-ys] {
@@ -663,13 +700,13 @@ input[type="text"]::placeholder { color: var(--smoke); }
 
   .content { padding: 14px 10px 80px; }
   .day-label { font-size: 18px; }
-  .event-main { padding: 10px 12px; gap: 8px; }
+  .event-main { padding: 9px 10px; gap: 8px; }
   .event-time-col { min-width: 56px; font-size: 10px; }
-  .event-name { font-size: 13px; }
-  .event-host { font-size: 11px; }
+  .event-name { font-size: 12.5px; }
+  .event-host { font-size: 10px; }
   .tag { font-size: 9.5px; padding: 2px 6px; }
-  .event-right { min-width: 50px; }
-  .event-venue-short { font-size: 10px; }
+  .event-right { min-width: 40px; }
+  .event-venue-short { font-size: 9.5px; }
   .event-detail { padding: 0 12px 12px; }
   .detail-grid { grid-template-columns: 1fr; gap: 8px; }
   .detail-item p { font-size: 12px; }
@@ -744,14 +781,14 @@ input[type="text"]::placeholder { color: var(--smoke); }
     <div class="hero-cols">
       <div class="hero-col-main">
         <p class="hero-desc">
-          The <strong style="color:var(--ink);">original viral Conference Spreadsheet since 2023</strong> — now covering New York! Tech, founder, and investor events you can access without a badge. Covering <strong style="color:var(--red);">May 25 – June 8, 2026</strong>. Updated daily. Find us on social <strong style="color:var(--red);">@Yorkseed</strong>
+          The <strong style="color:var(--ink);">original viral Conference Spreadsheet since 2023</strong> — now covering New York! Tech, founder, and investor events you can access without a badge. Covering <strong style="color:var(--red);">May 27 – June 8, 2026</strong>. Updated daily. Find us on social <strong style="color:var(--red);">@Yorkseed</strong>
         </p>
         <p class="hero-byline">
           I'm <strong style="color:var(--ink);">Jessica Sophia Wong</strong>, founder of Yorkseed. If you're hosting a venture-driven event in New York, I'd love to know — connect with me via one of the Yorkseed hubs or email <a href="mailto:partnership@yorkseed.co" style="color:var(--red);text-decoration:none;">partnership@yorkseed.co</a>
         </p>
         <div class="connect-box">
           <div class="connect-box-title">Yorkseed Connect — app.yorkseed.co</div>
-          <p>Yorkseed Connect is our curated global membership platform for founders and investors. Get access to our smart member directory, deal flow, vetted investor network, exclusive event access, and our growing library of venture intelligence — all in one place.</p>
+          <p>Yorkseed Connect is a private, curated venture network and membership platform for founders, investors, and capital partners. Built on an application-only model, it combines a vetted global network, proprietary deal flow, investor-grade intelligence tools, and exclusive access to opportunities and events — all designed for those actively raising, deploying, and operating in venture.</p>
           <a href="https://app.yorkseed.co/pricing?ref=yorkseed" target="_blank" rel="noopener" class="connect-box-btn">View Plans &amp; Pricing ↗</a>
         </div>
       </div>
@@ -832,13 +869,21 @@ input[type="text"]::placeholder { color: var(--smoke); }
       </div>
       <div class="filter-chips">
         <div class="filter-chip active" data-type="all">All</div>
-        <div class="filter-chip" data-type="fintech">Fintech</div>
         <div class="filter-chip" data-type="ai">AI &amp; Tech</div>
-        <div class="filter-chip" data-type="web3">Web3</div>
-        <div class="filter-chip" data-type="vc">VC</div>
+        <div class="filter-chip" data-type="fintech">Fintech</div>
+        <div class="filter-chip" data-type="vc">VC &amp; Investors</div>
+        <div class="filter-chip" data-type="web3">Web3 / Crypto</div>
+        <div class="filter-chip" data-type="saas">SaaS</div>
+        <div class="filter-chip" data-type="deeptech">Deep Tech</div>
+        <div class="filter-chip" data-type="dinner">🍽 Dinners</div>
+        <div class="filter-chip" data-type="breakfast">☕ Breakfasts</div>
+        <div class="filter-chip" data-type="hackathon">⚡ Hackathons</div>
+        <div class="filter-chip" data-type="rooftop">🏙 Rooftops</div>
         <div class="filter-chip" data-type="women">Women</div>
         <div class="filter-chip" data-type="marketing">Marketing</div>
         <div class="filter-chip" data-type="legal">Legal</div>
+        <div class="filter-chip" data-type="health">Health</div>
+        <div class="filter-chip" data-type="climate">Climate</div>
         <div class="filter-chip" data-ys>⭐ Yorkseed</div>
         <div class="filter-chip" data-free data-free-val="drinks">🍷 Drinks</div>
         <div class="filter-chip" data-free data-free-val="food">🍔 Food</div>
@@ -874,100 +919,234 @@ input[type="text"]::placeholder { color: var(--smoke); }
 <script>
 const EVENTS = [
 
-  // ── SUN MAY 25 (Pre-week) ──
-  { id:1, name:"Yorkseed Passport Series: NYTW — Opening Night Mixer", host:"Yorkseed", date:"2026-05-25", day:"Sun May 25", time:"6:00 PM", venue:"TBD — Lower Manhattan", neighborhood:"Lower Manhattan", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The official Yorkseed Passport Series NYTW kickoff. Founders, investors and operators kicking off the week together. Curated and intimate. RSVP via Luma — spaces are limited.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+  // ══════════════════════════════════════════
+  // YORKSEED PASSPORT SERIES
+  // ══════════════════════════════════════════
 
-  // ── MON MAY 26 ──
-  { id:2, name:"Memorial Day — No Major Events", host:"", date:"2026-05-26", day:"Mon May 26", time:"—", venue:"New York, NY", neighborhood:"NYC", address:"New York, NY", types:["community"], free:true, drinks:false, food:false, ticket:"Free", notes:"US Federal Holiday. Most large events are scheduled from Tuesday onwards. A handful of informal meetups may still take place — check Luma NYC for any pop-ups.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
+  { id:12, name:"Yorkseed Passport Series: NYTW — Pre-Week Drinks", host:"Yorkseed", date:"2026-05-30", day:"Fri May 30", time:"6:00 PM", venue:"TBD — SoHo or Flatiron", neighborhood:"SoHo / Flatiron", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Paid", yorkseed:"passport", notes:"Yorkseed Passport Series pre-week edition. Founders, investors and operators in one room before the week kicks off. Members get priority access. RSVP via Luma.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+  { id:40, name:"Yorkseed Passport Series: NYTW — Flagship Dinner", host:"Yorkseed", date:"2026-06-03", day:"Tue Jun 3", time:"7:30 PM", venue:"TBD — West Village or SoHo", neighborhood:"West Village / SoHo", address:"New York, NY", types:["vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The flagship Yorkseed Passport Series NYTW dinner. A carefully curated evening of founders, investors, and operators at the midpoint of the week. Limited seats — members get priority access. Apply via Luma.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+  { id:41, name:"Yorkseed Passport Series: NYTW — Closing Rooftop", host:"Yorkseed", date:"2026-06-06", day:"Fri Jun 6", time:"5:30 PM", venue:"TBD Rooftop — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The closing Yorkseed Passport Series event at NYTW. Rooftop sendoff for founders, investors, and operators. Celebrate the week before the official closing parties. Members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+  { id:39, name:"Yorkseed Passport Series: NYTW — Post-Week Debrief Brunch", host:"Yorkseed", date:"2026-06-08", day:"Sun Jun 8", time:"11:30 AM", venue:"TBD — Brooklyn or Lower Manhattan", neighborhood:"Brooklyn / Lower Manhattan", address:"New York, NY", types:["community","vc","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The final Yorkseed Passport Series event — a relaxed post-NYTW debrief brunch. Reflect, follow up, and close the loop on the week's connections. Open to Yorkseed members and passport holders.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
 
-  // ── TUE MAY 27 ──
+  // ══════════════════════════════════════════
+  // YORKSEED COMMUNITY PARTNERS
+  // ══════════════════════════════════════════
+
+  { id:13, name:"Fintech Meetup NYC — Monthly Edition", host:"Fintech Meetup NYC", date:"2026-05-30", day:"Fri May 30", time:"6:30 PM", venue:"TBD — FiDi", neighborhood:"FiDi", address:"New York, NY", types:["fintech","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Monthly fintech community gathering. Payments, lending, banking, insurance. Last Friday of each month across rotating NYC venues. Yorkseed community partner.", rsvp:"https://www.eventbrite.com/d/ny--new-york/fintech/?ref=yorkseed", status:"Open" },
+  { id:19, name:"Fintech Is Femme — NYTW Networking Brunch", host:"Fintech Is Femme", date:"2026-06-02", day:"Mon Jun 2", time:"11:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["fintech","women","community","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Annual NYTW edition of Fintech Is Femme's signature brunch. Women founders, investors, and operators in fintech, crypto, and banking. RSVP fills up fast. Yorkseed community partner.", rsvp:"https://www.fintechisfemme.com/?ref=yorkseed", status:"Open" },
+  { id:23, name:"Marketing & Growth — NYTW Meetup", host:"GrowthHackers NYC", date:"2026-06-03", day:"Tue Jun 3", time:"6:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["marketing","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Growth and marketing practitioners gathering during NYTW. SEO, paid, content, product-led growth. Community-led, no pitches. Yorkseed community partner.", rsvp:"https://www.eventbrite.com/d/ny--new-york/marketing/?ref=yorkseed", status:"Open" },
+  { id:27, name:"Black Founders Matter — NYTW Mixer", host:"Black Founders Matter", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"TBD — Harlem or Midtown", neighborhood:"Harlem / Midtown", address:"New York, NY", types:["community","vc"], free:true, drinks:true, food:true, ticket:"Free", notes:"Annual NYTW mixer celebrating and connecting Black founders, investors, and operators. Open to all. Hosted by the Black Founders Matter community. Yorkseed community partner.", rsvp:"https://www.eventbrite.com/d/ny--new-york/black-founders/?ref=yorkseed", status:"Open" },
+  { id:31, name:"Women Who Code — NYTW Hackathon", host:"Women Who Code NYC", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","women","hackathon","community"], free:true, drinks:false, food:true, ticket:"Free", notes:"Day-long hackathon for women in tech during NYTW. AI, social impact, and fintech tracks. All skill levels welcome. Prizes and networking with NYC tech leaders. Yorkseed community partner.", rsvp:"https://www.womenwhocode.com/?ref=yorkseed", status:"Open" },
+
+  // ══════════════════════════════════════════
+  // PRE-WEEK — TUE MAY 27
+  // ══════════════════════════════════════════
+
   { id:3, name:"AI Tinkerers NYC — Builders Meetup", host:"AI Tinkerers NYC", date:"2026-05-27", day:"Tue May 27", time:"6:30 PM", venue:"TBD — Midtown or SoHo", neighborhood:"Midtown / SoHo", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Practitioner-only meetup for LLM and generative AI builders. Live demos, engineering talks, peer networking. Community-led, no sales pitches. Check ai-tinkerers.org for venue confirmation.", rsvp:"https://nyc.aitinkerers.org/?ref=yorkseed", status:"Open" },
-  { id:4, name:"Fintech Founders NYC — Pre-Week Drinks", host:"Fintech Nexus / Community", date:"2026-05-27", day:"Tue May 27", time:"6:00 PM", venue:"TBD Bar — FiDi or Midtown", neighborhood:"FiDi / Midtown", address:"New York, NY", types:["fintech","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Informal pre-week gathering for fintech founders and operators. No agenda, no pitching — just great conversations. Follow @fintechnexus for confirmed location.", rsvp:"https://www.eventbrite.com/d/ny--new-york/fintech/?ref=yorkseed", status:"Open" },
-  { id:5, name:"Web3 NYC — Pre-NYTW Happy Hour", host:"Web3 NYC Community", date:"2026-05-27", day:"Tue May 27", time:"7:00 PM", venue:"TBD — Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["web3","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Informal Web3 community gathering ahead of NY Tech Week. Builders, founders and investors welcome. Check @web3nyc on X for venue details.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
+  { id:4, name:"Fintech Founders NYC — Pre-Week Drinks", host:"Fintech Nexus", date:"2026-05-27", day:"Tue May 27", time:"6:00 PM", venue:"TBD Bar — FiDi or Midtown", neighborhood:"FiDi / Midtown", address:"New York, NY", types:["fintech","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Informal pre-week gathering for fintech founders and operators. No agenda, no pitching. Follow @fintechnexus for confirmed location.", rsvp:"https://www.eventbrite.com/d/ny--new-york/fintech/?ref=yorkseed", status:"Open" },
+  { id:5, name:"Web3 NYC — Pre-NYTW Happy Hour", host:"Web3 NYC Community", date:"2026-05-27", day:"Tue May 27", time:"7:00 PM", venue:"TBD — Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["web3","crypto","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Informal Web3 community gathering ahead of NY Tech Week. Builders, founders and investors welcome. Check @web3nyc on X for venue details.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
 
-  // ── WED MAY 28 ──
-  { id:6, name:"Startup Grind NYC — Monthly Fireside", host:"Startup Grind NYC", date:"2026-05-28", day:"Wed May 28", time:"6:30 PM", venue:"WeWork or TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Paid", notes:"Monthly Startup Grind fireside chat featuring a top founder or investor from the NYC ecosystem. Networking before and after. One of the world's largest startup communities.", rsvp:"https://www.startupgrind.com/new-york-city/?ref=yorkseed", status:"Open" },
-  { id:7, name:"Women in VC — Networking Dinner", host:"Women in VC", date:"2026-05-28", day:"Wed May 28", time:"7:00 PM", venue:"TBD Restaurant — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["vc","women","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Intimate dinner for women investors and founders. Curated conversation, small group. Pre-register via Luma or their mailing list.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
-  { id:8, name:"Climate & Deep Tech Drinks", host:"Climate Draft / Independent", date:"2026-05-28", day:"Wed May 28", time:"6:00 PM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["climate","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Casual evening for climate tech founders, investors and operators. Pre-week edition. No presentations — just drinks and networking.", rsvp:"https://www.eventbrite.com/d/ny--new-york/climate-tech/?ref=yorkseed", status:"Open" },
+  // ══════════════════════════════════════════
+  // PRE-WEEK — WED MAY 28
+  // ══════════════════════════════════════════
 
-  // ── THU MAY 29 ──
-  { id:9, name:"NYTW Pre-Week AI Summit", host:"Independent / Community", date:"2026-05-29", day:"Thu May 29", time:"9:00 AM", venue:"TBD — Midtown Manhattan", neighborhood:"Midtown", address:"New York, NY", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Full-day pre-week AI summit. Founders, researchers, and investors converging on New York. Tracks: generative AI, agents, AI infrastructure, enterprise AI. Check event channels for confirmed details.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
-  { id:10, name:"Legal Tech Happy Hour — NY Tech Week Edition", host:"LegalTech Hub NYC", date:"2026-05-29", day:"Thu May 29", time:"6:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["legal","ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Pre-NYTW gathering for legal tech founders, attorneys, and investors. AI's impact on law, compliance, and contracts. Hosted in partnership with NYC legal tech community.", rsvp:"https://www.eventbrite.com/d/ny--new-york/legaltech/?ref=yorkseed", status:"Open" },
-  { id:11, name:"Big Ballers: Pre-Week Founders Dinner", host:"Independent", date:"2026-05-29", day:"Thu May 29", time:"7:30 PM", venue:"TBD Restaurant — TriBeCa", neighborhood:"TriBeCa", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Curated pre-week dinner for high-growth founders and early-stage investors. Small group, intimate format. Apply via Eventbrite.", rsvp:"https://www.eventbrite.com/d/ny--new-york/startup/?ref=yorkseed", status:"Open" },
+  { id:6, name:"Startup Grind NYC — Monthly Fireside", host:"Startup Grind NYC", date:"2026-05-28", day:"Wed May 28", time:"6:30 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Paid", notes:"Monthly Startup Grind fireside chat featuring a top founder or investor from the NYC ecosystem. Networking before and after.", rsvp:"https://www.startupgrind.com/new-york-city/?ref=yorkseed", status:"Open" },
+  { id:7, name:"Women in VC — Networking Dinner", host:"Women in VC", date:"2026-05-28", day:"Wed May 28", time:"7:00 PM", venue:"TBD Restaurant — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["vc","women","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Intimate dinner for women investors and founders. Curated conversation, small group. Pre-register via Luma or their mailing list.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
+  { id:8, name:"Climate & Deep Tech Drinks", host:"Climate Draft", date:"2026-05-28", day:"Wed May 28", time:"6:00 PM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["climate","deeptech","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Casual evening for climate tech founders, investors and operators. Pre-week edition. No presentations — just drinks and networking.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
 
-  // ── FRI MAY 30 ──
-  { id:12, name:"Yorkseed Passport Series: NYTW — Pre-Week Drinks", host:"Yorkseed", date:"2026-05-30", day:"Fri May 30", time:"6:00 PM", venue:"TBD — SoHo or Flatiron", neighborhood:"SoHo / Flatiron", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Paid", yorkseed:"passport", notes:"Yorkseed Passport Series pre-week edition. Founders, investors and operators in one room before the week kicks off officially. Members get priority access. RSVP via Luma.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:13, name:"Fintech Meetup NYC — Monthly Edition", host:"Fintech Meetup NYC", date:"2026-05-30", day:"Fri May 30", time:"6:30 PM", venue:"TBD — FiDi", neighborhood:"FiDi", address:"New York, NY", types:["fintech","community"], free:true, drinks:true, food:false, ticket:"Free", yorkseed:"partner", notes:"Monthly fintech community gathering. Payments, lending, banking, insurance. Hosted the last Friday of each month across rotating venues in NYC. Yorkseed community partner.", rsvp:"https://www.eventbrite.com/d/ny--new-york/fintech/?ref=yorkseed", status:"Open" },
+  // ══════════════════════════════════════════
+  // PRE-WEEK — THU MAY 29
+  // ══════════════════════════════════════════
 
-  // ── SAT MAY 31 ──
-  { id:14, name:"Startup Weekend NYC — Pre-NYTW Edition", host:"Techstars Startup Weekend", date:"2026-05-31", day:"Sat May 31", time:"9:00 AM", venue:"TBD — Brooklyn or Manhattan", neighborhood:"Brooklyn / Manhattan", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:true, ticket:"Paid", notes:"54-hour startup weekend for early-stage builders. Form a team, build a product, pitch on Sunday. All skill levels welcome. One of the most action-packed events of the pre-week.", rsvp:"https://www.eventbrite.com/d/ny--new-york/startup-weekend/?ref=yorkseed", status:"Open" },
+  { id:10, name:"Legal Tech Happy Hour — NY Tech Week Edition", host:"LegalTech Hub NYC", date:"2026-05-29", day:"Thu May 29", time:"6:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["legal","ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Pre-NYTW gathering for legal tech founders, attorneys, and investors. AI's impact on law, compliance, and contracts.", rsvp:"https://www.eventbrite.com/d/ny--new-york/legaltech/?ref=yorkseed", status:"Open" },
+  { id:11, name:"Pre-Week Founders Dinner", host:"Independent", date:"2026-05-29", day:"Thu May 29", time:"7:30 PM", venue:"TBD Restaurant — TriBeCa", neighborhood:"TriBeCa", address:"New York, NY", types:["vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Curated pre-week dinner for high-growth founders and early-stage investors. Small group, intimate format.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
 
-  // ── SUN JUN 1 (NYTW Official Week Begins) ──
-  { id:15, name:"NY Tech Week — Official Opening Day", host:"NY Tech Week", date:"2026-06-01", day:"Sun Jun 1", time:"12:00 PM", venue:"Various Venues — NYC", neighborhood:"NYC-wide", address:"New York, NY", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Badge Required", notes:"Official start of NY Tech Week 2026. Opening ceremonies, flagship venue opens. Check nytechweek.com for the full official programme and badge pickup information.", rsvp:"https://www.nytechweek.com/?ref=yorkseed", status:"Open" },
-  { id:16, name:"NYTW Opening Night Party", host:"NY Tech Week / Sponsors", date:"2026-06-01", day:"Sun Jun 1", time:"7:00 PM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:true, ticket:"Paid / Badge", notes:"Official opening night party of NY Tech Week 2026. Largest annual NYC startup gathering. Watch nytechweek.com and @nytechweek on X for venue and ticket details.", rsvp:"https://www.nytechweek.com/?ref=yorkseed", status:"Open" },
-  { id:17, name:"AI x Crypto Night — NYTW Edition", host:"Community", date:"2026-06-01", day:"Sun Jun 1", time:"6:30 PM", venue:"TBD — Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["ai","web3","community"], free:false, drinks:true, food:false, ticket:"Paid", notes:"Opening night side event at the intersection of AI and crypto/Web3. Builders, founders and investors in both ecosystems. Follow channels for venue confirmation.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
+  // ══════════════════════════════════════════
+  // PRE-WEEK — SAT MAY 31
+  // ══════════════════════════════════════════
 
-  // ── MON JUN 2 ──
-  { id:18, name:"Founder Dating NYC — Speed Networking", host:"Founder Dating", date:"2026-06-02", day:"Mon Jun 2", time:"6:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["community","vc"], free:false, drinks:true, food:false, ticket:"Paid", notes:"Structured speed-networking for founders, investors and operators. 5-minute rotations, hosted in-person. Great way to meet new collaborators during NYTW.", rsvp:"https://www.eventbrite.com/d/ny--new-york/startup/?ref=yorkseed", status:"Open" },
-  { id:19, name:"Fintech Is Femme — NYTW Networking Brunch", host:"Fintech Is Femme", date:"2026-06-02", day:"Mon Jun 2", time:"11:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["fintech","women","community"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"partner", notes:"Annual NYTW edition of Fintech Is Femme's signature brunch. Women founders, investors, and operators in fintech, crypto, and banking. RSVP fills up fast. Yorkseed community partner.", rsvp:"https://www.fintechisfemme.com/?ref=yorkseed", status:"Open" },
-  { id:20, name:"AI Agents Summit NYC", host:"Independent / Community", date:"2026-06-02", day:"Mon Jun 2", time:"9:00 AM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Full-day summit dedicated to autonomous AI agents, agentic workflows, and agent infrastructure. Founders, researchers, and investors building and deploying AI agents at scale.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
-  { id:21, name:"VC Scouts & Emerging Managers Happy Hour", host:"Emerging Fund Managers NYC", date:"2026-06-02", day:"Mon Jun 2", time:"6:30 PM", venue:"TBD Bar — UES or Midtown", neighborhood:"Midtown / UES", address:"New York, NY", types:["vc","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Annual gathering for scouts, emerging managers, and fund-of-fund allocators during NYTW. Informal and open. Check @emergingvc on X for confirmed venue.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
+  { id:14, name:"Techstars Startup Weekend NYC — Pre-NYTW Edition", host:"Techstars Startup Weekend", date:"2026-05-31", day:"Sat May 31", time:"9:00 AM", venue:"TBD — Brooklyn or Manhattan", neighborhood:"Brooklyn / Manhattan", address:"New York, NY", types:["ai","community","hackathon"], free:false, drinks:false, food:true, ticket:"Paid", notes:"54-hour startup weekend for early-stage builders. Form a team, build a product, pitch on Sunday. All skill levels welcome.", rsvp:"https://www.eventbrite.com/d/ny--new-york/startup-weekend/?ref=yorkseed", status:"Open" },
 
-  // ── TUE JUN 3 ──
-  { id:40, name:"Yorkseed Passport Series: NYTW — Flagship Dinner", host:"Yorkseed", date:"2026-06-03", day:"Tue Jun 3", time:"7:30 PM", venue:"TBD Restaurant — West Village or SoHo", neighborhood:"West Village / SoHo", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The flagship Yorkseed Passport Series NYTW dinner. A carefully curated evening of founders, investors, and operators at the midpoint of the week. Limited seats — Yorkseed members get priority access. Apply via Luma.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:22, name:"TechCrunch Early Stage NYC — Side Event", host:"TechCrunch / Community", date:"2026-06-03", day:"Tue Jun 3", time:"6:00 PM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:true, food:false, ticket:"Paid", notes:"TechCrunch-affiliated side event during NYTW. Startup founders and investors. Check TechCrunch event pages for confirmed details and access.", rsvp:"https://techcrunch.com/events/?ref=yorkseed", status:"Open" },
-  { id:23, name:"Marketing & Growth — NYTW Meetup", host:"GrowthHackers NYC", date:"2026-06-03", day:"Tue Jun 3", time:"6:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["marketing","community"], free:true, drinks:true, food:false, ticket:"Free", yorkseed:"partner", notes:"Growth and marketing practitioners gathering during NYTW. SEO, paid, content, product-led growth. Community-led, no pitches. Yorkseed community partner.", rsvp:"https://www.eventbrite.com/d/ny--new-york/marketing/?ref=yorkseed", status:"Open" },
-  { id:24, name:"Web3 / DeFi Founders Lunch", host:"DeFi Alliance / Community", date:"2026-06-03", day:"Tue Jun 3", time:"12:00 PM", venue:"TBD Restaurant — TriBeCa", neighborhood:"TriBeCa", address:"New York, NY", types:["web3","vc","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Curated lunch for DeFi and Web3 founders and investors during NYTW. Protocol founders, layer-2 teams, institutional crypto investors. Small group, curated seating.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
-  { id:25, name:"Robotics & Hardware Drinks — NYTW", host:"Hardware Club NYC", date:"2026-06-03", day:"Tue Jun 3", time:"6:00 PM", venue:"TBD — Brooklyn Navy Yard area", neighborhood:"Brooklyn", address:"New York, NY", types:["robotics","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Annual NYTW drinks for robotics, hardware, and deep tech founders. Engineers, operators, and investors building physical products. Follow @hardwareclubnyc for confirmed venue.", rsvp:"https://www.eventbrite.com/d/ny--new-york/robotics/?ref=yorkseed", status:"Open" },
+  // ══════════════════════════════════════════
+  // MON JUN 1 — Official NYTW opens
+  // ══════════════════════════════════════════
 
-  // ── WED JUN 4 ──
-  { id:26, name:"General Catalyst Portfolio Day", host:"General Catalyst", date:"2026-06-04", day:"Wed Jun 4", time:"10:00 AM", venue:"GC NYC Office — TBD", neighborhood:"Midtown / UES", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Invite Only", notes:"Annual portfolio day and networking for GC companies and LPs during NYTW. Invite-only. Watch GC social channels and portfolio founder networks for access.", rsvp:"https://www.generalcatalyst.com/?ref=yorkseed", status:"Invite Only" },
-  { id:27, name:"Black Founders Matter — NYTW Mixer", host:"Black Founders Matter", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"TBD — Harlem or Midtown", neighborhood:"Harlem / Midtown", address:"New York, NY", types:["community","vc"], free:true, drinks:true, food:true, ticket:"Free", yorkseed:"partner", notes:"Annual NYTW mixer celebrating and connecting Black founders, investors, and operators. Open to all. Hosted by the Black Founders Matter community. Yorkseed community partner.", rsvp:"https://www.eventbrite.com/d/ny--new-york/black-founders/?ref=yorkseed", status:"Open" },
-  { id:28, name:"Healthtech & BioTech Drinks — NYTW", host:"NYC Healthtech Community", date:"2026-06-04", day:"Wed Jun 4", time:"6:30 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["health","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"NYTW side event for healthtech, medtech, and biotech founders, investors, and operators. Digital health, longevity, medical devices, diagnostics. Check Eventbrite for venue.", rsvp:"https://www.eventbrite.com/d/ny--new-york/healthtech/?ref=yorkseed", status:"Open" },
-  { id:29, name:"Pitch Competition — NYTW Edition", host:"NY Tech Week / Sponsors", date:"2026-06-04", day:"Wed Jun 4", time:"2:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Live pitch competition for early-stage startups during NYTW. AI, fintech, and consumer categories. Prize pool TBD. Apply via official NYTW channels.", rsvp:"https://www.nytechweek.com/?ref=yorkseed", status:"Open" },
+  { id:100, name:"Official Tech Week Kickoff Party — a16z & Gamma", host:"a16z, Gamma", date:"2026-06-01", day:"Sun Jun 1", time:"6:30 PM", venue:"TBD — Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"The official a16z Tech Week 2026 kickoff party, co-hosted with Gamma. Founders, investors, and operators. One of the most sought-after RSVP events of the week. Apply via Partiful.", rsvp:"https://partiful.com/events/o1qradCjiAlnUg3c6ZWj?ref=yorkseed", status:"Open" },
+  { id:101, name:"Stripe Supper Club", host:"Stripe", date:"2026-06-01", day:"Sun Jun 1", time:"6:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["fintech","vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Invite Only", notes:"Stripe's intimate supper club for founders and operators on Day 1 of NY Tech Week. Fintech, infrastructure, and company building. Watch founder networks for access.", rsvp:"https://partiful.com/e/YFlFyVXYl8MFYSUapd3o?ref=yorkseed", status:"Invite Only" },
+  { id:103, name:"Rebuilding American Manufacturing — BVP, JPM & Orrick", host:"J.P. Morgan, Orrick, Bessemer Venture Partners", date:"2026-06-01", day:"Sun Jun 1", time:"4:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","deeptech","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Panel and networking hosted by JPMorgan, Orrick, and Bessemer on the resurgence of American manufacturing and deep tech. Robotics, climate, and industrial tech focus.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
+  { id:104, name:"Mercury's Vinyl House at NY Tech Week", host:"Mercury", date:"2026-06-01", day:"Sun Jun 1", time:"8:00 AM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["fintech","community"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"Mercury Bank's pop-up founders hub running all week in SoHo. Morning networking, vinyl sessions, and workspace for founders. Apply via Tech Week calendar.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
+  { id:105, name:"a16z Speedrun — Pitch Day", host:"a16z speedrun", date:"2026-06-01", day:"Sun Jun 1", time:"4:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"a16z speedrun's live pitch day. Early-stage founders pitch in fast format in front of the a16z team and ecosystem. Apply via the official Tech Week calendar.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
+  { id:106, name:"Founders Morning Run — Central Park", host:"Leverage", date:"2026-06-01", day:"Sun Jun 1", time:"6:30 AM", venue:"Central Park", neighborhood:"Central Park", address:"Central Park, New York, NY", types:["community","vc"], free:true, drinks:false, food:false, ticket:"Free", notes:"Morning run kicking off NY Tech Week. Meet fellow founders before the events start. Community-led, no agenda. Meet at the south entrance.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
 
-  // ── THU JUN 5 ──
-  { id:30, name:"Andreessen Horowitz — NYC Open House", host:"a16z", date:"2026-06-05", day:"Thu Jun 5", time:"10:00 AM", venue:"a16z NYC Office", neighborhood:"Midtown", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:false, food:false, ticket:"Invite Only", notes:"Annual a16z open house for portfolio founders and ecosystem partners during NYTW. Invite-only — watch a16z social channels and founder networks for access.", rsvp:"https://a16z.com/?ref=yorkseed", status:"Invite Only" },
-  { id:31, name:"Women Who Code — NYTW Hackathon", host:"Women Who Code NYC", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","women","community"], free:true, drinks:false, food:true, ticket:"Free", yorkseed:"partner", notes:"Day-long hackathon for women in tech during NYTW. AI, social impact, and fintech tracks. All skill levels welcome. Prizes and networking with NYC tech leaders. Yorkseed community partner.", rsvp:"https://www.womenwhocode.com/?ref=yorkseed", status:"Open" },
-  { id:32, name:"NYTW Official Investor Summit", host:"NY Tech Week", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","ai","conference"], free:false, drinks:false, food:false, ticket:"Badge Required", notes:"Official investor-focused day of NYTW. LP panels, fund-of-fund discussions, deal flow sessions, and 1-on-1 meetings. Check nytechweek.com for access and registration.", rsvp:"https://www.nytechweek.com/?ref=yorkseed", status:"Open" },
-  { id:33, name:"Drinks at Soho House — Founder Edition", host:"Independent", date:"2026-06-05", day:"Thu Jun 5", time:"6:30 PM", venue:"Soho House NYC — 29-35 9th Ave", neighborhood:"Meatpacking", address:"29-35 9th Ave, New York, NY 10014", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Invite Only", notes:"Curated evening at Soho House for founders, investors, and creative operators. Membership or guest invite required. Watch founder networks for access.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Invite Only" },
+  // ══════════════════════════════════════════
+  // MON JUN 2
+  // ══════════════════════════════════════════
 
-  // ── FRI JUN 6 ──
-  { id:41, name:"Yorkseed Passport Series: NYTW — Closing Rooftop", host:"Yorkseed", date:"2026-06-06", day:"Fri Jun 6", time:"5:30 PM", venue:"TBD Rooftop — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The closing edition of the Yorkseed Passport Series at NYTW. Rooftop sendoff for founders, investors, and operators. Celebrate the week with the Yorkseed community before the official closing parties. Members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:34, name:"NYTW Closing Party", host:"NY Tech Week", date:"2026-06-06", day:"Fri Jun 6", time:"8:00 PM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:true, ticket:"Paid / Badge", notes:"Official closing party of NY Tech Week 2026. Largest annual NYC startup celebration. Watch nytechweek.com and @nytechweek on X for venue and ticket details.", rsvp:"https://www.nytechweek.com/?ref=yorkseed", status:"Open" },
-  { id:35, name:"Fintech Closing Rooftop — NYTW", host:"Fintech Nexus / Community", date:"2026-06-06", day:"Fri Jun 6", time:"6:00 PM", venue:"TBD Rooftop — Midtown or FiDi", neighborhood:"Midtown / FiDi", address:"New York, NY", types:["fintech","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Annual closing rooftop event for the fintech community during NYTW. Great views, great networking. Payments, banking, crypto, and insurance founders and investors.", rsvp:"https://www.eventbrite.com/d/ny--new-york/fintech/?ref=yorkseed", status:"Open" },
-  { id:36, name:"AI Founders Closing Dinner", host:"Independent", date:"2026-06-06", day:"Fri Jun 6", time:"7:30 PM", venue:"TBD Restaurant — West Village", neighborhood:"West Village", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Intimate closing dinner for AI founders and investors at the end of NYTW. Small group, curated format. Apply for a seat via Eventbrite.", rsvp:"https://www.eventbrite.com/d/ny--new-york/startup/?ref=yorkseed", status:"Open" },
+  { id:110, name:"SaaS & AI Founder + Investor Rooftop Happy Hour — NachoNacho & Deel", host:"NachoNacho, Deel, ZenDesk, Morrison Foerster", date:"2026-06-02", day:"Mon Jun 2", time:"5:00 PM", venue:"Mr. Purple — Hotel Indigo LES", neighborhood:"Lower East Side", address:"180 Orchard St, New York, NY 10002", types:["ai","saas","fintech","community","rooftop"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Exclusive rooftop happy hour for SaaS and AI founders and investors. Curated guest list — Seed-funded minimum, no +1s, applications screened. Sponsored drinks on the rooftop deck at Mr. Purple.", rsvp:"https://partiful.com/e/A8JEdUuv9FIqqiPGE0nV?ref=yorkseed", status:"Open" },
+  { id:111, name:"Enterprise AI Innovation Showcase — NVIDIA & Dell", host:"NVIDIA, Dell Technologies Capital", date:"2026-06-02", day:"Mon Jun 2", time:"4:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","conference","deeptech"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"NVIDIA and Dell showcase enterprise AI infrastructure and AI compute. Deep tech, AI stack, and startup applications. Apply via Partiful.", rsvp:"https://partiful.com/e/5vHvRPI0VlMQwOmQadCN?ref=yorkseed", status:"Open" },
+  { id:112, name:"ElevenLabs: Live from NY", host:"ElevenLabs", date:"2026-06-02", day:"Mon Jun 2", time:"6:00 PM", venue:"ElevenLabs NY Office — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"An unforgettable evening at the brand new ElevenLabs NY office. Conversations with top AI and tech leaders, activations, and meaningful networking. Apply via Partiful.", rsvp:"https://partiful.com/e/Vamn82rpSCMY5sp1UgNG?ref=yorkseed", status:"Open" },
+  { id:115, name:"GPs + LPs Lunch — Mercury, Reveille VC & Columbia Endowment", host:"Mercury, Reveille VC, Columbia Investment Management", date:"2026-06-02", day:"Mon Jun 2", time:"12:30 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"Curated GP/LP lunch bringing together fund managers and institutional allocators. Invite-only — watch emerging manager networks for access.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Invite Only" },
+  { id:116, name:"NYTW Early-Stage Investor Dinner", host:"a16z speedrun, Precursor, Collab Fund", date:"2026-06-02", day:"Mon Jun 2", time:"5:30 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Invite Only", notes:"Intimate early-stage investor dinner co-hosted by a16z speedrun, Precursor Ventures, and Collab Fund. Pre-seed and seed focus. Invite-only through fund networks.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Invite Only" },
+  { id:117, name:"Techstars Investor Preview — Spring 2026", host:"Techstars, Google Cloud", date:"2026-06-02", day:"Mon Jun 2", time:"12:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"In-person pitches from 14 groundbreaking startups from the Techstars NYC and Techstars Anywhere Spring 2026 classes. Investor-facing preview. Strict ID required at entry.", rsvp:"https://partiful.com/e/t9rcgqhGn2tx8udcMKmX?ref=yorkseed", status:"Open" },
+  { id:120, name:"BCG x FT Partners — Global Fintech Report Launch", host:"Boston Consulting Group, FT Partners", date:"2026-06-02", day:"Mon Jun 2", time:"4:00 PM", venue:"TBD — Hudson Yards", neighborhood:"Hudson Yards", address:"New York, NY", types:["fintech","vc","conference"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"BCG and FT Partners launch their annual Global Fintech Report at NY Tech Week. Data on investment trends, M&A, valuations, and the global fintech landscape. Followed by networking.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/fintech?ref=yorkseed", status:"Open" },
+  { id:121, name:"Building to Disrupt — AI in Enterprise and Fintech", host:"HSBC Innovation Banking", date:"2026-06-02", day:"Mon Jun 2", time:"4:00 PM", venue:"TBD — Hudson Yards", neighborhood:"Hudson Yards", address:"New York, NY", types:["ai","fintech","conference"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"HSBC Innovation Banking's flagship NYTW panel on AI disrupting enterprise and financial services. Followed by networking reception.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/fintech?ref=yorkseed", status:"Open" },
 
-  // ── SAT JUN 7 (NYTW Final Official Day) ──
-  { id:37, name:"NYTW Final Day — Community Day", host:"NY Tech Week", date:"2026-06-07", day:"Sat Jun 7", time:"10:00 AM", venue:"Various Venues — NYC", neighborhood:"NYC-wide", address:"New York, NY", types:["ai","community","conference"], free:false, drinks:false, food:false, ticket:"Badge Required", notes:"Final official day of NY Tech Week 2026. Community programming, demos, and wrap-up sessions. Check nytechweek.com for the final day agenda.", rsvp:"https://www.nytechweek.com/?ref=yorkseed", status:"Open" },
-  { id:38, name:"Saturday Startup Brunch — Post NYTW", host:"Independent / Community", date:"2026-06-07", day:"Sat Jun 7", time:"11:00 AM", venue:"TBD Restaurant — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["community","vc"], free:false, drinks:true, food:true, ticket:"Paid", notes:"End-of-week brunch for founders and investors to decompress after NYTW. Casual format, good food. Check Eventbrite for confirmed venue and seating.", rsvp:"https://www.eventbrite.com/d/ny--new-york/startup/?ref=yorkseed", status:"Open" },
+  // ══════════════════════════════════════════
+  // TUE JUN 3
+  // ══════════════════════════════════════════
 
-  // ── SUN JUN 8 (Post-week) ──
-  { id:39, name:"Yorkseed Passport Series: NYTW — Post-Week Debrief Brunch", host:"Yorkseed", date:"2026-06-08", day:"Sun Jun 8", time:"11:30 AM", venue:"TBD — Brooklyn or Lower Manhattan", neighborhood:"Brooklyn / Lower Manhattan", address:"New York, NY", types:["community","vc"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The final Yorkseed Passport Series event — a relaxed post-NYTW debrief brunch. Reflect, follow up, and close the loop on the week's connections. Open to Yorkseed members and passport holders.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+  { id:130, name:"Google for Startups Hub — All Day", host:"Google for Startups", date:"2026-06-03", day:"Tue Jun 3", time:"9:00 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Google for Startups activates a full-day hub in Chelsea for NY Tech Week. Multiple sessions across AI, founders, and engineering. Apply via Partiful.", rsvp:"https://partiful.com/e/ZzxFq9vcfoDUqBBRQTzv?ref=yorkseed", status:"Open" },
+  { id:131, name:"Google for Startups — Latest from Google DeepMind", host:"Google for Startups", date:"2026-06-03", day:"Tue Jun 3", time:"9:00 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Google DeepMind researchers share the latest AI research advances and what they mean for startup builders. Hosted at the Google for Startups hub.", rsvp:"https://partiful.com/e/e0FYrBmBfIPXGQdUttNW?ref=yorkseed", status:"Open" },
+  { id:132, name:"Fireside Chat — Bryan Kim of ElevenLabs & Verci", host:"Verci, ElevenLabs", date:"2026-06-03", day:"Tue Jun 3", time:"10:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Bryan Kim of ElevenLabs joins Verci for a morning fireside on building voice AI companies, navigating hypergrowth, and what comes next for audio/speech AI.", rsvp:"https://partiful.com/e/kcNK4Mal67OURfFcBLRy?ref=yorkseed", status:"Open" },
+  { id:133, name:"HubSpot — Build Mode: RevOps & GTM Teams as AI-Powered Builders", host:"HubSpot", date:"2026-06-03", day:"Tue Jun 3", time:"6:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","marketing","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"HubSpot's flagship Tech Week evening event on how RevOps and GTM teams are becoming AI-native builders. Panel + networking drinks in SoHo.", rsvp:"https://partiful.com/events/o1qradCjiAlnUg3c6ZWj?ref=yorkseed", status:"Open" },
+  { id:134, name:"Anthropic Founder Salon — AI 2.0", host:"Anthropic", date:"2026-06-03", day:"Tue Jun 3", time:"1:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"Anthropic's curated founder salon: AI 2.0. Speakers include Gamma, Factory, and CodeRabbit alongside Anthropic product and engineering team. Building with Claude, agentic systems, and frontier AI. Limited attendance.", rsvp:"https://partiful.com/e/titPml1Nw0DKwGl9B6CF?ref=yorkseed", status:"Invite Only" },
+  { id:136, name:"Inner Circle — Founder & VC Lunch", host:"Menlo Ventures, AmEx Ventures, BambooX", date:"2026-06-03", day:"Tue Jun 3", time:"12:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"Curated founder and VC lunch hosted by Menlo Ventures, AmEx Ventures, and BambooX. Small group. Cofounder dynamics, seed-to-Series-A conversations.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Invite Only" },
+  { id:137, name:"NYSE + PwC IPO Panel", host:"PwC, NYSE", date:"2026-06-03", day:"Tue Jun 3", time:"2:30 PM", venue:"NYSE — Financial District", neighborhood:"Financial District", address:"11 Wall St, New York, NY 10005", types:["fintech","vc","conference"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"PwC and the New York Stock Exchange on the IPO market, capital markets outlook, and what late-stage founders need to know about going public in 2026.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
+  { id:138, name:"Ramp x 8VC — Founders & Builders Night", host:"Ramp, 8VC", date:"2026-06-03", day:"Tue Jun 3", time:"6:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","fintech","vc","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Ramp and 8VC host a high-energy builders night for founders and operators. Finance, AI, and SaaS. One of the best networking evenings of the week.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
+  { id:140, name:"Bootstrapped Founders Breakfast Club", host:"Independent", date:"2026-06-03", day:"Tue Jun 3", time:"8:30 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["community","breakfast"], free:false, drinks:false, food:true, ticket:"Paid", notes:"Morning gathering for bootstrapped and indie founders during NYTW. No VC pitching, no investor pressure — just founders who build their own way. Small group format.", rsvp:"https://www.eventbrite.ch/e/bootstrapped-founders-breakfast-club-nytechweek-tickets-1988023726482?ref=yorkseed", status:"Open" },
+  { id:142, name:"Hack the Tech Week — a16z Hackathon", host:"a16z", date:"2026-06-03", day:"Tue Jun 3", time:"10:00 AM", venue:"TBD — Brooklyn", neighborhood:"Brooklyn", address:"New York, NY", types:["ai","hackathon","community"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"The premier hackathon of NY Tech Week by a16z. Build an AI agent that generates or saves $1M. In-person sprint for founders, engineers, and builders. Prizes for top teams.", rsvp:"https://partiful.com/e/5b8DE39ZNAUhZsPcSepq?ref=yorkseed", status:"Open" },
+
+  // ══════════════════════════════════════════
+  // WED JUN 4
+  // ══════════════════════════════════════════
+
+  { id:150, name:"Atlassian — The Journey of an Acquired Founder", host:"Atlassian", date:"2026-06-04", day:"Wed Jun 4", time:"5:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Atlassian hosts candid conversations with founders who have been acquired. Deal mechanics, culture, life post-acquisition. One of the more unique format events of the week.", rsvp:"https://partiful.com/e/iC3xjF6JPm0iKeTkvCCG?ref=yorkseed", status:"Open" },
+  { id:151, name:"a16z Speedrun — Startup Culture Brunch for Angels & VCs", host:"a16z speedrun", date:"2026-06-04", day:"Wed Jun 4", time:"9:30 AM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community","breakfast"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"a16z speedrun's angel and emerging VC brunch. Morning format, curated guest list. Invite through a16z speedrun network.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/investors?ref=yorkseed", status:"Invite Only" },
+  { id:152, name:"Founders & Funders — NYC VC Reverse Pitch", host:"Founders N' Funders, Microsoft", date:"2026-06-04", day:"Wed Jun 4", time:"10:00 AM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Flipped format: VCs pitch themselves to founders. Thesis, value-add, and portfolio support on show. A rare chance for founders to evaluate investors before taking their money.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/investors?ref=yorkseed", status:"Open" },
+  { id:153, name:"Alpha Partners — 3rd Annual VC Rooftop Happy Hour", host:"Alpha Partners", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"TBD Rooftop — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Alpha Partners' third annual NYTW rooftop gathering. VCs, angels, and founders with a Midtown rooftop view. One of the week's most popular investor evening events.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/investors?ref=yorkseed", status:"Open" },
+  { id:157, name:"AI Launch Party — Pinecone", host:"Pinecone", date:"2026-06-04", day:"Wed Jun 4", time:"5:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Pinecone's AI launch party during NY Tech Week. Vector search, RAG, and AI application builders. One of the most popular mid-week tech evening events.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/ai-infra?ref=yorkseed", status:"Open" },
+  { id:158, name:"Vibe Coder Dinner Club", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"8:00 PM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Dinner gathering for vibe coders and builders experimenting with AI-first development. Relaxed format, good food, code talk.", rsvp:"https://www.eventbrite.com/e/vibe-coder-dinner-club-nytechweek-tickets-1988024060481?ref=yorkseed", status:"Open" },
+  { id:159, name:"Wine & Einstein — NPCs and Consciousness", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"6:30 PM", venue:"OS NYC — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"A salon-style discussion on AI consciousness, NPCs, and what intelligence really means. Wine, conversation, and minds. One of the week's more philosophical side events.", rsvp:"https://www.eventbrite.com/e/wine-einstein-npcs-and-consciousness-nytechweek-tickets-1988260930967?ref=yorkseed", status:"Open" },
+  { id:160, name:"Planting the Seeds to Launch — Founders & VCs at Miles McEnery Gallery", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"Miles McEnery Gallery — Chelsea", neighborhood:"Chelsea", address:"525 W 22nd St, New York, NY 10011", types:["vc","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"A gallery opening meets startup networking event. Founders and investors mingle in one of Chelsea's premier art spaces. Creative, distinctive evening format.", rsvp:"https://www.eventbrite.com/e/planting-the-seeds-to-launch-nytechweek-tickets-1988002240216?ref=yorkseed", status:"Open" },
+  { id:162, name:"General Catalyst Portfolio Day", host:"General Catalyst", date:"2026-06-04", day:"Wed Jun 4", time:"10:00 AM", venue:"GC NYC Office — TBD", neighborhood:"Midtown / UES", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Invite Only", notes:"Annual portfolio day and networking for GC companies and LPs during NYTW. Invite-only. Watch GC social channels and portfolio founder networks for access.", rsvp:"https://www.generalcatalyst.com/?ref=yorkseed", status:"Invite Only" },
+
+  // ══════════════════════════════════════════
+  // THU JUN 5
+  // ══════════════════════════════════════════
+
+  { id:171, name:"Sentry, Neon & Harness — The Light Stack Happy Hour", host:"Sentry, Harness, Databricks Neon", date:"2026-06-05", day:"Thu Jun 5", time:"5:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","community","saas"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Developer tooling happy hour hosted by Sentry, Neon (Databricks), and Harness. Observability, databases, and DevOps for the modern AI stack. Engineers and founders welcome.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/ai-infra?ref=yorkseed", status:"Open" },
+  { id:173, name:"Intuit AI/ML Hackathon", host:"Intuit", date:"2026-06-05", day:"Thu Jun 5", time:"4:00 PM", venue:"TBD — East Village", neighborhood:"East Village", address:"New York, NY", types:["ai","hackathon","fintech"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"Intuit's hackathon during NYTW. Teams build AI/ML solutions for fintech, accounting, and small business tools using Intuit APIs and data.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/hackathons?ref=yorkseed", status:"Open" },
+  { id:175, name:"Webflow — Women in Tech: Build Your First AI Workflow with Claude", host:"Webflow", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["women","ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Hands-on morning workshop for women in tech — build AI workflows using Claude. No prior AI experience needed. Small group, practical format hosted by Webflow.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/gtm?ref=yorkseed", status:"Open" },
+  { id:177, name:"Drinks at Soho House — Founder Edition", host:"Independent", date:"2026-06-05", day:"Thu Jun 5", time:"6:30 PM", venue:"Soho House NYC — Meatpacking", neighborhood:"Meatpacking", address:"29-35 9th Ave, New York, NY 10014", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Invite Only", notes:"Curated evening at Soho House for founders, investors, and creative operators. Membership or guest invite required. Watch founder networks for access.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Invite Only" },
+
+  // ══════════════════════════════════════════
+  // FRI JUN 6
+  // ══════════════════════════════════════════
+
+  { id:182, name:"Vibe Code Hackathon — Women Builders Edition", host:"Products by Women, Geeks & Experts", date:"2026-06-06", day:"Fri Jun 6", time:"10:00 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","hackathon","women"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"Hackathon for women builders focused on vibe coding and AI-native product development. All levels welcome. Build, ship, and present in one day.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/hackathons?ref=yorkseed", status:"Open" },
+
+  // ══════════════════════════════════════════
+  // SAT JUN 7
+  // ══════════════════════════════════════════
+
+  { id:190, name:"Saturday Startup Brunch — Post NYTW", host:"Independent", date:"2026-06-07", day:"Sat Jun 7", time:"11:00 AM", venue:"TBD Restaurant — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["community","vc","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", notes:"End-of-week brunch for founders and investors to decompress after NYTW. Casual format, good food. Check Luma NYC for confirmed venue and seating.", rsvp:"https://lu.ma/nyc?ref=yorkseed", status:"Open" },
 
 ];
 
 let activeType='all', activeDay='all', freeFilter=null, ysFilter=false, searchTerm='';
-let submittedEvents=[];
-try{const s=sessionStorage.getItem('ys_nytw_submitted');if(s)submittedEvents=JSON.parse(s);}catch(e){}
-function saveSubmitted(){try{sessionStorage.setItem('ys_nytw_submitted',JSON.stringify(submittedEvents));}catch(e){}}
+// ── Google Sheet config ──────────────────────────────────────
+// Paste your Apps Script deployment URL here after deploying
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFPOJGYYYkrTDR-4DniMWmRkAyXYUlCehlsxF24fgePTyYYStlevu1gEbbzajCUO_Glg/exec';
+
+let submittedEvents = [];  // new events from Sheet
+let sheetUpdates    = [];  // updates/patches from Sheet
+let sheetLoaded     = false;
+
+// Fetch submitted events + updates from Google Sheet on load
+async function loadSheetData() {
+  if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_APPS')) return;
+  try {
+    const res  = await fetch(SCRIPT_URL, { cache: 'no-store' });
+    const data = await res.json();
+
+    // Map submitted rows → event objects
+    submittedEvents = (data.submitted || []).map(row => rowToEvent(row));
+
+    // Store updates for patching
+    sheetUpdates = data.updates || [];
+
+    sheetLoaded = true;
+    applySheetUpdates();
+    render();
+    buildDayTabs();
+    document.getElementById('headerCount').textContent = allEvents().length + ' events';
+  } catch(err) {
+    console.warn('Sheet fetch failed:', err);
+  }
+}
+
+// Convert a Sheet row object → event object the page understands
+function rowToEvent(row) {
+  return {
+    id:           row.id || ('sub_' + Math.random()),
+    name:         row.name         || '',
+    host:         row.host         || '',
+    date:         row.date         || '',
+    day:          row.day          || dayLabelFromISO(row.date),
+    time:         row.time         || 'TBD',
+    venue:        row.venue        || 'TBD',
+    neighborhood: row.neighborhood || 'New York, NY',
+    address:      row.address      || 'New York, NY',
+    types:        row.types ? row.types.split(',').map(t=>t.trim()).filter(Boolean) : ['community'],
+    free:         row.ticket === 'Free',
+    drinks:       row.drinks === 'true' || row.drinks === true,
+    food:         row.food   === 'true' || row.food   === true,
+    ticket:       row.ticket || 'Free',
+    notes:        row.notes  || '',
+    rsvp:         row.rsvp   || '',
+    status:       row.status || 'Open',
+    submitted:    true
+  };
+}
+
+// Apply Sheet updates onto the static EVENTS array in-place
+function applySheetUpdates() {
+  sheetUpdates.forEach(upd => {
+    if (!upd.original_rsvp) return;
+    const cleanTarget = upd.original_rsvp.replace(/[?#].*$/, '').toLowerCase();
+
+    // Find matching event in static array or submitted
+    const target = allEvents().find(e =>
+      e.rsvp && e.rsvp.replace(/[?#].*$/, '').toLowerCase().includes(cleanTarget)
+    );
+    if (!target) return;
+
+    if (upd.new_date  && upd.new_date.trim())  { target.date  = upd.new_date.trim();  target.day = dayLabelFromISO(upd.new_date.trim()); }
+    if (upd.new_time  && upd.new_time.trim())   target.time  = upd.new_time.trim();
+    if (upd.new_venue && upd.new_venue.trim())  target.venue = upd.new_venue.trim();
+    if (upd.new_host  && upd.new_host.trim())   target.host  = target.host ? target.host + ' & ' + upd.new_host.trim() : upd.new_host.trim();
+    if (upd.new_notes && upd.new_notes.trim()) {
+      target.notes = target.notes
+        ? target.notes + ' · Update: ' + upd.new_notes.trim()
+        : upd.new_notes.trim();
+      target.status = 'Updated';
+    }
+  });
+}
 
 function getYsBadge(e){
   if(e.yorkseed==='passport') return `<span class="ys-badge ys-badge-passport">⭐ Passport Series</span>`;
-  if(e.yorkseed==='partner')  return `<span class="ys-badge ys-badge-partner">♥ YS Community Partner</span>`;
+  if(e.yorkseed==='partner')  return `<span class="ys-badge ys-badge-partner">♥ Yorkseed Community Partner</span>`;
   return '';
 }
 function getTypeTags(types){
-  const map={ai:['tag-ai','AI'],fintech:['tag-fintech','Fintech'],web3:['tag-web3','Web3'],vc:['tag-vc','VC'],robotics:['tag-robotics','Robotics'],climate:['tag-climate','Climate'],design:['tag-design','Design'],health:['tag-health','Health'],community:['tag-community','Community'],conference:['tag-conference','Conference'],legal:['tag-legal','Legal'],women:['tag-women','Women'],marketing:['tag-marketing','Marketing']};
-  return types.map(t=>map[t]?`<span class="tag ${map[t][0]}">${map[t][1]}</span>`:'').join('');
+  const map={ai:['tag-ai','AI'],fintech:['tag-fintech','Fintech'],web3:['tag-web3','Web3'],vc:['tag-vc','VC'],robotics:['tag-robotics','Robotics'],climate:['tag-climate','Climate'],design:['tag-design','Design'],health:['tag-health','Health'],community:['tag-community','Community'],conference:['tag-conference','Conference'],legal:['tag-legal','Legal'],women:['tag-women','Women'],marketing:['tag-marketing','Marketing'],saas:['tag-saas','SaaS'],deeptech:['tag-deeptech','Deep Tech'],crypto:['tag-crypto','Crypto'],dinner:['tag-dinner','Dinner'],breakfast:['tag-breakfast','Breakfast'],hackathon:['tag-hackathon','Hackathon'],rooftop:['tag-rooftop','Rooftop']};
+  // Format types first (dinner/breakfast/hackathon/rooftop), then sector, suppress 'community' when redundant
+  const priority=['dinner','breakfast','hackathon','rooftop','women','legal','climate','health','robotics','deeptech','crypto','web3','saas','marketing','fintech','ai','vc','conference','community'];
+  const sorted=[...types].sort((a,b)=>priority.indexOf(a)-priority.indexOf(b));
+  const filtered=sorted.filter(t=>t!=='community'||sorted.length===1);
+  return filtered.slice(0,2).map(t=>map[t]?`<span class="tag ${map[t][0]}">${map[t][1]}</span>`:'').join('');
 }
 function getPerks(e){
   let t='';
-  t+=e.free?`<span class="tag tag-free">${e.ticket==='Free'?'Free':e.ticket}</span>`:`<span class="tag tag-paid">${e.ticket}</span>`;
-  if(e.drinks)t+=`<span class="tag tag-drinks">🍷 Drinks</span>`;
-  if(e.food)t+=`<span class="tag tag-food">🍔 Food</span>`;
-  if(e.status==='Sold Out / Waitlist')t+=`<span class="tag tag-invite">Waitlist</span>`;
-  if(e.status==='Invite Only')t+=`<span class="tag tag-invite">Invite Only</span>`;
+  if(e.ticket==='Free')t+=`<span class="tag tag-free">Free</span>`;
+  else if(e.ticket==='Paid'||e.ticket==='Paid / Badge')t+=`<span class="tag tag-paid">Paid</span>`;
+  else if(e.ticket==='Invite Only'||e.status==='Invite Only')t+=`<span class="tag tag-invite">Invite Only</span>`;
+  else if(e.ticket==='Application Required')t+=`<span class="tag tag-invite">Apply</span>`;
+  else if(e.ticket==='Badge Required')t+=`<span class="tag tag-paid">Badge</span>`;
+  else if(e.ticket)t+=`<span class="tag tag-invite">${e.ticket}</span>`;
+  if(e.drinks)t+=`<span class="tag tag-drinks">🍷</span>`;
+  if(e.food)t+=`<span class="tag tag-food">🍔</span>`;
   return t;
 }
 function matchesFilters(e){
@@ -992,7 +1171,6 @@ function render(){
   dayOrder.sort();
   dayOrder.forEach(date=>{
     function t2m(t){if(!t||t==='—')return 9999;const m=t.match(/(\d+):(\d+)\s*(AM|PM)/i);if(!m)return 9999;let h=parseInt(m[1]),mn=parseInt(m[2]),p=m[3].toUpperCase();if(p==="AM"&&h===12)h=0;if(p==="PM"&&h!==12)h+=12;return h*60+mn;}
-    // Sort: passport first, then partner, then others — within same time slot
     function ysPriority(e){if(e.yorkseed==='passport')return 0;if(e.yorkseed==='partner')return 1;return 2;}
     const events=groups[date].sort((a,b)=>{const td=t2m(a.time)-t2m(b.time);if(td!==0)return td;return ysPriority(a)-ysPriority(b);});
     const group=document.createElement('div');
@@ -1011,9 +1189,10 @@ function render(){
         <div class="event-main">
           <div class="event-time-col"><div class="time">${e.time}</div></div>
           <div class="event-body">
+            ${ysBadge?`<div class="event-badge-row">${ysBadge}</div>`:''}
             <div class="event-name">${e.name}</div>
-            ${e.host?`<div class="event-host">Hosted by <span>${e.host}</span></div>`:''}
-            <div class="event-tags">${ysBadge}${getTypeTags(e.types)}${getPerks(e)}</div>
+            ${e.host?`<div class="event-host">${e.host}</div>`:''}
+            <div class="event-tags-row">${getTypeTags(e.types)}${getPerks(e)}</div>
           </div>
           <div class="event-right">
             <div class="event-venue-short">${e.neighborhood}</div>
@@ -1046,8 +1225,6 @@ function buildDayTabs(){
   const tabs=document.getElementById('dayTabs');
   const days=[
     {date:'all',label:'All Days'},
-    {date:'2026-05-25',label:'Sun 5/25'},
-    {date:'2026-05-26',label:'Mon 5/26'},
     {date:'2026-05-27',label:'Tue 5/27'},
     {date:'2026-05-28',label:'Wed 5/28'},
     {date:'2026-05-29',label:'Thu 5/29'},
@@ -1057,7 +1234,7 @@ function buildDayTabs(){
     {date:'2026-06-02',label:'Mon 6/2'},
     {date:'2026-06-03',label:'Tue 6/3'},
     {date:'2026-06-04',label:'Wed 6/4'},
-    {date:'2026-06-05',label:'Thu 6/5'},
+    {date:'2026-06-05',label:'Thu Jun 5'},
     {date:'2026-06-06',label:'Fri 6/6'},
     {date:'2026-06-07',label:'Sat 6/7'},
     {date:'2026-06-08',label:'Sun 6/8'},
@@ -1121,6 +1298,8 @@ document.querySelectorAll('.filter-chip[data-ys]').forEach(chip=>{
 document.getElementById('searchInput').addEventListener('input',function(){searchTerm=this.value.trim();render();});
 buildDayTabs();render();
 document.getElementById('headerCount').textContent=allEvents().length+' events';
+// Load Google Sheet data (submitted events + updates) in background
+loadSheetData();
 
 // ── EMAIL GATE ──
 const GATE_TRIGGER=3;let eventOpenCount=0,gateShown=false,gateCleared=false;
@@ -1184,7 +1363,7 @@ let verifyTimeout;
 function scheduleVerify(){checkDuplicate();clearTimeout(verifyTimeout);const url=document.getElementById('sub-rsvp').value.trim(),badge=document.getElementById('rsvpBadge');if(!url||!url.startsWith('http')){badge.style.display='none';return;}badge.style.display='inline-flex';badge.className='verify-badge checking';badge.textContent='Checking…';verifyTimeout=setTimeout(async()=>{try{await fetch(url,{method:'HEAD',mode:'no-cors',signal:AbortSignal.timeout(4000)});badge.className='verify-badge valid';badge.textContent='✓ Reachable';}catch(e){badge.className='verify-badge invalid';badge.textContent='⚠ Unverified';}},800);}
 function dayLabelFromISO(iso){
   const map={
-    '2026-05-25':'Sun May 25','2026-05-26':'Mon May 26','2026-05-27':'Tue May 27',
+    '2026-05-27':'Tue May 27',
     '2026-05-28':'Wed May 28','2026-05-29':'Thu May 29','2026-05-30':'Fri May 30',
     '2026-05-31':'Sat May 31','2026-06-01':'Sun Jun 1','2026-06-02':'Mon Jun 2',
     '2026-06-03':'Tue Jun 3','2026-06-04':'Wed Jun 4','2026-06-05':'Thu Jun 5',
@@ -1192,19 +1371,49 @@ function dayLabelFromISO(iso){
   };
   return map[iso]||iso;
 }
-function submitEvent(){
+async function submitEvent(){
   const name=document.getElementById('sub-name').value.trim(),date=document.getElementById('sub-date').value,time=document.getElementById('sub-time').value.trim()||'TBD',host=document.getElementById('sub-host').value.trim(),neighborhood=document.getElementById('sub-neighborhood').value.trim()||'New York, NY',venue=document.getElementById('sub-venue').value.trim()||'TBD',rsvp=document.getElementById('sub-rsvp').value.trim(),ticket=document.getElementById('sub-ticket').value,type=document.getElementById('sub-type').value,notes=document.getElementById('sub-notes').value.trim(),drinks=document.getElementById('sub-drinks').checked,food=document.getElementById('sub-food').checked;
   if(!name){alert('Please enter an event name.');return;}
   if(!date){alert('Please select a date.');return;}
   if(!rsvp){alert('Please enter an RSVP link.');return;}
   const dup=findDuplicate(name,rsvp);
   if(dup){if(notes)dup.notes=(dup.notes?dup.notes+' · ':'')+notes;showSuccess('duplicate');render();return;}
-  const newEvent={id:9000+submittedEvents.length+1,name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],free:ticket==='Free',drinks,food,ticket,notes,rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',status:'Open',submitted:true};
-  submittedEvents.push(newEvent);saveSubmitted();showSuccess('added');render();document.getElementById('headerCount').textContent=allEvents().length+' events';
+  const finalRsvp=rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed';
+  const newEvent={id:'sub_'+Date.now(),name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],free:ticket==='Free',drinks,food,ticket,notes,rsvp:finalRsvp,status:'Open',submitted:true};
+  // Show immediately in this session
+  submittedEvents.push(newEvent);
+  render();
+  document.getElementById('headerCount').textContent=allEvents().length+' events';
+  showSuccess('added');
+  // Push to Google Sheet in background
+  if(SCRIPT_URL && !SCRIPT_URL.includes('YOUR_APPS')){
+    try{
+      await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'submit',name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],ticket,drinks,food,notes,rsvp:finalRsvp})});
+    }catch(err){console.warn('Sheet POST failed:',err);}
+  }
 }
 let updTargetEvent=null;
 function findEventByRsvp(){const rsvp=document.getElementById('upd-rsvp').value.trim(),label=document.getElementById('upd-found-label'),fields=document.getElementById('upd-fields');if(!rsvp||rsvp.length<10){label.textContent='';fields.style.display='none';updTargetEvent=null;return;}const clean=rsvp.replace(/[?#].*$/,'').toLowerCase();const found=allEvents().find(e=>e.rsvp&&e.rsvp.replace(/[?#].*$/,'').replace(/\?ref=yorkseed/,'').toLowerCase()===clean);if(found){updTargetEvent=found;label.innerHTML=`<span style="color:#1a7a40;font-weight:600;">✓ Found: ${found.name}</span>`;document.getElementById('upd-event-name').textContent=found.name;fields.style.display='block';}else{updTargetEvent=null;label.innerHTML='<span style="color:#C0392B;">No matching event found.</span>';fields.style.display='none';}}
-async function submitUpdate(){if(!updTargetEvent){alert('No event found to update.');return;}const newDate=document.getElementById('upd-date').value,newTime=document.getElementById('upd-time').value.trim(),newVenue=document.getElementById('upd-venue').value.trim(),newHost=document.getElementById('upd-host').value.trim(),newNotes=document.getElementById('upd-notes').value.trim();if(!newDate&&!newTime&&!newVenue&&!newHost&&!newNotes){alert('Please fill in at least one field.');return;}const btn=document.getElementById('updateBtn');btn.disabled=true;btn.textContent='Applying…';if(newDate){updTargetEvent.date=newDate;updTargetEvent.day=dayLabelFromISO(newDate);}if(newTime)updTargetEvent.time=newTime;if(newVenue)updTargetEvent.venue=newVenue;if(newHost)updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}btn.disabled=false;btn.textContent='Apply Update';showSuccess('updated');render();}
+async function submitUpdate(){
+  if(!updTargetEvent){alert('No event found to update.');return;}
+  const newDate=document.getElementById('upd-date').value,newTime=document.getElementById('upd-time').value.trim(),newVenue=document.getElementById('upd-venue').value.trim(),newHost=document.getElementById('upd-host').value.trim(),newNotes=document.getElementById('upd-notes').value.trim();
+  if(!newDate&&!newTime&&!newVenue&&!newHost&&!newNotes){alert('Please fill in at least one field.');return;}
+  const btn=document.getElementById('updateBtn');btn.disabled=true;btn.textContent='Applying…';
+  // Apply locally immediately
+  if(newDate){updTargetEvent.date=newDate;updTargetEvent.day=dayLabelFromISO(newDate);}
+  if(newTime)updTargetEvent.time=newTime;
+  if(newVenue)updTargetEvent.venue=newVenue;
+  if(newHost)updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;
+  if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}
+  btn.disabled=false;btn.textContent='Apply Update';
+  showSuccess('updated');render();
+  // Push update to Google Sheet in background
+  if(SCRIPT_URL && !SCRIPT_URL.includes('YOUR_APPS')){
+    try{
+      await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'update',original_rsvp:updTargetEvent.rsvp,new_date:newDate,new_time:newTime,new_venue:newVenue,new_host:newHost,new_notes:newNotes})});
+    }catch(err){console.warn('Sheet update POST failed:',err);}
+  }
+}
 function showSuccess(type){const icon=document.getElementById('successIcon'),title=document.getElementById('successTitle'),msg=document.getElementById('successMsg');if(type==='added'){icon.textContent='✅';title.textContent='Event Added!';msg.textContent='Your event has been added to the NY Tech Week list.';}else if(type==='duplicate'){icon.textContent='🔀';title.textContent='Merged with Existing Event';msg.textContent='A similar event already exists. Your details have been merged in.';}else if(type==='updated'){icon.textContent='✏️';title.textContent='Event Updated!';msg.textContent='The event has been updated. Changes are live.';}else if(type==='out-of-range'){icon.textContent='📅';title.textContent='Outside Date Range';msg.textContent='This event falls outside May 25 – June 8, 2026.';}document.getElementById('formSubmit').style.display='none';document.getElementById('formUpdate').style.display='none';document.getElementById('successState').classList.add('show');}
 </script>
 
@@ -1234,8 +1443,6 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
           <div class="form-group"><label>Date <span>*</span></label>
             <select id="sub-date">
               <option value="">Select date</option>
-              <option value="2026-05-25">Sun May 25</option>
-              <option value="2026-05-26">Mon May 26</option>
               <option value="2026-05-27">Tue May 27</option>
               <option value="2026-05-28">Wed May 28</option>
               <option value="2026-05-29">Thu May 29</option>
@@ -1286,9 +1493,7 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
             <div class="form-group"><label>New Date</label>
               <select id="upd-date">
                 <option value="">No change</option>
-                <option value="2026-05-25">Sun May 25</option>
-                <option value="2026-05-26">Mon May 26</option>
-                <option value="2026-05-27">Tue May 27</option>
+                    <option value="2026-05-27">Tue May 27</option>
                 <option value="2026-05-28">Wed May 28</option>
                 <option value="2026-05-29">Thu May 29</option>
                 <option value="2026-05-30">Fri May 30</option>
