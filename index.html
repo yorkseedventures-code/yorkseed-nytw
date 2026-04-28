@@ -963,39 +963,24 @@ let activeType='all', activeDay='all', freeFilter=null, ysFilter=false, searchTe
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyc79ZOPCd0AL1Skfk2fpW9IttYhvXIBEj8hGMGu3CqiyqRfv40UM8YT8UWmABGBL15dQ/exec';
 let submittedEvents=[], sheetUpdates=[], sheetLoaded=false;
 
-// Uses JSONP (<script> tag) to load sheet data — avoids CORS entirely.
-// The Apps Script responds with: callbackName({...data...})
-function loadSheetData(){
+// Load sheet data via fetch — GAS /exec follows redirects to a CORS-enabled endpoint.
+async function loadSheetData(){
   if(!SCRIPT_URL||SCRIPT_URL.includes('YOUR_APPS'))return;
-  const cbName='_ysSheet_'+Date.now();
-  const timeout=setTimeout(()=>{
-    delete window[cbName];
-    console.warn('Sheet fetch timed out');
-  },10000);
-  window[cbName]=function(data){
-    clearTimeout(timeout);
-    delete window[cbName];
-    try{
-      submittedEvents=(data.submitted||[]).map(row=>rowToEvent(row));
-      sheetUpdates=data.updates||[];
-      sheetLoaded=true;
-      applySheetUpdates();
-      // Rebuild day tabs cleanly (clear first to avoid duplicates)
-      const tabsEl=document.getElementById('dayTabs');
-      tabsEl.innerHTML='';
-      buildDayTabs();
-      render();
-      updateHeaderCount();
-    }catch(e){console.warn('Sheet parse failed:',e);}
-  };
-  const s=document.createElement('script');
-  s.src=SCRIPT_URL+'?action=read&callback='+cbName;
-  s.onerror=()=>{
-    clearTimeout(timeout);
-    delete window[cbName];
-    console.warn('Sheet fetch failed: script load error');
-  };
-  document.head.appendChild(s);
+  try{
+    const res=await fetch(SCRIPT_URL+'?action=read',{method:'GET',redirect:'follow'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    submittedEvents=(data.submitted||[]).map(row=>rowToEvent(row));
+    sheetUpdates=data.updates||[];
+    sheetLoaded=true;
+    applySheetUpdates();
+    document.getElementById('dayTabs').innerHTML='';
+    buildDayTabs();
+    render();
+    updateHeaderCount();
+  }catch(err){
+    console.warn('Sheet fetch failed:',err);
+  }
 }
 function rowToEvent(row){return{id:row.id||('sub_'+Math.random()),name:row.name||'',host:row.host||'',date:row.date||'',day:row.day||dayLabelFromISO(row.date),time:row.time||'TBD',venue:row.venue||'TBD',neighborhood:row.neighborhood||'New York, NY',address:row.address||'New York, NY',types:row.types?row.types.split(',').map(t=>t.trim()).filter(Boolean):['community'],free:row.ticket==='Free',drinks:row.drinks==='true'||row.drinks===true,food:row.food==='true'||row.food===true,ticket:row.ticket||'Free',notes:row.notes||'',rsvp:row.rsvp||'',status:row.status||'Open',submitted:true};}
 function applySheetUpdates(){sheetUpdates.forEach(upd=>{if(!upd.original_rsvp)return;const cleanTarget=upd.original_rsvp.replace(/[?#].*$/,'').toLowerCase();const target=allEvents().find(e=>e.rsvp&&e.rsvp.replace(/[?#].*$/,'').toLowerCase().includes(cleanTarget));if(!target)return;if(upd.new_date&&upd.new_date.trim()){target.date=upd.new_date.trim();target.day=dayLabelFromISO(upd.new_date.trim());}if(upd.new_time&&upd.new_time.trim())target.time=upd.new_time.trim();if(upd.new_venue&&upd.new_venue.trim())target.venue=upd.new_venue.trim();if(upd.new_host&&upd.new_host.trim())target.host=target.host?target.host+' & '+upd.new_host.trim():upd.new_host.trim();if(upd.new_notes&&upd.new_notes.trim()){target.notes=target.notes?target.notes+' · Update: '+upd.new_notes.trim():upd.new_notes.trim();target.status='Updated';}});}
