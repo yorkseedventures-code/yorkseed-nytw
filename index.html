@@ -546,6 +546,15 @@ input[type="text"]::placeholder { color: var(--smoke); }
 .form-group textarea { resize: vertical; min-height: 80px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .form-hint { font-size: 10.5px; color: var(--smoke); margin-top: 4px; line-height: 1.4; }
+.sector-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+.sector-chip {
+  font-size: 10.5px; font-weight: 500; padding: 4px 9px;
+  border-radius: 2px; cursor: pointer; user-select: none;
+  background: var(--cream); border: 1px solid var(--cream-dark);
+  color: var(--smoke); transition: all 0.12s; white-space: nowrap;
+}
+.sector-chip:hover { border-color: var(--red); color: var(--red); background: #fff1f1; }
+.sector-chip.selected { background: var(--red); color: white; border-color: var(--red); }
 .form-submit {
   width: 100%; padding: 11px; background: var(--red); color: white;
   border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif;
@@ -1135,7 +1144,15 @@ function getTypeTags(types){
   const priority=['dinner','breakfast','hackathon','rooftop','women','legal','climate','health','robotics','deeptech','crypto','web3','saas','marketing','fintech','ai','vc','conference','community'];
   const sorted=[...types].sort((a,b)=>priority.indexOf(a)-priority.indexOf(b));
   const filtered=sorted.filter(t=>t!=='community'||sorted.length===1);
-  return filtered.slice(0,2).map(t=>map[t]?`<span class="tag ${map[t][0]}">${map[t][1]}</span>`:'').join('');
+  return filtered.slice(0,2).map(t=>{
+    if(map[t]) return `<span class="tag ${map[t][0]}">${map[t][1]}</span>`;
+    if(t&&t!=='community'){
+      // Unknown sector — render as generic tag with nice label
+      const label=t.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+      return `<span class="tag" style="background:#f0f0f8;color:#444;">${label}</span>`;
+    }
+    return '';
+  }).join('');
 }
 function getPerks(e){
   let t='';
@@ -1357,6 +1374,34 @@ function findDuplicate(name,rsvp){
   if(rsvp){const rc=rsvp.replace(/[?#].*$/,'').replace(/\?ref=yorkseed/,'').toLowerCase();const br=ae.find(e=>e.rsvp&&e.rsvp.replace(/[?#].*$/,'').replace(/\?ref=yorkseed/,'').toLowerCase()===rc);if(br)return br;}
   let best=null,bs=0;ae.forEach(e=>{const s=similarity(name,e.name);if(s>bs){bs=s;best=e;}});return bs>=0.55?best:null;
 }
+function setSector(label){
+  document.getElementById('sub-type').value=label;
+  document.querySelectorAll('.sector-chip').forEach(c=>{
+    c.classList.toggle('selected', c.textContent===label);
+  });
+}
+function sectorToSlug(raw){
+  const map={
+    'ai':'ai','fintech':'fintech','web3':'web3','vc':'vc',
+    'health':'health','climate':'climate','robotics':'robotics',
+    'legal':'legal','marketing':'marketing','saas':'saas',
+    'crypto':'crypto','women':'women','community':'community',
+    'deep tech':'deeptech','beauty tech':'beautytech',
+    'sport tech':'sporttech','proptech':'proptech',
+    'edtech':'edtech','govtech':'govtech',
+  };
+  const slug=map[raw.toLowerCase()];
+  if(slug)return slug;
+  // Unknown sector: store raw as slug (lowercased, spaces→hyphens)
+  return raw.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'community';
+}
+// Clear sector chip selection when user types manually
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('sub-type');
+  if(inp)inp.addEventListener('input',()=>{
+    document.querySelectorAll('.sector-chip').forEach(c=>c.classList.remove('selected'));
+  });
+});
 let dupTimeout;
 function checkDuplicate(){clearTimeout(dupTimeout);dupTimeout=setTimeout(()=>{const name=document.getElementById('sub-name').value,rsvp=document.getElementById('sub-rsvp').value;const dup=findDuplicate(name,rsvp),w=document.getElementById('duplicateWarning');if(dup&&name.length>4){document.getElementById('duplicateEventName').textContent=dup.name;w.classList.add('show');}else{w.classList.remove('show');}},400);}
 let verifyTimeout;
@@ -1372,7 +1417,7 @@ function dayLabelFromISO(iso){
   return map[iso]||iso;
 }
 async function submitEvent(){
-  const name=document.getElementById('sub-name').value.trim(),date=document.getElementById('sub-date').value,time=document.getElementById('sub-time').value.trim()||'TBD',host=document.getElementById('sub-host').value.trim(),neighborhood=document.getElementById('sub-neighborhood').value.trim()||'New York, NY',venue=document.getElementById('sub-venue').value.trim()||'TBD',rsvp=document.getElementById('sub-rsvp').value.trim(),ticket=document.getElementById('sub-ticket').value,type=document.getElementById('sub-type').value,notes=document.getElementById('sub-notes').value.trim(),drinks=document.getElementById('sub-drinks').checked,food=document.getElementById('sub-food').checked;
+  const name=document.getElementById('sub-name').value.trim(),date=document.getElementById('sub-date').value,time=document.getElementById('sub-time').value.trim()||'TBD',host=document.getElementById('sub-host').value.trim(),neighborhood=document.getElementById('sub-neighborhood').value.trim()||'New York, NY',venue=document.getElementById('sub-venue').value.trim()||'TBD',rsvp=document.getElementById('sub-rsvp').value.trim(),ticket=document.getElementById('sub-ticket').value,type=sectorToSlug(document.getElementById('sub-type').value.trim()||'community'),notes=document.getElementById('sub-notes').value.trim(),drinks=document.getElementById('sub-drinks').checked,food=document.getElementById('sub-food').checked;
   if(!name){alert('Please enter an event name.');return;}
   if(!date){alert('Please select a date.');return;}
   if(!rsvp){alert('Please enter an RSVP link.');return;}
@@ -1471,7 +1516,30 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
         </div>
         <div class="form-row">
           <div class="form-group"><label>Ticket Type</label><select id="sub-ticket"><option value="Free">Free</option><option value="Paid">Paid</option><option value="Invite Only">Invite Only</option><option value="Free (Approval Required)">Free (Approval Required)</option><option value="Badge Required">Badge Required</option><option value="Application Required">Application Required</option></select></div>
-          <div class="form-group"><label>Category</label><select id="sub-type"><option value="ai">AI</option><option value="fintech">Fintech</option><option value="web3">Web3</option><option value="vc">VC / Investors</option><option value="robotics">Robotics</option><option value="climate">Climate</option><option value="design">Design</option><option value="health">Health</option><option value="women">Women</option><option value="marketing">Marketing</option><option value="legal">Legal</option><option value="community">Community</option></select></div>
+          <div class="form-group">
+            <label>Sector / Category <span style="color:var(--smoke);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;">— type freely or pick one</span></label>
+            <input type="text" id="sub-type" placeholder="e.g. Beauty Tech, Sport Tech, Edtech…" autocomplete="off" style="margin-bottom:6px;">
+            <div class="sector-chips" id="sectorChips">
+              <span class="sector-chip" onclick="setSector('AI')">AI</span>
+              <span class="sector-chip" onclick="setSector('Fintech')">Fintech</span>
+              <span class="sector-chip" onclick="setSector('VC')">VC</span>
+              <span class="sector-chip" onclick="setSector('Web3')">Web3</span>
+              <span class="sector-chip" onclick="setSector('Health')">Health</span>
+              <span class="sector-chip" onclick="setSector('Climate')">Climate</span>
+              <span class="sector-chip" onclick="setSector('Beauty Tech')">Beauty Tech</span>
+              <span class="sector-chip" onclick="setSector('Sport Tech')">Sport Tech</span>
+              <span class="sector-chip" onclick="setSector('Proptech')">Proptech</span>
+              <span class="sector-chip" onclick="setSector('Edtech')">Edtech</span>
+              <span class="sector-chip" onclick="setSector('Deep Tech')">Deep Tech</span>
+              <span class="sector-chip" onclick="setSector('Robotics')">Robotics</span>
+              <span class="sector-chip" onclick="setSector('Legal')">Legal</span>
+              <span class="sector-chip" onclick="setSector('Marketing')">Marketing</span>
+              <span class="sector-chip" onclick="setSector('SaaS')">SaaS</span>
+              <span class="sector-chip" onclick="setSector('Crypto')">Crypto</span>
+              <span class="sector-chip" onclick="setSector('Women')">Women</span>
+              <span class="sector-chip" onclick="setSector('Community')">Community</span>
+            </div>
+          </div>
         </div>
         <div class="form-group"><label>Description / Notes</label><textarea id="sub-notes" placeholder="Brief description…"></textarea></div>
         <div class="form-row">
