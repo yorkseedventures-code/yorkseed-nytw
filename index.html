@@ -411,6 +411,47 @@
     background: var(--gold); padding: 4px 10px;
     border-radius: 20px;
   }
+  .partner-hero-card {
+    flex-shrink: 0; width: 220px;
+    background: #fff8f8;
+    border: 1.5px solid #e8e8e8;
+    border-left: 3px solid var(--red);
+    border-radius: 10px; padding: 14px;
+    cursor: pointer; transition: all 0.18s;
+    text-decoration: none;
+  }
+  .partner-hero-card:hover {
+    border-color: #ddd;
+    border-left-color: var(--red);
+    box-shadow: 0 3px 16px rgba(255,10,10,0.08);
+    transform: translateY(-2px);
+  }
+  .partner-hero-card .phc-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--red);
+    margin-bottom: 6px; letter-spacing: 0.04em;
+  }
+  .partner-hero-card .phc-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 12.5px; font-weight: 600;
+    color: #0a0a0a; line-height: 1.35; margin-bottom: 6px;
+  }
+  .partner-hero-card .phc-meta {
+    font-family: 'Sora', sans-serif;
+    font-size: 11px; color: #888;
+  }
+  .partner-hero-card .phc-rsvp {
+    display: inline-block; margin-top: 10px;
+    font-family: 'Sora', sans-serif; font-size: 10.5px;
+    font-weight: 600; color: white;
+    background: var(--red); padding: 4px 10px;
+    border-radius: 20px;
+  }
+  #partnerCards::-webkit-scrollbar { display: none; }
+  @media (max-width: 600px) {
+    .partner-hero-card { width: 185px; }
+    .partner-hero-card .phc-name { font-size: 12px; }
+  }
   @media (max-width: 600px) {
     .passport-hero-card { width: 185px; }
     .passport-hero-card .phc-name { font-size: 12px; }
@@ -632,9 +673,20 @@
       </div>
       <a href="https://lu.ma/yorkseed?ref=yorkseed" target="_blank" rel="noopener" style="font-family:'Sora',sans-serif;font-size:11px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,0.4);padding:5px 12px;border-radius:20px;white-space:nowrap;">View all ↗</a>
     </div>
-    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;" id="passportCards">
-      <!-- Filled by JS -->
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;" id="passportCards"></div>
+  </div>
+</div>
+
+<!-- COMMUNITY PARTNER EVENTS SECTION -->
+<div style="background:white;border-bottom:1px solid #e8e8e8;padding:22px 24px;" id="partnerSection">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:transparent;color:var(--red);border:1.5px solid var(--red);padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;">♥ Yorkseed Partner</span>
+        <span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:600;color:#0a0a0a;">Community &amp; Media Partner Events</span>
+      </div>
     </div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;" id="partnerCards"></div>
   </div>
 </div>
 
@@ -1069,24 +1121,48 @@ function detectYorkseed(name, host, notes) {
 }
 
 function renderPassportHero() {
-  const container = document.getElementById('passportCards');
-  if (!container) return;
-  const passportEvents = allEvents()
-    .filter(e => e.yorkseed === 'passport')
-    .sort((a, b) => a.date.localeCompare(b.date));
-  if (!passportEvents.length) {
-    document.getElementById('passportSection').style.display = 'none';
-    return;
+  // Passport Series
+  const passportContainer = document.getElementById('passportCards');
+  const passportSection = document.getElementById('passportSection');
+  if (passportContainer) {
+    const passportEvents = allEvents()
+      .filter(e => e.yorkseed === 'passport')
+      .sort((a, b) => a.date.localeCompare(b.date));
+    if (!passportEvents.length) {
+      passportSection.style.display = 'none';
+    } else {
+      passportSection.style.display = 'block';
+      passportContainer.innerHTML = passportEvents.map(e => `
+        <a class="passport-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
+          <div class="phc-date">${e.day} · ${e.time}</div>
+          <div class="phc-name">${e.name}</div>
+          <div class="phc-meta">${e.neighborhood||'New York'}</div>
+          <span class="phc-rsvp">RSVP ↗</span>
+        </a>
+      `).join('');
+    }
   }
-  document.getElementById('passportSection').style.display = 'block';
-  container.innerHTML = passportEvents.map(e => `
-    <a class="passport-hero-card" href="${e.rsvp || '#'}" target="_blank" rel="noopener">
-      <div class="phc-date">${e.day} · ${e.time}</div>
-      <div class="phc-name">${e.name}</div>
-      <div class="phc-meta">${e.neighborhood || 'New York'}</div>
-      <span class="phc-rsvp">RSVP ↗</span>
-    </a>
-  `).join('');
+  // Community / Media Partners
+  const partnerContainer = document.getElementById('partnerCards');
+  const partnerSection = document.getElementById('partnerSection');
+  if (partnerContainer) {
+    const partnerEvents = allEvents()
+      .filter(e => e.yorkseed === 'partner')
+      .sort((a, b) => a.date.localeCompare(b.date));
+    if (!partnerEvents.length) {
+      partnerSection.style.display = 'none';
+    } else {
+      partnerSection.style.display = 'block';
+      partnerContainer.innerHTML = partnerEvents.map(e => `
+        <a class="partner-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
+          <div class="phc-date">${e.day} · ${e.time}</div>
+          <div class="phc-name">${e.name}</div>
+          <div class="phc-meta">${e.neighborhood||'New York'}</div>
+          <span class="phc-rsvp">RSVP ↗</span>
+        </a>
+      `).join('');
+    }
+  }
 }
 
 // Category chip selection — fills the text input
