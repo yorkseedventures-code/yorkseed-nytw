@@ -901,7 +901,13 @@ function buildDayTabs() {
   });
 }
 
-// Category chip selection
+// Category chip selection — fills the text input
+function onCatInput(val) {
+  // Deactivate chips if user types something custom
+  document.querySelectorAll('.cat-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.val.toLowerCase() === val.toLowerCase());
+  });
+}
 document.querySelectorAll('.cat-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
@@ -987,11 +993,9 @@ function resetForms() {
   const rb = document.getElementById('rsvpBadge'); if(rb) rb.style.display='none';
   const uf = document.getElementById('upd-fields'); if(uf) uf.style.display='none';
   const ul = document.getElementById('upd-found-label'); if(ul) ul.textContent='';
-  // Reset category chips to default (ai)
+  // Reset category chips and text input
   document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-  const defaultChip = document.querySelector('.cat-chip[data-val="ai"]');
-  if (defaultChip) defaultChip.classList.add('active');
-  const subType = document.getElementById('sub-type'); if(subType) subType.value = 'ai';
+  const subType = document.getElementById('sub-type'); if(subType) subType.value = '';
 }
 function openUpdateForEvent(ev, rsvpLink) {
   if (ev) ev.stopPropagation();
@@ -1040,12 +1044,23 @@ function dayLabelFromISO(iso){
   const map={'2026-05-27':'Tue May 27','2026-05-28':'Wed May 28','2026-05-29':'Thu May 29','2026-05-30':'Fri May 30','2026-05-31':'Sat May 31','2026-06-01':'Sun Jun 1','2026-06-02':'Mon Jun 2','2026-06-03':'Tue Jun 3','2026-06-04':'Wed Jun 4','2026-06-05':'Thu Jun 5','2026-06-06':'Fri Jun 6','2026-06-07':'Sat Jun 7','2026-06-08':'Sun Jun 8'};
   return map[iso]||iso;
 }
+function slugifyCategory(raw) {
+  const map = {
+    'ai & tech':'ai','ai':'ai','fintech':'fintech','vc & investors':'vc','vc':'vc',
+    'web3':'web3','saas':'saas','deep tech':'deeptech','women in tech':'women','women':'women',
+    'marketing':'marketing','legal':'legal','health':'health','climate':'climate','community':'community',
+    'beauty tech':'beautytech','sport tech':'sporttech','proptech':'proptech','edtech':'edtech',
+    'govtech':'govtech','robotics':'robotics','crypto':'crypto'
+  };
+  const key = (raw||'').toLowerCase().trim();
+  return map[key] || key.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'community';
+}
 function submitEvent() {
   const name=document.getElementById('sub-name').value.trim(), date=document.getElementById('sub-date').value,
     time=document.getElementById('sub-time').value.trim()||'TBD', host=document.getElementById('sub-host').value.trim(),
     neighborhood=document.getElementById('sub-neighborhood').value.trim()||'Manhattan',
     venue=document.getElementById('sub-venue').value.trim()||'TBD', rsvp=document.getElementById('sub-rsvp').value.trim(),
-    ticket=document.getElementById('sub-ticket').value, type=document.getElementById('sub-type').value,
+    ticket=document.getElementById('sub-ticket').value, type=slugifyCategory(document.getElementById('sub-type').value),
     notes=document.getElementById('sub-notes').value.trim(), drinks=document.getElementById('sub-drinks').checked,
     food=document.getElementById('sub-food').checked;
   if(!name){alert('Please enter an event name.');return;}
@@ -1158,20 +1173,21 @@ function showSuccess(type) {
         </div>
         <div class="form-group">
           <label>Category <span>*</span></label>
-          <input type="hidden" id="sub-type" value="ai">
+          <input type="text" id="sub-type" placeholder="e.g. Beauty Tech, Sport Tech, PropTech…" autocomplete="off" style="margin-bottom:8px;" oninput="onCatInput(this.value)">
+          <div class="form-hint" style="margin-bottom:8px;">Or pick one below — tapping a chip fills the field:</div>
           <div class="cat-chips" id="catChips">
-            <button type="button" class="cat-chip active" data-val="ai">🤖 AI &amp; Tech</button>
-            <button type="button" class="cat-chip" data-val="fintech">💳 Fintech</button>
-            <button type="button" class="cat-chip" data-val="vc">💼 VC &amp; Investors</button>
-            <button type="button" class="cat-chip" data-val="web3">🔗 Web3</button>
-            <button type="button" class="cat-chip" data-val="saas">☁️ SaaS</button>
-            <button type="button" class="cat-chip" data-val="deeptech">🔬 Deep Tech</button>
-            <button type="button" class="cat-chip" data-val="women">♀️ Women in Tech</button>
-            <button type="button" class="cat-chip" data-val="marketing">📣 Marketing</button>
-            <button type="button" class="cat-chip" data-val="legal">⚖️ Legal</button>
-            <button type="button" class="cat-chip" data-val="health">🏥 Health</button>
-            <button type="button" class="cat-chip" data-val="climate">🌱 Climate</button>
-            <button type="button" class="cat-chip" data-val="community">🤝 Community</button>
+            <button type="button" class="cat-chip" data-val="AI & Tech">🤖 AI &amp; Tech</button>
+            <button type="button" class="cat-chip" data-val="Fintech">💳 Fintech</button>
+            <button type="button" class="cat-chip" data-val="VC & Investors">💼 VC &amp; Investors</button>
+            <button type="button" class="cat-chip" data-val="Web3">🔗 Web3</button>
+            <button type="button" class="cat-chip" data-val="SaaS">☁️ SaaS</button>
+            <button type="button" class="cat-chip" data-val="Deep Tech">🔬 Deep Tech</button>
+            <button type="button" class="cat-chip" data-val="Women in Tech">♀️ Women in Tech</button>
+            <button type="button" class="cat-chip" data-val="Marketing">📣 Marketing</button>
+            <button type="button" class="cat-chip" data-val="Legal">⚖️ Legal</button>
+            <button type="button" class="cat-chip" data-val="Health">🏥 Health</button>
+            <button type="button" class="cat-chip" data-val="Climate">🌱 Climate</button>
+            <button type="button" class="cat-chip" data-val="Community">🤝 Community</button>
           </div>
         </div>
         <div class="form-group"><label>Description / Notes</label><textarea id="sub-notes" placeholder="Brief description of the event…"></textarea></div>
