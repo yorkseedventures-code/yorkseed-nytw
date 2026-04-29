@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="100+ events across AI & Tech, Fintech, Web3, VC. Updated daily.">
 <meta name="twitter:image" content="https://nyftw.yorkseed.co/og-image.png">
 <style>
-/*! © 2026 Yorkseed — nyftw.yorkseed.co — All rights reserved. Unauthorised copying prohibited. */
+/*! © 2026 Yorkseed — nyftw.yorkseed.co — All rights reserved. Unauthorized copying prohibited. */
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
   html { scroll-padding-top: 160px; }
   :root {
@@ -404,10 +404,10 @@
 <div style="background:#fffcf0;border-bottom:1px solid #f0e0a0;border-top:1px solid #f0e0a0;padding:16px 24px;">
   <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--gold);color:#0a0a0a;padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;flex-shrink:0;">⭐ For Organisers</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--gold);color:#0a0a0a;padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;flex-shrink:0;">⭐ Hosting an Event?</span>
       <div>
-        <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.3;">Feature your event — get top placement &amp; Yorkseed promotion</div>
-        <div style="font-family:'Sora',sans-serif;font-size:11.5px;color:#888;margin-top:2px;">Basic from <strong style="color:#0a0a0a;">$150</strong> · Partner from <strong style="color:var(--red);">$400</strong> · Headline / Passport <strong style="color:#0a0a0a;">$900</strong></div>
+        <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.3;">Get top placement, a Yorkseed badge, and promotion to thousands of founders and investors.</div>
+        <div style="font-family:'Sora',sans-serif;font-size:11.5px;color:#888;margin-top:2px;">Top-of-day placement · Hero carousel · WhatsApp &amp; newsletter blast · Yorkseed co-host branding</div>
       </div>
     </div>
     <button class="feature-btn" onclick="openModal('feature')" style="flex-shrink:0;padding:10px 20px;font-size:13px;">⭐ Feature My Event →</button>
@@ -660,7 +660,7 @@ function render() {
       card.dataset.id = e.id;
       const rsvpBtn = e.rsvp
         ? `<a class="rsvp-btn" href="${e.rsvp}" target="_blank" rel="noopener">RSVP / Register ↗</a>`
-        : `<span class="rsvp-btn disabled">Check organiser channels</span>`;
+        : `<span class="rsvp-btn disabled">Check organizer channels</span>`;
       const safeRsvp = (e.rsvp || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
       const updateBtn = `<button class="update-event-btn" data-rsvp="${safeRsvp}" onclick="openUpdateForEvent(event,this.dataset.rsvp)">💡 Update info</button>`;
       let badge = '';
