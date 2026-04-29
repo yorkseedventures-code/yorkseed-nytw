@@ -951,7 +951,12 @@ async function importFromLink() {
       // Auto-detect yorkseed relationship
       const ysDetected = detectYorkseed(evt.name, evt.host, evt.notes);
       document.getElementById('sub-yorkseed').value = ysDetected;
-      submitEvent(true); // skip date validation for Quick Add
+      console.log('Quick Add event data:', evt);
+      console.log('RSVP URL:', url);
+      console.log('Date field value:', document.getElementById('sub-date').value);
+      console.log('Name field value:', document.getElementById('sub-name').value);
+      console.log('RSVP field value:', document.getElementById('sub-rsvp').value);
+      submitEvent(true);
     }, 600);
   } catch(err) {
     statusIcon.textContent = '⚠️';
@@ -1178,6 +1183,9 @@ function submitEvent(skipValidation) {
     yorkseed:yorkseed||undefined
   };
   submittedEvents.push(newEvent);
+  console.log('Event pushed:', newEvent);
+  console.log('Total submitted events:', submittedEvents.length);
+  console.log('All events count:', allEvents().length);
   saveSubmitted();
   // Rebuild day tabs in case new date appeared
   document.getElementById('dayTabs').innerHTML = '';
