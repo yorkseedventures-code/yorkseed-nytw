@@ -813,14 +813,19 @@ function render() {
     events.forEach(e => {
       const card = document.createElement('div');
       const isPassport = e.yorkseed === 'passport';
-      card.className = 'event-card' + (isPassport ? ' ys-passport' : '');
+      const isPartner  = e.yorkseed === 'partner';
+      card.className = 'event-card' + (isPassport ? ' ys-passport' : isPartner ? ' ys-partner' : '');
       card.dataset.id = e.id;
       const rsvpBtn = e.rsvp
         ? `<a class="rsvp-btn" href="${e.rsvp}" target="_blank" rel="noopener">RSVP / Register ↗</a>`
         : `<span class="rsvp-btn disabled">Check organiser channels</span>`;
       const safeRsvp = (e.rsvp || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
       const updateBtn = `<button class="update-event-btn" data-rsvp="${safeRsvp}" onclick="openUpdateForEvent(event,this.dataset.rsvp)">💡 Update info</button>`;
-      const passportBadge = isPassport ? `<div><span class="ys-passport-badge">⭐ Passport Series</span></div>` : '';
+      const passportBadge = isPassport
+        ? `<div><span class="ys-passport-badge">⭐ Passport Series</span></div>`
+        : isPartner
+        ? `<div><span class="ys-passport-badge" style="background:transparent;color:var(--red);border:1.5px solid var(--red);">♥ Yorkseed Partner</span></div>`
+        : '';
       card.innerHTML = `
         <div class="event-main">
           <div class="event-time-col"><div class="time">${e.time}</div></div>
@@ -1064,7 +1069,19 @@ function openModal(tab) {
   switchTab(tab || 'quick');
   document.getElementById('successState').classList.remove('show');
 }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); resetForms(); }
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  resetForms();
+  // Scroll to content area so new event is visible
+  const content = document.getElementById('content');
+  const header = document.querySelector('.header');
+  const sticky = document.querySelector('.sticky-controls-wrap');
+  if (content && header && sticky) {
+    const offset = header.offsetHeight + sticky.offsetHeight + 8;
+    const top = content.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+  }
+}
 function switchTab(tab) {
   document.getElementById('tab-quick').classList.toggle('active', tab === 'quick');
   document.getElementById('tab-submit').classList.toggle('active', tab === 'submit');
