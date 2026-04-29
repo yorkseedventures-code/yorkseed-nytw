@@ -182,6 +182,22 @@
   .event-card.ys-passport .detail-item label { color: var(--gold); }
   .event-card.ys-passport .detail-item p { color: rgba(255,255,255,0.75); }
   .event-card.ys-passport .event-notes { background: rgba(201,168,76,0.08); color: rgba(255,255,255,0.6); }
+  /* Partner card — cream background, red left border */
+  .event-card.ys-partner {
+    background: #fffcf8;
+    border: 1.5px solid rgba(201,168,76,0.4);
+    border-left: 3px solid var(--red);
+  }
+  .event-card.ys-partner:hover { box-shadow: 0 3px 20px rgba(201,168,76,0.14); }
+  .event-card.ys-partner.expanded { border-color: rgba(201,168,76,0.6); border-left-color: var(--red); }
+  .ys-partner-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--red);
+    border: 1.5px solid var(--red);
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; letter-spacing: 0.07em;
+    text-transform: uppercase; white-space: nowrap; margin-bottom: 4px;
+  }
   .ys-passport-badge {
     display: inline-flex; align-items: center; gap: 4px;
     background: var(--gold); color: var(--black);
@@ -824,7 +840,7 @@ function render() {
       const passportBadge = isPassport
         ? `<div><span class="ys-passport-badge">⭐ Passport Series</span></div>`
         : isPartner
-        ? `<div><span class="ys-passport-badge" style="background:transparent;color:var(--red);border:1.5px solid var(--red);">♥ Yorkseed Partner</span></div>`
+        ? `<div><span class="ys-partner-badge">♥ Yorkseed Partner</span></div>`
         : '';
       card.innerHTML = `
         <div class="event-main">
