@@ -950,13 +950,9 @@ async function importFromLink() {
       if (evt.food) document.getElementById('sub-food').checked = true;
       // Auto-detect yorkseed relationship
       const ysDetected = detectYorkseed(evt.name, evt.host, evt.notes);
+      console.log('Yorkseed detected:', ysDetected, '| host:', evt.host);
       document.getElementById('sub-yorkseed').value = ysDetected;
-      console.log('Quick Add event data:', evt);
-      console.log('RSVP URL:', url);
-      console.log('Date field value:', document.getElementById('sub-date').value);
-      console.log('Name field value:', document.getElementById('sub-name').value);
-      console.log('RSVP field value:', document.getElementById('sub-rsvp').value);
-      submitEvent(true);
+      submitEvent(true, ysDetected);
     }, 600);
   } catch(err) {
     statusIcon.textContent = '⚠️';
@@ -1159,7 +1155,7 @@ function slugifyCategory(raw) {
   const key = (raw||'').toLowerCase().trim();
   return map[key] || key.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'community';
 }
-function submitEvent(skipValidation) {
+function submitEvent(skipValidation, ysOverride) {
   const name=document.getElementById('sub-name').value.trim(), date=document.getElementById('sub-date').value,
     time=document.getElementById('sub-time').value.trim()||'TBD', host=document.getElementById('sub-host').value.trim(),
     neighborhood=document.getElementById('sub-neighborhood').value.trim()||'Manhattan',
@@ -1167,16 +1163,17 @@ function submitEvent(skipValidation) {
     ticket=document.getElementById('sub-ticket').value, type=slugifyCategory(document.getElementById('sub-type').value),
     notes=document.getElementById('sub-notes').value.trim(), drinks=document.getElementById('sub-drinks').checked,
     food=document.getElementById('sub-food').checked;
-  const ysManual = document.getElementById('sub-yorkseed').value;
-  const yorkseed = ysManual || detectYorkseed(name, host, notes);
+  // Yorkseed: direct override (from Quick Add) → manual selection → auto-detect
+  const ysManual = document.getElementById('sub-yorkseed') ? document.getElementById('sub-yorkseed').value : '';
+  const yorkseed = ysOverride !== undefined ? ysOverride : (ysManual || detectYorkseed(name, host, notes));
+  console.log('submitEvent yorkseed:', yorkseed, '| override:', ysOverride);
   if(!name){alert('Please enter an event name.');return;}
   if(!skipValidation && !date){alert('Please select a date.');return;}
   if(!rsvp){alert('Please enter an RSVP link.');return;}
   const dup=findDuplicate(name,rsvp);
   if(dup){if(notes) dup.notes=(dup.notes?dup.notes+' · ':'')+notes;showSuccess('duplicate');render();return;}
-  // Use a fallback date if missing - default to Jun 1 (main kickoff day)
   const finalDate = date || '2026-06-01';
-  const finalDay = date ? dayLabelFromISO(date) : dayLabelFromISO('2026-06-01');
+  const finalDay = dayLabelFromISO(finalDate);
   const newEvent={
     id:'sub_'+Date.now(),name,host,
     date: finalDate,
@@ -1186,19 +1183,15 @@ function submitEvent(skipValidation) {
     free:ticket==='Free',drinks,food,ticket,notes,
     rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',
     status:'Open',submitted:true,
-    yorkseed:yorkseed||undefined
+    yorkseed: yorkseed || undefined
   };
+  console.log('New event object:', newEvent);
   submittedEvents.push(newEvent);
-  console.log('Event pushed:', newEvent);
-  console.log('Total submitted events:', submittedEvents.length);
-  console.log('All events count:', allEvents().length);
   saveSubmitted();
-  // Reset to All Days so the new event is visible
   activeDay = 'all';
   document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
   const allTab = document.querySelector('.day-tab[data-date="all"]');
   if (allTab) allTab.classList.add('active');
-  // Rebuild day tabs in case new date appeared
   document.getElementById('dayTabs').innerHTML = '';
   buildDayTabs();
   showSuccess('added');
