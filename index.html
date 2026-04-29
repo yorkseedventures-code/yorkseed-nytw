@@ -376,6 +376,45 @@
   }
   .cat-chip:hover { border-color: var(--red); color: var(--red); }
   .cat-chip.active { background: var(--red); border-color: var(--red); color: white; }
+  #passportCards::-webkit-scrollbar { display: none; }
+  .passport-hero-card {
+    flex-shrink: 0; width: 220px;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 10px; padding: 14px;
+    cursor: pointer; transition: all 0.18s;
+    text-decoration: none;
+  }
+  .passport-hero-card:hover {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .passport-hero-card .phc-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--gold);
+    margin-bottom: 6px; letter-spacing: 0.04em;
+  }
+  .passport-hero-card .phc-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 12.5px; font-weight: 600;
+    color: white; line-height: 1.35; margin-bottom: 6px;
+  }
+  .passport-hero-card .phc-meta {
+    font-family: 'Sora', sans-serif;
+    font-size: 11px; color: rgba(201,168,76,0.7);
+  }
+  .passport-hero-card .phc-rsvp {
+    display: inline-block; margin-top: 10px;
+    font-family: 'Sora', sans-serif; font-size: 10.5px;
+    font-weight: 600; color: #0a0a0a;
+    background: var(--gold); padding: 4px 10px;
+    border-radius: 20px;
+  }
+  @media (max-width: 600px) {
+    .passport-hero-card { width: 185px; }
+    .passport-hero-card .phc-name { font-size: 12px; }
+  }
   .verify-badge {
     display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px;
     font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 6px;
@@ -579,6 +618,22 @@
           <span>Read Our Story</span><span style="color:rgba(255,255,255,0.4);">yorkseed.co</span>
         </a>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- PASSPORT SERIES FEATURED SECTION -->
+<div style="background:#0a0a0a;border-bottom:1px solid rgba(201,168,76,0.2);padding:28px 24px;" id="passportSection">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--gold);color:#0a0a0a;padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;">⭐ Passport Series</span>
+        <span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:600;color:white;">Yorkseed Events at NY Tech Week</span>
+      </div>
+      <a href="https://lu.ma/yorkseed?ref=yorkseed" target="_blank" rel="noopener" style="font-family:'Sora',sans-serif;font-size:11px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,0.4);padding:5px 12px;border-radius:20px;white-space:nowrap;">View all ↗</a>
+    </div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;" id="passportCards">
+      <!-- Filled by JS -->
     </div>
   </div>
 </div>
@@ -1013,6 +1068,27 @@ function detectYorkseed(name, host, notes) {
   return 'partner';
 }
 
+function renderPassportHero() {
+  const container = document.getElementById('passportCards');
+  if (!container) return;
+  const passportEvents = allEvents()
+    .filter(e => e.yorkseed === 'passport')
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (!passportEvents.length) {
+    document.getElementById('passportSection').style.display = 'none';
+    return;
+  }
+  document.getElementById('passportSection').style.display = 'block';
+  container.innerHTML = passportEvents.map(e => `
+    <a class="passport-hero-card" href="${e.rsvp || '#'}" target="_blank" rel="noopener">
+      <div class="phc-date">${e.day} · ${e.time}</div>
+      <div class="phc-name">${e.name}</div>
+      <div class="phc-meta">${e.neighborhood || 'New York'}</div>
+      <span class="phc-rsvp">RSVP ↗</span>
+    </a>
+  `).join('');
+}
+
 // Category chip selection — fills the text input
 function onCatInput(val) {
   if (!val) return;
@@ -1047,6 +1123,7 @@ document.querySelectorAll('.filter-chip[data-free]').forEach(chip => {
 document.getElementById('searchInput').addEventListener('input', function() { searchTerm = this.value.trim(); render(); });
 buildDayTabs();
 render();
+renderPassportHero();
 document.getElementById('headerCount').textContent = allEvents().length + ' events';
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-TrSR3O--PcsozWxzyUNJl6vw3wNgRx7SpbjmPgGjVM3v2ohaO8ZwIVK0vYd4QgVviA/exec";
@@ -1229,6 +1306,7 @@ function submitEvent(skipValidation, ysOverride) {
   buildDayTabs();
   showSuccess('added');
   render();
+  renderPassportHero();
   updateHeaderCount();
 }
 let updTargetEvent=null;
