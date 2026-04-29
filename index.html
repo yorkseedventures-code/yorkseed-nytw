@@ -14,8 +14,6 @@
 <meta property="og:title" content="Yorkseed — NY Tech Week 2026 Master Side Event List">
 <meta property="og:description" content="100+ events across AI & Tech, Fintech, Web3, VC, and more. Events you can access without a badge. Updated daily.">
 <meta property="og:image" content="https://nyftw.yorkseed.co/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Yorkseed">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@Yorkseed">
@@ -27,148 +25,63 @@
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
   html { scroll-padding-top: 160px; }
   :root {
-    --red: #FF0A0A;
-    --red-light: #fff1f1;
-    --red-mid: #ffe0e0;
-    --red-dark: #cc0808;
-    --black: #0a0a0a;
-    --gray-900: #111;
-    --gray-700: #333;
-    --gray-500: #666;
-    --gray-300: #999;
-    --gray-100: #f5f5f5;
-    --white: #fff;
-    --gold: #C9A84C;
-    --gold-light: #fdf6e3;
-    --border: #e8e8e8;
-    --shadow: 0 2px 12px rgba(0,0,0,0.07);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    --red: #FF0A0A; --red-light: #fff1f1; --red-mid: #ffe0e0; --red-dark: #cc0808;
+    --black: #0a0a0a; --gray-900: #111; --gray-700: #333; --gray-500: #666;
+    --gray-300: #999; --gray-100: #f5f5f5; --white: #fff;
+    --gold: #C9A84C; --gold-light: #fdf6e3; --border: #e8e8e8;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07); --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Sora', sans-serif; background: #fafafa; color: var(--black); min-height: 100vh; }
-  .sticky-controls-wrap {
-    position: sticky;
-    top: var(--header-height, 48px);
-    z-index: 89;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .header {
-    background: var(--black); padding: 10px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
-    border-bottom: 2px solid var(--red); isolation: isolate;
-  }
+  .sticky-controls-wrap { position: sticky; top: var(--header-height, 48px); z-index: 89; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .header { background: var(--black); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--red); isolation: isolate; }
   .logo { display: flex; align-items: center; gap: 10px; }
   .header-right { display: flex; align-items: center; gap: 12px; }
-  .event-count-pill {
-    background: var(--red); color: white; font-size: 11px; font-weight: 600;
-    padding: 4px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace;
-  }
-  .live-viewers-pill {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);
-    font-size: 11px; font-weight: 500; padding: 4px 10px;
-    border-radius: 20px; font-family: 'JetBrains Mono', monospace;
-    border: 1px solid rgba(255,255,255,0.15); white-space: nowrap;
-  }
-  .live-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: #22c55e;
-    animation: live-pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes live-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.75); }
-  }
+  .event-count-pill { background: var(--red); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+  .live-viewers-pill { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; border: 1px solid rgba(255,255,255,0.15); white-space: nowrap; }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: live-pulse 1.8s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes live-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.75); } }
   .hero { background: var(--black); padding: 32px 24px 28px; border-bottom: 1px solid #1a1a1a; }
-  .hero-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(28px, 5vw, 44px);
-    color: white; line-height: 1.1; margin-bottom: 8px;
-  }
+  .hero-title { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 5vw, 44px); color: white; line-height: 1.1; margin-bottom: 8px; }
   .hero-title span { color: var(--red); }
   .hero-meta { display: flex; align-items: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
-  .hero-tag {
-    font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 400;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    border: 1px solid rgba(255,255,255,0.12); padding: 4px 10px; border-radius: 4px;
-  }
-  .controls {
-    background: white; border-bottom: 1px solid var(--border);
-    padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  }
-  .search-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 0 0; flex-wrap: wrap;
-  }
+  .hero-tag { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.12); padding: 4px 10px; border-radius: 4px; }
+  .controls { background: white; border-bottom: 1px solid var(--border); padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .search-row { display: flex; align-items: center; gap: 12px; padding: 12px 0 0; flex-wrap: wrap; }
   .search-wrap { position: relative; flex: 1; min-width: 220px; }
-  .search-icon {
-    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-    color: var(--gray-300); font-size: 14px; pointer-events: none;
-  }
-  input[type="text"] {
-    width: 100%; padding: 9px 12px 9px 34px;
-    border: 1.5px solid var(--border); border-radius: 8px;
-    font-family: 'Sora', sans-serif; font-size: 13px; color: var(--black);
-    outline: none; transition: border-color 0.15s; background: var(--gray-100);
-  }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-300); font-size: 14px; pointer-events: none; }
+  input[type="text"] { width: 100%; padding: 9px 12px 9px 34px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 13px; color: var(--black); outline: none; transition: border-color 0.15s; background: var(--gray-100); }
   input[type="text"]:focus { border-color: var(--red); background: white; }
   input[type="text"]::placeholder { color: var(--gray-300); }
   .filter-chips { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .filter-chip {
-    padding: 5px 12px; border-radius: 20px; font-size: 11.5px; font-weight: 500;
-    cursor: pointer; border: 1.5px solid var(--border); background: white;
-    color: var(--gray-500); transition: all 0.15s; white-space: nowrap; user-select: none;
-  }
+  .filter-chip { padding: 5px 12px; border-radius: 20px; font-size: 11.5px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: white; color: var(--gray-500); transition: all 0.15s; white-space: nowrap; user-select: none; }
   .filter-chip:hover { border-color: var(--red); color: var(--red); }
   .filter-chip.active { background: var(--red); border-color: var(--red); color: white; }
-  .day-tabs {
-    display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
-    padding: 10px 0 0; border-top: 1px solid var(--border); margin-top: 12px;
-  }
+  .day-tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; padding: 10px 0 0; border-top: 1px solid var(--border); margin-top: 12px; }
   .day-tabs::-webkit-scrollbar { display: none; }
-  .day-tab {
-    padding: 8px 16px 10px; font-size: 12px; font-weight: 500; cursor: pointer;
-    color: var(--gray-500); border-bottom: 2px solid transparent; white-space: nowrap;
-    transition: all 0.15s; user-select: none; letter-spacing: 0.01em;
-  }
+  .day-tab { padding: 8px 16px 10px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--gray-500); border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; user-select: none; letter-spacing: 0.01em; }
   .day-tab:hover { color: var(--black); }
   .day-tab.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
-  .day-tab .count {
-    display: inline-block; background: var(--gray-100); color: var(--gray-500);
-    font-size: 10px; font-family: 'JetBrains Mono', monospace;
-    padding: 1px 6px; border-radius: 10px; margin-left: 4px;
-  }
+  .day-tab .count { display: inline-block; background: var(--gray-100); color: var(--gray-500); font-size: 10px; font-family: 'JetBrains Mono', monospace; padding: 1px 6px; border-radius: 10px; margin-left: 4px; }
   .day-tab.active .count { background: var(--red-light); color: var(--red); }
-  .stats-bar {
-    background: var(--red-light); border-bottom: 1px solid var(--red-mid);
-    padding: 8px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-  }
+  .stats-bar { background: var(--red-light); border-bottom: 1px solid var(--red-mid); padding: 8px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
   .stat { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-500); }
   .stat strong { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--red-dark); font-weight: 600; }
   .stat-sep { color: var(--red-mid); font-size: 16px; }
   .content { max-width: 900px; margin: 0 auto; padding: 24px 20px 60px; }
   .day-group { margin-bottom: 32px; }
-  .day-header {
-    display: flex; align-items: baseline; gap: 12px;
-    margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--black);
-  }
+  .day-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--black); }
   .day-label { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--black); }
   .day-date { font-size: 12px; color: var(--gray-300); font-weight: 400; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
   .day-event-count { margin-left: auto; font-size: 11px; color: var(--gray-300); font-family: 'JetBrains Mono', monospace; }
-  .event-card {
-    background: white; border: 1.5px solid var(--border); border-radius: 10px;
-    margin-bottom: 8px; overflow: hidden; transition: all 0.18s; cursor: pointer;
-  }
+
+  /* ── EVENT CARDS ── */
+  .event-card { background: white; border: 1.5px solid var(--border); border-radius: 10px; margin-bottom: 8px; overflow: hidden; transition: all 0.18s; cursor: pointer; }
   .event-card:hover { border-color: #ddd; box-shadow: var(--shadow); }
   .event-card.expanded { border-color: var(--red); box-shadow: 0 4px 16px rgba(255,10,10,0.08); }
-  /* Gold passport card */
-  .event-card.ys-passport {
-    background: var(--black); border: 1.5px solid var(--gold);
-    box-shadow: 0 2px 16px rgba(201,168,76,0.18);
-  }
+
+  /* Passport — black + gold */
+  .event-card.ys-passport { background: var(--black); border: 1.5px solid var(--gold); box-shadow: 0 2px 16px rgba(201,168,76,0.18); }
   .event-card.ys-passport:hover { border-color: #e8d5aa; box-shadow: 0 4px 28px rgba(201,168,76,0.28); }
   .event-card.ys-passport.expanded { border-color: #e8d5aa; box-shadow: 0 6px 32px rgba(201,168,76,0.3); }
   .event-card.ys-passport .event-name { color: white; }
@@ -182,44 +95,35 @@
   .event-card.ys-passport .detail-item label { color: var(--gold); }
   .event-card.ys-passport .detail-item p { color: rgba(255,255,255,0.75); }
   .event-card.ys-passport .event-notes { background: rgba(201,168,76,0.08); color: rgba(255,255,255,0.6); }
-  /* Partner card — cream background, red left border */
-  .event-card.ys-partner {
-    background: #fffcf8;
-    border: 1.5px solid rgba(201,168,76,0.4);
-    border-left: 3px solid var(--red);
-  }
-  .event-card.ys-partner:hover { box-shadow: 0 3px 20px rgba(201,168,76,0.14); }
-  .event-card.ys-partner.expanded { border-color: rgba(201,168,76,0.6); border-left-color: var(--red); }
-  .ys-partner-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: transparent; color: var(--red);
-    border: 1.5px solid var(--red);
-    font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
-    padding: 2px 8px; border-radius: 4px; letter-spacing: 0.07em;
-    text-transform: uppercase; white-space: nowrap; margin-bottom: 4px;
-  }
-  .ys-passport-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: var(--gold); color: var(--black);
-    font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
-    padding: 2px 8px; border-radius: 4px; letter-spacing: 0.07em;
-    text-transform: uppercase; white-space: nowrap; margin-bottom: 4px;
-  }
+
+  /* Partner — warm cream, thicker red left border, gold right accents */
+  .event-card.ys-partner { background: #fffcf8; border: 1.5px solid rgba(201,168,76,0.35); border-left: 4px solid var(--red); border-radius: 10px; }
+  .event-card.ys-partner:hover { box-shadow: 0 3px 20px rgba(201,168,76,0.14); border-color: rgba(201,168,76,0.55); border-left-color: var(--red); }
+  .event-card.ys-partner.expanded { border-color: rgba(201,168,76,0.6); border-left-color: var(--red); box-shadow: 0 4px 16px rgba(201,168,76,0.12); }
+  .event-card.ys-partner .event-venue-short { color: var(--gold); }
+  .event-card.ys-partner .chevron { color: var(--gold); }
+  .event-card.ys-partner.expanded .chevron { color: var(--red); }
+  .event-card.ys-partner .event-detail { border-top-color: rgba(201,168,76,0.2); }
+
+  /* Basic featured — white with blue tint border + badge */
+  .event-card.ys-featured { background: white; border: 1.5px solid #c0ccff; border-radius: 10px; }
+  .event-card.ys-featured:hover { border-color: #99aaee; box-shadow: 0 2px 12px rgba(51,85,204,0.08); }
+  .event-card.ys-featured.expanded { border-color: #3355cc; }
+
+  /* ── BADGES ── */
+  .ys-passport-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--gold); color: var(--black); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; margin-bottom: 4px; }
+  .ys-partner-badge { display: inline-flex; align-items: center; gap: 4px; background: transparent; color: var(--red); border: 1.5px solid var(--red); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; margin-bottom: 4px; }
+  .ys-featured-badge { display: inline-flex; align-items: center; gap: 4px; background: #e8f0ff; color: #3355cc; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; margin-bottom: 4px; }
+
   .event-main { display: flex; align-items: flex-start; padding: 12px 14px; gap: 12px; }
-  .event-time-col {
-    min-width: 70px; font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--gray-300); padding-top: 2px; white-space: nowrap;
-  }
+  .event-time-col { min-width: 70px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-300); padding-top: 2px; white-space: nowrap; }
   .event-time-col .time { color: var(--gray-700); font-weight: 500; }
   .event-body { flex: 1; min-width: 0; }
   .event-name { font-size: 14px; font-weight: 600; color: var(--black); line-height: 1.3; margin-bottom: 3px; }
   .event-host { font-size: 11.5px; color: #888; margin-bottom: 6px; font-weight: 400; }
   .event-host span { color: var(--gray-500); font-style: italic; }
   .event-tags { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
-  .tag {
-    font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px;
-    letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
-  }
+  .tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
   .tag-fintech { background: #e8f0ff; color: #3355cc; }
   .tag-ai { background: #e8fff0; color: #1a8040; }
   .tag-web3 { background: #f0e8ff; color: #6633cc; }
@@ -249,263 +153,128 @@
   .event-detail { display: none; padding: 0 14px 14px; border-top: 1px solid var(--border); }
   .event-card.expanded .event-detail { display: block; }
   .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin-bottom: 12px; padding-top: 12px; }
-  .detail-item label {
-    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--gray-300); font-weight: 600; display: block; margin-bottom: 3px;
-  }
+  .detail-item label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-300); font-weight: 600; display: block; margin-bottom: 3px; }
   .detail-item p { font-size: 12.5px; color: var(--gray-700); line-height: 1.4; }
-  .event-notes {
-    font-size: 12.5px; color: var(--gray-500); line-height: 1.5;
-    padding: 10px 12px; background: var(--gray-100); border-radius: 6px;
-    margin-bottom: 10px; font-style: italic;
-  }
+  .event-notes { font-size: 12.5px; color: var(--gray-500); line-height: 1.5; padding: 10px 12px; background: var(--gray-100); border-radius: 6px; margin-bottom: 10px; font-style: italic; }
   .rsvp-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-  .rsvp-btn {
-    display: inline-flex; align-items: center; gap: 6px; background: var(--red);
-    color: white; font-size: 12px; font-weight: 600; padding: 7px 16px;
-    border-radius: 6px; text-decoration: none; transition: background 0.15s;
-    font-family: 'Sora', sans-serif;
-  }
+  .rsvp-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--red); color: white; font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; font-family: 'Sora', sans-serif; }
   .rsvp-btn:hover { background: var(--red-dark); }
   .rsvp-btn.disabled { background: var(--gray-300); pointer-events: none; }
-  .update-event-btn {
-    display: inline-flex; align-items: center; gap: 5px; background: transparent;
-    color: #888; font-size: 11px; font-weight: 500; padding: 6px 11px;
-    border-radius: 6px; border: 1.5px solid var(--border); cursor: pointer;
-    font-family: 'Sora', sans-serif; transition: all 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .update-event-btn { display: inline-flex; align-items: center; gap: 5px; background: transparent; color: #888; font-size: 11px; font-weight: 500; padding: 6px 11px; border-radius: 6px; border: 1.5px solid var(--border); cursor: pointer; font-family: 'Sora', sans-serif; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
   .update-event-btn:hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
-  .public-update-notice {
-    background: #fffbe8; border: 1px solid #e8d040; border-radius: 7px;
-    padding: 10px 13px; font-size: 12px; color: #7a5800; line-height: 1.5; margin-bottom: 14px;
-  }
+  .public-update-notice { background: #fffbe8; border: 1px solid #e8d040; border-radius: 7px; padding: 10px 13px; font-size: 12px; color: #7a5800; line-height: 1.5; margin-bottom: 14px; }
   .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-300); display: none; }
   .empty-state.visible { display: block; }
   .empty-state h3 { font-size: 18px; margin-bottom: 8px; color: var(--gray-500); }
-  .footer {
-    text-align: center; padding: 20px; font-size: 11px; color: var(--gray-300);
-    border-top: 1px solid var(--border); background: white;
-  }
+  .footer { text-align: center; padding: 20px; font-size: 11px; color: var(--gray-300); border-top: 1px solid var(--border); background: white; }
   .footer strong { color: var(--red); }
-  .submit-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--black); color: white;
-    font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600;
-    padding: 7px 14px; border-radius: 6px; cursor: pointer;
-    border: 1.5px solid rgba(255,255,255,0.15); transition: all 0.15s; white-space: nowrap;
-  }
+  .submit-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--black); color: white; font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 6px; cursor: pointer; border: 1.5px solid rgba(255,255,255,0.15); transition: all 0.15s; white-space: nowrap; }
   .submit-btn:hover { background: #222; border-color: var(--red); }
+  .feature-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--gold); color: var(--black); font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 6px; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; letter-spacing: 0.01em; }
+  .feature-btn:hover { background: #b8962e; }
   .mobile-fab { display: none; }
-  .modal-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-    z-index: 999; align-items: center; justify-content: center; padding: 20px;
-  }
+
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: white; border-radius: 14px; width: 100%; max-width: 560px;
-    max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-    font-family: 'Sora', sans-serif;
-  }
-  .modal-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 22px 14px; border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; background: white; z-index: 2;
-  }
+  .modal { background: white; border-radius: 14px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.35); font-family: 'Sora', sans-serif; }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px 14px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: white; z-index: 2; }
   .modal-header h2 { font-size: 16px; font-weight: 700; color: var(--black); margin: 0; }
-  .modal-close {
-    width: 30px; height: 30px; border-radius: 50%; border: none;
-    background: var(--gray-100); cursor: pointer; font-size: 16px;
-    display: flex; align-items: center; justify-content: center; color: var(--gray-500);
-  }
+  .modal-close { width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--gray-100); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: var(--gray-500); }
   .modal-close:hover { background: var(--red); color: white; }
   .modal-body { padding: 18px 22px 22px; }
   .modal-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
-  .modal-tab {
-    flex: 1; padding: 9px 12px; font-size: 12.5px; font-weight: 500;
-    color: var(--gray-500); border-bottom: 2px solid transparent;
-    cursor: pointer; text-align: center; transition: all 0.15s; user-select: none;
-  }
+  .modal-tab { flex: 1; padding: 9px 12px; font-size: 12px; font-weight: 500; color: var(--gray-500); border-bottom: 2px solid transparent; cursor: pointer; text-align: center; transition: all 0.15s; user-select: none; }
   .modal-tab.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
   .form-group { margin-bottom: 14px; }
   .form-group label { display: block; font-size: 11.5px; font-weight: 600; color: var(--gray-700); margin-bottom: 5px; letter-spacing: 0.02em; }
   .form-group label span { color: var(--red); }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%; padding: 9px 12px; border: 1.5px solid var(--border);
-    border-radius: 7px; font-family: 'Sora', sans-serif; font-size: 13px;
-    color: var(--black); outline: none; transition: border-color 0.15s; background: var(--gray-100);
-  }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 7px; font-family: 'Sora', sans-serif; font-size: 13px; color: var(--black); outline: none; transition: border-color 0.15s; background: var(--gray-100); }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--red); background: white; }
   .form-group textarea { resize: vertical; min-height: 80px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-hint { font-size: 11px; color: var(--gray-300); margin-top: 4px; line-height: 1.4; }
-  .form-submit {
-    width: 100%; padding: 11px; background: var(--red); color: white;
-    border: none; border-radius: 8px; font-family: 'Sora', sans-serif;
-    font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-top: 6px;
-  }
+  .form-submit { width: 100%; padding: 11px; background: var(--red); color: white; border: none; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-top: 6px; }
   .form-submit:hover { background: var(--red-dark); }
   .form-submit:disabled { background: var(--gray-300); cursor: not-allowed; }
-  .modal-notice {
-    background: var(--red-light); border: 1px solid var(--red-mid);
-    border-radius: 7px; padding: 10px 13px; font-size: 12px;
-    color: var(--gray-700); line-height: 1.5; margin-bottom: 16px;
-  }
+  .modal-notice { background: var(--red-light); border: 1px solid var(--red-mid); border-radius: 7px; padding: 10px 13px; font-size: 12px; color: var(--gray-700); line-height: 1.5; margin-bottom: 16px; }
   .modal-notice strong { color: var(--red-dark); }
-  .duplicate-warning {
-    background: #fff8e0; border: 1px solid #f0d060; border-radius: 7px;
-    padding: 10px 13px; font-size: 12px; color: #7a5800; line-height: 1.5;
-    margin-bottom: 14px; display: none;
-  }
+  .duplicate-warning { background: #fff8e0; border: 1px solid #f0d060; border-radius: 7px; padding: 10px 13px; font-size: 12px; color: #7a5800; line-height: 1.5; margin-bottom: 14px; display: none; }
   .duplicate-warning.show { display: block; }
   .success-state { text-align: center; padding: 30px 20px; display: none; }
   .success-state.show { display: block; }
   .success-icon { font-size: 40px; margin-bottom: 12px; }
   .success-state h3 { font-size: 17px; font-weight: 700; color: var(--black); margin: 0 0 8px; }
   .success-state p { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin: 0; }
-  .cat-chips {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;
-  }
-  .cat-chip {
-    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
-    cursor: pointer; border: 1.5px solid var(--border);
-    background: white; color: var(--gray-500);
-    transition: all 0.15s; white-space: nowrap; user-select: none;
-    font-family: 'Sora', sans-serif; line-height: 1;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .cat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .cat-chip { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: white; color: var(--gray-500); transition: all 0.15s; white-space: nowrap; user-select: none; font-family: 'Sora', sans-serif; line-height: 1; -webkit-tap-highlight-color: transparent; }
   .cat-chip:hover { border-color: var(--red); color: var(--red); }
   .cat-chip.active { background: var(--red); border-color: var(--red); color: white; }
+
+  /* ── FEATURE MODAL TIERS ── */
+  .tier-card { border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+  .tier-basic { border: 1.5px solid #c0ccff; background: white; }
+  .tier-partner { border: 1.5px solid rgba(201,168,76,0.5); border-left: 4px solid var(--red); background: #fffcf8; }
+  .tier-headline { border: 1.5px solid var(--gold); background: var(--black); }
+  .tier-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .tier-name { font-size: 14px; font-weight: 700; }
+  .tier-price { font-size: 18px; font-weight: 700; }
+  .tier-price-sub { font-size: 11px; font-weight: 400; color: var(--gray-300); }
+  .tier-features { font-size: 12px; line-height: 1.7; margin-bottom: 12px; }
+  .tier-btn { display: block; width: 100%; padding: 9px; text-align: center; border-radius: 7px; font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.15s; cursor: pointer; border: none; }
+  .tier-btn-basic { background: #3355cc; color: white; }
+  .tier-btn-basic:hover { background: #2244bb; }
+  .tier-btn-partner { background: var(--red); color: white; }
+  .tier-btn-partner:hover { background: var(--red-dark); }
+  .tier-btn-headline { background: var(--gold); color: var(--black); }
+  .tier-btn-headline:hover { background: #b8962e; }
+  .tier-divider { display: flex; align-items: center; gap: 8px; margin: 4px 0 10px; }
+  .tier-divider span { font-size: 10px; color: var(--gray-300); white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
+  .tier-divider:before, .tier-divider:after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── HERO CAROUSELS ── */
   #passportCards::-webkit-scrollbar { display: none; }
-  .passport-hero-card {
-    flex-shrink: 0; width: 220px;
-    background: rgba(201,168,76,0.06);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 10px; padding: 14px;
-    cursor: pointer; transition: all 0.18s;
-    text-decoration: none;
-  }
-  .passport-hero-card:hover {
-    background: rgba(201,168,76,0.12);
-    border-color: var(--gold);
-    transform: translateY(-2px);
-  }
-  .passport-hero-card .phc-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--gold);
-    margin-bottom: 6px; letter-spacing: 0.04em;
-  }
-  .passport-hero-card .phc-name {
-    font-family: 'Sora', sans-serif;
-    font-size: 12.5px; font-weight: 600;
-    color: white; line-height: 1.35; margin-bottom: 6px;
-  }
-  .passport-hero-card .phc-meta {
-    font-family: 'Sora', sans-serif;
-    font-size: 11px; color: rgba(201,168,76,0.7);
-  }
-  .passport-hero-card .phc-rsvp {
-    display: inline-block; margin-top: 10px;
-    font-family: 'Sora', sans-serif; font-size: 10.5px;
-    font-weight: 600; color: #0a0a0a;
-    background: var(--gold); padding: 4px 10px;
-    border-radius: 20px;
-  }
-  .partner-hero-card {
-    flex-shrink: 0; width: 220px;
-    background: #fff8f8;
-    border: 1.5px solid #e8e8e8;
-    border-left: 3px solid var(--red);
-    border-radius: 10px; padding: 14px;
-    cursor: pointer; transition: all 0.18s;
-    text-decoration: none;
-  }
-  .partner-hero-card:hover {
-    border-color: #ddd;
-    border-left-color: var(--red);
-    box-shadow: 0 3px 16px rgba(255,10,10,0.08);
-    transform: translateY(-2px);
-  }
-  .partner-hero-card .phc-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--red);
-    margin-bottom: 6px; letter-spacing: 0.04em;
-  }
-  .partner-hero-card .phc-name {
-    font-family: 'Sora', sans-serif;
-    font-size: 12.5px; font-weight: 600;
-    color: #0a0a0a; line-height: 1.35; margin-bottom: 6px;
-  }
-  .partner-hero-card .phc-meta {
-    font-family: 'Sora', sans-serif;
-    font-size: 11px; color: #888;
-  }
-  .partner-hero-card .phc-rsvp {
-    display: inline-block; margin-top: 10px;
-    font-family: 'Sora', sans-serif; font-size: 10.5px;
-    font-weight: 600; color: white;
-    background: var(--red); padding: 4px 10px;
-    border-radius: 20px;
-  }
   #partnerCards::-webkit-scrollbar { display: none; }
-  @media (max-width: 600px) {
-    .partner-hero-card { width: 185px; }
-    .partner-hero-card .phc-name { font-size: 12px; }
-  }
-  @media (max-width: 600px) {
-    .passport-hero-card { width: 185px; }
-    .passport-hero-card .phc-name { font-size: 12px; }
-  }
-  .verify-badge {
-    display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px;
-    font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 6px;
-  }
+  .passport-hero-card { flex-shrink: 0; width: 220px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.18s; text-decoration: none; }
+  .passport-hero-card:hover { background: rgba(201,168,76,0.12); border-color: var(--gold); transform: translateY(-2px); }
+  .passport-hero-card .phc-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.04em; }
+  .passport-hero-card .phc-name { font-size: 12.5px; font-weight: 600; color: white; line-height: 1.35; margin-bottom: 6px; }
+  .passport-hero-card .phc-meta { font-size: 11px; color: rgba(201,168,76,0.7); }
+  .passport-hero-card .phc-rsvp { display: inline-block; margin-top: 10px; font-size: 10.5px; font-weight: 600; color: #0a0a0a; background: var(--gold); padding: 4px 10px; border-radius: 20px; }
+  .partner-hero-card { flex-shrink: 0; width: 220px; background: #fff8f8; border: 1.5px solid #e8e8e8; border-left: 4px solid var(--red); border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.18s; text-decoration: none; }
+  .partner-hero-card:hover { border-color: rgba(201,168,76,0.4); border-left-color: var(--red); box-shadow: 0 3px 16px rgba(255,10,10,0.08); transform: translateY(-2px); }
+  .partner-hero-card .phc-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); margin-bottom: 6px; letter-spacing: 0.04em; }
+  .partner-hero-card .phc-name { font-size: 12.5px; font-weight: 600; color: #0a0a0a; line-height: 1.35; margin-bottom: 6px; }
+  .partner-hero-card .phc-meta { font-size: 11px; color: #888; }
+  .partner-hero-card .phc-rsvp { display: inline-block; margin-top: 10px; font-size: 10.5px; font-weight: 600; color: white; background: var(--red); padding: 4px 10px; border-radius: 20px; }
+
+  .verify-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
   .verify-badge.checking { background: #fff8e0; color: #8a6000; }
   .verify-badge.valid { background: #e8fff0; color: #1a7a40; }
   .verify-badge.invalid { background: #fff0f0; color: #cc0000; }
-  .email-gate-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.82);
-    z-index: 998; align-items: center; justify-content: center; padding: 20px;
-  }
+
+  /* ── EMAIL GATE ── */
+  .email-gate-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.82); z-index: 998; align-items: center; justify-content: center; padding: 20px; }
   .email-gate-overlay.open { display: flex; }
-  .email-gate-box {
-    background: var(--black); border-radius: 14px; width: 100%; max-width: 420px;
-    padding: 32px 28px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.6); font-family: 'Sora', sans-serif;
-  }
+  .email-gate-box { background: var(--black); border-radius: 14px; width: 100%; max-width: 420px; padding: 32px 28px; text-align: center; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 24px 60px rgba(0,0,0,0.6); font-family: 'Sora', sans-serif; }
   .email-gate-logo { font-family: 'Instrument Serif', serif; font-size: 13px; color: var(--red); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
   .email-gate-box h2 { font-size: 20px; font-weight: 700; color: white; margin: 0 0 8px; line-height: 1.3; }
   .email-gate-box p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; margin: 0 0 20px; }
-  .email-gate-input {
-    width: 100%; padding: 11px 14px; border: 1.5px solid rgba(255,255,255,0.15);
-    border-radius: 8px; background: rgba(255,255,255,0.07); color: white;
-    font-family: 'Sora', sans-serif; font-size: 13px; outline: none; margin-bottom: 10px;
-    box-sizing: border-box; transition: border-color 0.15s;
-  }
+  .email-gate-input { width: 100%; padding: 11px 14px; border: 1.5px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.07); color: white; font-family: 'Sora', sans-serif; font-size: 13px; outline: none; margin-bottom: 10px; box-sizing: border-box; transition: border-color 0.15s; }
   .email-gate-input:focus { border-color: var(--red); }
   .email-gate-input::placeholder { color: rgba(255,255,255,0.3); }
-  .email-gate-submit {
-    width: 100%; padding: 11px; background: var(--red); color: white; border: none;
-    border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600;
-    cursor: pointer; margin-bottom: 10px; transition: background 0.15s;
-  }
+  .email-gate-submit { width: 100%; padding: 11px; background: var(--red); color: white; border: none; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: background 0.15s; }
   .email-gate-submit:hover { background: var(--red-dark); }
   .email-gate-submit:disabled { background: var(--gray-300); cursor: not-allowed; }
-  .email-gate-skip {
-    font-size: 11.5px; color: rgba(255,255,255,0.3); cursor: pointer;
-    text-decoration: underline; background: none; border: none;
-    font-family: 'Sora', sans-serif; display: block; margin: 0 auto;
-  }
+  .email-gate-skip { font-size: 11.5px; color: rgba(255,255,255,0.3); cursor: pointer; text-decoration: underline; background: none; border: none; font-family: 'Sora', sans-serif; display: block; margin: 0 auto; }
   .email-gate-skip:hover { color: rgba(255,255,255,0.6); }
   .email-gate-success { display: none; text-align: center; padding: 10px 0; }
   .email-gate-success .tick { font-size: 36px; margin-bottom: 10px; }
   .email-gate-success h3 { color: white; font-size: 17px; margin: 0 0 6px; }
   .email-gate-success p { color: rgba(255,255,255,0.5); font-size: 12.5px; margin: 0; }
-  .email-gate-count {
-    display: inline-block; background: rgba(255,10,10,0.15); color: var(--red);
-    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
-    margin-bottom: 14px; letter-spacing: 0.04em;
-  }
+  .email-gate-count { display: inline-block; background: rgba(255,10,10,0.15); color: var(--red); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 14px; letter-spacing: 0.04em; }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .header-right .join-btn { display: none !important; }
     .content { max-width: 100%; padding: 20px 16px 60px; }
@@ -517,7 +286,6 @@
   }
   @media (max-width: 600px) {
     .header { padding: 12px 14px; gap: 8px; }
-    .header img { height: 36px !important; }
     .header-right { gap: 6px; }
     .header-right .join-btn { display: none !important; }
     .event-count-pill { font-size: 10px; padding: 3px 8px; }
@@ -527,37 +295,17 @@
     .hero-meta { gap: 6px; margin-top: 10px; }
     .hero-tag { font-size: 10px; padding: 3px 8px; }
     .controls { padding: 0; overflow: hidden; }
-    .search-row {
-      flex-direction: column !important; align-items: stretch !important;
-      gap: 6px !important; padding: 8px 12px 4px !important;
-      width: 100% !important; box-sizing: border-box !important;
-    }
-    .search-wrap {
-      flex: none !important; width: 100% !important; min-width: 0 !important;
-      max-width: 100% !important; box-sizing: border-box !important; order: 0 !important;
-    }
-    input[type="text"] {
-      font-size: 16px !important; width: 100% !important;
-      max-width: 100% !important; box-sizing: border-box !important;
-    }
-    .submit-btn { display: none; }
-    .filter-chips {
-      gap: 4px; overflow-x: auto; flex-wrap: nowrap !important;
-      padding: 0 12px 8px; width: 100%; box-sizing: border-box;
-      -webkit-overflow-scrolling: touch;
-    }
+    .search-row { flex-direction: column !important; align-items: stretch !important; gap: 6px !important; padding: 8px 12px 4px !important; width: 100% !important; box-sizing: border-box !important; }
+    .search-wrap { flex: none !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; order: 0 !important; }
+    input[type="text"] { font-size: 16px !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; }
+    .submit-btn, .feature-btn { display: none; }
+    .filter-chips { gap: 4px; overflow-x: auto; flex-wrap: nowrap !important; padding: 0 12px 8px; width: 100%; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
     .filter-chips::-webkit-scrollbar { display: none; }
     .filter-chip { font-size: 10.5px; padding: 4px 10px; flex-shrink: 0; white-space: nowrap; }
     .day-tab { font-size: 11px; padding: 7px 10px 9px; }
-    .stats-bar {
-      padding: 6px 12px; gap: 8px; flex-wrap: nowrap;
-      overflow-x: auto; -webkit-overflow-scrolling: touch;
-    }
+    .stats-bar { padding: 6px 12px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .stats-bar::-webkit-scrollbar { display: none; }
-    .stats-bar .submit-btn {
-      display: inline-flex !important; font-size: 10px !important;
-      padding: 4px 10px !important; flex-shrink: 0;
-    }
+    .stats-bar .submit-btn { display: inline-flex !important; font-size: 10px !important; padding: 4px 10px !important; flex-shrink: 0; }
     .stat { font-size: 11px; white-space: nowrap; }
     .stat strong { font-size: 12px; }
     .stat-sep { display: none; }
@@ -582,15 +330,10 @@
     .form-row { grid-template-columns: 1fr; gap: 10px; }
     .email-gate-box { padding: 24px 20px; }
     .email-gate-box h2 { font-size: 18px; }
-    .mobile-fab {
-      display: flex !important; position: fixed; bottom: 20px; right: 16px; z-index: 500;
-      width: 54px; height: 54px; background: var(--red); color: white; border-radius: 50%;
-      align-items: center; justify-content: center; font-size: 26px; line-height: 1;
-      box-shadow: 0 4px 20px rgba(255,10,10,0.5), 0 2px 6px rgba(0,0,0,0.25);
-      cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .mobile-fab { display: flex !important; position: fixed; bottom: 20px; right: 16px; z-index: 500; width: 54px; height: 54px; background: var(--red); color: white; border-radius: 50%; align-items: center; justify-content: center; font-size: 26px; line-height: 1; box-shadow: 0 4px 20px rgba(255,10,10,0.5), 0 2px 6px rgba(0,0,0,0.25); cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; -webkit-tap-highlight-color: transparent; }
     .mobile-fab:active { transform: scale(0.92); box-shadow: 0 2px 10px rgba(255,10,10,0.4); }
+    .tier-card { padding: 13px; }
+    .modal-tab { font-size: 11px; padding: 8px 6px; }
   }
   @media (max-width: 380px) {
     .hero-title { font-size: 20px; }
@@ -644,26 +387,34 @@
         <div style="background:rgba(255,10,10,0.08);border:1px solid rgba(255,10,10,0.2);border-radius:10px;padding:14px 16px;">
           <div style="color:var(--red);font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Yorkseed Connect — app.yorkseed.co</div>
           <p style="color:rgba(255,255,255,0.85);font-family:'Sora',sans-serif;font-size:12.5px;line-height:1.7;margin:0 0 10px 0;">
-            Yorkseed Connect is a private, curated venture network and membership platform for founders, investors, and capital partners. Built on an application-only model, it combines a vetted global network, proprietary deal flow, investor-grade intelligence tools, and exclusive access to opportunities and events — all designed for those actively raising, deploying, and operating in venture.
+            Yorkseed Connect is a private, curated venture network and membership platform for founders, investors, and capital partners. Built on an application-only model, it combines a vetted global network, proprietary deal flow, investor-grade intelligence tools, and exclusive access to opportunities and events.
           </p>
-          <a href="https://app.yorkseed.co/pricing?ref=yorkseed" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:var(--red);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;">
-            View Plans &amp; Pricing ↗
-          </a>
+          <a href="https://app.yorkseed.co/pricing?ref=yorkseed" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:var(--red);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;">View Plans &amp; Pricing ↗</a>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;min-width:220px;flex-shrink:0;">
-        <a href="https://app.yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;background:var(--red);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;padding:10px 14px;border-radius:7px;text-decoration:none;gap:8px;">
-          <span>Sign Up — Yorkseed Connect</span><span>↗</span>
-        </a>
-        <a href="https://yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.07);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;padding:10px 14px;border-radius:7px;text-decoration:none;border:1px solid rgba(255,255,255,0.12);gap:8px;">
-          <span>Read Our Story</span><span style="color:rgba(255,255,255,0.4);">yorkseed.co</span>
-        </a>
+        <a href="https://app.yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;background:var(--red);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;padding:10px 14px;border-radius:7px;text-decoration:none;gap:8px;"><span>Sign Up — Yorkseed Connect</span><span>↗</span></a>
+        <a href="https://yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.07);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;padding:10px 14px;border-radius:7px;text-decoration:none;border:1px solid rgba(255,255,255,0.12);gap:8px;"><span>Read Our Story</span><span style="color:rgba(255,255,255,0.4);">yorkseed.co</span></a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PASSPORT SERIES FEATURED SECTION -->
+<!-- ⭐ FEATURE MY EVENT STRIP — standalone, separate from Yorkseed Connect -->
+<div style="background:#fffcf0;border-bottom:1px solid #f0e0a0;border-top:1px solid #f0e0a0;padding:16px 24px;">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--gold);color:#0a0a0a;padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;flex-shrink:0;">⭐ For Organisers</span>
+      <div>
+        <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.3;">Feature your event — get top placement &amp; Yorkseed promotion</div>
+        <div style="font-family:'Sora',sans-serif;font-size:11.5px;color:#888;margin-top:2px;">Basic from <strong style="color:#0a0a0a;">$150</strong> · Partner from <strong style="color:var(--red);">$400</strong> · Headline / Passport <strong style="color:#0a0a0a;">$900</strong></div>
+      </div>
+    </div>
+    <button class="feature-btn" onclick="openModal('feature')" style="flex-shrink:0;padding:10px 20px;font-size:13px;">⭐ Feature My Event →</button>
+  </div>
+</div>
+
+<!-- PASSPORT SERIES -->
 <div style="background:#0a0a0a;border-bottom:1px solid rgba(201,168,76,0.2);padding:28px 24px;" id="passportSection">
   <div style="max-width:900px;margin:0 auto;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
@@ -677,7 +428,7 @@
   </div>
 </div>
 
-<!-- COMMUNITY PARTNER EVENTS SECTION -->
+<!-- COMMUNITY PARTNER EVENTS -->
 <div style="background:white;border-bottom:1px solid #e8e8e8;padding:22px 24px;" id="partnerSection">
   <div style="max-width:900px;margin:0 auto;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
@@ -694,56 +445,14 @@
 <div style="background:white;border-bottom:1px solid #e8e8e8;">
   <div style="max-width:1160px;margin:0 auto;padding:24px 28px;">
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:10px;">
-      <a href="https://luma.com/Yorkseed?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Global Event Calendar</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Subscribe to curated venture events worldwide — weekly for founders &amp; investors</div></div>
-      </a>
-      <a href="https://yorkseed.co/#about?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">City &amp; Conference Hubs</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Apply to access 30+ local city hubs and conference hubs</div></div>
-      </a>
-      <a href="https://whatsapp.com/channel/0029Vaf0wiU3wtbBcxTEFD0h" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#25D366;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">WhatsApp Public Channel</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Follow Yorkseed's public channel for updates</div></div>
-      </a>
-      <a href="https://chat.whatsapp.com/GzD1WMtb8Gu7CN8W1m882o?mode=gi_t" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#25D366;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Yorkseed New York Hub — NYTW</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Join our NYC Hub, open as a conference hub for the week</div></div>
-      </a>
-      <a href="https://yorkseed.beehiiv.com/subscribe?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Newsletter — Founders &amp; Investors</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Curated global venture events — weekly digest</div></div>
-      </a>
-      <a href="https://sitch.app/LinkList?s=5ufJ0cp" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#0a0a0a;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Founders · Investors · Executives</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Raising or selling? Looking for deal flow or partnerships? Connect here</div></div>
-      </a>
-      <a href="https://forms.gle/vbwwtw9CaPCJhD4x9" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#0a0a0a;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Partner &amp; Sponsor</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Work with us across events, conferences, newsletters, and the Yorkseed Passport Series</div></div>
-      </a>
-      <a href="https://forms.gle/vuHYgAYCskRZmyDR6" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#0a0a0a;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Founder &amp; Investor Submission</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Fill out Yorkseed's Founder and Investor Submission Form</div></div>
-      </a>
-      <a href="https://lu.ma/b56cqfa7?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Advertise in This Spreadsheet</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Put your logo and company in front of thousands of founders and investors</div></div>
-      </a>
-      <a href="http://anywaypay.link/pay/jsw" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;margin-top:4px;flex-shrink:0;"></div>
-        <div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Support Yorkseed ♥</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">If you appreciated our hard work, click here to donate</div></div>
-      </a>
-      <a href="https://tally.so/r/ODJeYk" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #FF0A0A;border-radius:8px;text-decoration:none;background:#fff8f8;" onmouseover="this.style.background='#fff1f1'" onmouseout="this.style.background='#fff8f8'">
-        <div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div>
-        <div>
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;">
-            <div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Strategic Partner — New York · Milan · Paris</div>
-            <span style="font-family:'Sora',sans-serif;font-size:9px;font-weight:700;color:#FF0A0A;background:#ffe0e0;padding:2px 6px;border-radius:4px;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;">Limited</span>
-          </div>
-          <div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;line-height:1.45;">Partner with Yorkseed across NY Tech Week, Milan AI Week &amp; VivaTech Paris — curated events, platform integration, and direct access to a vetted founder &amp; investor network</div>
-        </div>
-      </a>
+      <a href="https://luma.com/Yorkseed?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Global Event Calendar</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Subscribe to curated venture events worldwide — weekly for founders &amp; investors</div></div></a>
+      <a href="https://yorkseed.co/#about?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">City &amp; Conference Hubs</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Apply to access 30+ local city hubs and conference hubs</div></div></a>
+      <a href="https://whatsapp.com/channel/0029Vaf0wiU3wtbBcxTEFD0h" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#25D366;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">WhatsApp Public Channel</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Follow Yorkseed's public channel for updates</div></div></a>
+      <a href="https://chat.whatsapp.com/GzD1WMtb8Gu7CN8W1m882o?mode=gi_t" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#25D366;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Yorkseed New York Hub — NYTW</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Join our NYC Hub, open as a conference hub for the week</div></div></a>
+      <a href="https://yorkseed.beehiiv.com/subscribe?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Newsletter — Founders &amp; Investors</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Curated global venture events — weekly digest</div></div></a>
+      <a href="https://lu.ma/b56cqfa7?ref=yorkseed" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Advertise in This Spreadsheet</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Put your logo and company in front of thousands of founders and investors</div></div></a>
+      <a href="http://anywaypay.link/pay/jsw" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Support Yorkseed ♥</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">If you appreciated our hard work, click here to donate</div></div></a>
+      <a href="https://tally.so/r/ODJeYk" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #FF0A0A;border-radius:8px;text-decoration:none;background:#fff8f8;" onmouseover="this.style.background='#fff1f1'" onmouseout="this.style.background='#fff8f8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;"><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Strategic Partner — New York · Milan · Paris</div><span style="font-family:'Sora',sans-serif;font-size:9px;font-weight:700;color:#FF0A0A;background:#ffe0e0;padding:2px 6px;border-radius:4px;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;">Limited</span></div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;line-height:1.45;">Partner with Yorkseed across NY Tech Week, Milan AI Week &amp; VivaTech Paris</div></div></a>
     </div>
   </div>
 </div>
@@ -811,52 +520,70 @@ const EVENTS = [
   { id:39, name:"Yorkseed Passport Series: NYTW — Post-Week Debrief Brunch", host:"Yorkseed", date:"2026-06-08", day:"Sun Jun 8", time:"11:30 AM", venue:"TBD — Brooklyn or Lower Manhattan", neighborhood:"Brooklyn / Lower Manhattan", address:"New York, NY", types:["community","vc","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The final Yorkseed Passport Series event — a relaxed post-NYTW debrief brunch. Open to Yorkseed members and passport holders.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
   { id:3, name:"AI Tinkerers NYC — Builders Meetup", host:"AI Tinkerers NYC", date:"2026-05-27", day:"Tue May 27", time:"6:30 PM", venue:"TBD — Midtown or SoHo", neighborhood:"Midtown / SoHo", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Practitioner-only meetup for LLM and generative AI builders. Live demos, engineering talks, peer networking. Community-led, no sales pitches.", rsvp:"https://nyc.aitinkerers.org/?ref=yorkseed", status:"Open" },
   { id:4, name:"Fintech Founders NYC — Pre-Week Drinks", host:"Fintech Nexus", date:"2026-05-27", day:"Tue May 27", time:"6:00 PM", venue:"TBD Bar — FiDi or Midtown", neighborhood:"FiDi / Midtown", address:"New York, NY", types:["fintech","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Informal pre-week gathering for fintech founders and operators. No agenda, no pitching.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
-  { id:7, name:"Women in VC — Cocktail Hour NY Tech Week", host:"Lowenstein Sandler", date:"2026-06-05", day:"Thu Jun 5", time:"5:00 PM", venue:"Lowenstein Sandler NYC Office", neighborhood:"Midtown", address:"New York, NY", types:["vc","women","community"], free:false, drinks:true, food:false, ticket:"Invite Only", notes:"In-person Women in VC Cocktail Hour during Tech Week. Held at Lowenstein Sandler's NYC Office, hosted by Meredith Beuchaw and select LS attorneys.", rsvp:"https://lu.ma/mdj48l3s?ref=yorkseed", status:"Open" },
+  { id:7, name:"Women in VC — Cocktail Hour NY Tech Week", host:"Lowenstein Sandler", date:"2026-06-05", day:"Thu Jun 5", time:"5:00 PM", venue:"Lowenstein Sandler NYC Office", neighborhood:"Midtown", address:"New York, NY", types:["vc","women","community"], free:false, drinks:true, food:false, ticket:"Invite Only", notes:"In-person Women in VC Cocktail Hour during Tech Week. Held at Lowenstein Sandler's NYC Office.", rsvp:"https://lu.ma/mdj48l3s?ref=yorkseed", status:"Open" },
   { id:10, name:"Legal Tech Happy Hour — NY Tech Week Edition", host:"LegalTech Hub NYC", date:"2026-05-29", day:"Thu May 29", time:"6:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["legal","ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Pre-NYTW gathering for legal tech founders, attorneys, and investors.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
   { id:13, name:"Fintech Meetup NYC — Monthly Edition", host:"Fintech Meetup NYC", date:"2026-05-30", day:"Fri May 30", time:"6:30 PM", venue:"TBD — FiDi", neighborhood:"FiDi", address:"New York, NY", types:["fintech","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Monthly fintech community gathering. Payments, lending, banking, insurance.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
   { id:14, name:"Techstars Startup Weekend NYC — Pre-NYTW Edition", host:"Techstars Startup Weekend", date:"2026-05-31", day:"Sat May 31", time:"9:00 AM", venue:"TBD — Brooklyn or Manhattan", neighborhood:"Brooklyn / Manhattan", address:"New York, NY", types:["ai","community","hackathon"], free:false, drinks:false, food:true, ticket:"Paid", notes:"54-hour startup weekend for early-stage builders.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
-  { id:100, name:"Official Tech Week Kickoff Party — a16z & Gamma", host:"a16z, Gamma", date:"2026-06-01", day:"Sun Jun 1", time:"6:30 PM", venue:"TBD — Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"The official a16z Tech Week 2026 kickoff party, co-hosted with Gamma. One of the most sought-after RSVP events of the week.", rsvp:"https://partiful.com/events/o1qradCjiAlnUg3c6ZWj?ref=yorkseed", status:"Open" },
+  { id:100, name:"Official Tech Week Kickoff Party — a16z & Gamma", host:"a16z, Gamma", date:"2026-06-01", day:"Sun Jun 1", time:"6:30 PM", venue:"TBD — Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"The official a16z Tech Week 2026 kickoff party, co-hosted with Gamma.", rsvp:"https://partiful.com/events/o1qradCjiAlnUg3c6ZWj?ref=yorkseed", status:"Open" },
   { id:101, name:"Stripe Supper Club", host:"Stripe", date:"2026-06-01", day:"Sun Jun 1", time:"6:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["fintech","vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Invite Only", notes:"Stripe's intimate supper club for founders and operators on Day 1 of NY Tech Week.", rsvp:"https://partiful.com/e/YFlFyVXYl8MFYSUapd3o?ref=yorkseed", status:"Invite Only" },
   { id:103, name:"Rebuilding American Manufacturing — BVP, JPM & Orrick", host:"J.P. Morgan, Orrick, Bessemer Venture Partners", date:"2026-06-01", day:"Sun Jun 1", time:"4:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","deeptech","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Panel and networking on the resurgence of American manufacturing and deep tech.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
   { id:106, name:"Founders Morning Run — Central Park", host:"Leverage", date:"2026-06-01", day:"Sun Jun 1", time:"6:30 AM", venue:"Central Park", neighborhood:"Central Park", address:"Central Park, New York, NY", types:["community","vc"], free:true, drinks:false, food:false, ticket:"Free", notes:"Morning run kicking off NY Tech Week. Meet fellow founders before the events start.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
-  { id:110, name:"SaaS & AI Founder + Investor Rooftop Happy Hour", host:"NachoNacho, Deel, ZenDesk, Morrison Foerster", date:"2026-06-02", day:"Mon Jun 2", time:"5:00 PM", venue:"Mr. Purple — Hotel Indigo LES", neighborhood:"Lower East Side", address:"180 Orchard St, New York, NY 10002", types:["ai","saas","fintech","community","rooftop"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Exclusive rooftop happy hour for SaaS and AI founders and investors. Curated guest list — Seed-funded minimum.", rsvp:"https://partiful.com/e/A8JEdUuv9FIqqiPGE0nV?ref=yorkseed", status:"Open" },
+  { id:110, name:"SaaS & AI Founder + Investor Rooftop Happy Hour", host:"NachoNacho, Deel, ZenDesk, Morrison Foerster", date:"2026-06-02", day:"Mon Jun 2", time:"5:00 PM", venue:"Mr. Purple — Hotel Indigo LES", neighborhood:"Lower East Side", address:"180 Orchard St, New York, NY 10002", types:["ai","saas","fintech","community","rooftop"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Exclusive rooftop happy hour for SaaS and AI founders and investors. Curated guest list.", rsvp:"https://partiful.com/e/A8JEdUuv9FIqqiPGE0nV?ref=yorkseed", status:"Open" },
   { id:111, name:"Enterprise AI Innovation Showcase — NVIDIA & Dell", host:"NVIDIA, Dell Technologies Capital", date:"2026-06-02", day:"Mon Jun 2", time:"4:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","conference","deeptech"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"NVIDIA and Dell showcase enterprise AI infrastructure and AI compute.", rsvp:"https://partiful.com/e/5vHvRPI0VlMQwOmQadCN?ref=yorkseed", status:"Open" },
-  { id:112, name:"ElevenLabs: Live from NY", host:"ElevenLabs", date:"2026-06-02", day:"Mon Jun 2", time:"6:00 PM", venue:"ElevenLabs NY Office — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"An unforgettable evening at the brand new ElevenLabs NY office. Conversations with top AI and tech leaders.", rsvp:"https://partiful.com/e/Vamn82rpSCMY5sp1UgNG?ref=yorkseed", status:"Open" },
+  { id:112, name:"ElevenLabs: Live from NY", host:"ElevenLabs", date:"2026-06-02", day:"Mon Jun 2", time:"6:00 PM", venue:"ElevenLabs NY Office — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"An unforgettable evening at the brand new ElevenLabs NY office.", rsvp:"https://partiful.com/e/Vamn82rpSCMY5sp1UgNG?ref=yorkseed", status:"Open" },
   { id:117, name:"Techstars Investor Preview — Spring 2026", host:"Techstars, Google Cloud", date:"2026-06-02", day:"Mon Jun 2", time:"12:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["vc","ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"In-person pitches from 14 groundbreaking startups from the Techstars NYC Spring 2026 class.", rsvp:"https://partiful.com/e/t9rcgqhGn2tx8udcMKmX?ref=yorkseed", status:"Open" },
-  { id:19, name:"Fintech Is Femme — NYTW Networking Brunch", host:"Fintech Is Femme", date:"2026-06-02", day:"Mon Jun 2", time:"11:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["fintech","women","community","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Annual NYTW edition of Fintech Is Femme's signature brunch. Women founders, investors, and operators.", rsvp:"https://www.fintechisfemme.co/?ref=yorkseed", status:"Open" },
+  { id:19, name:"Fintech Is Femme — NYTW Networking Brunch", host:"Fintech Is Femme", date:"2026-06-02", day:"Mon Jun 2", time:"11:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["fintech","women","community","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Annual NYTW edition of Fintech Is Femme's signature brunch.", rsvp:"https://www.fintechisfemme.co/?ref=yorkseed", status:"Open" },
   { id:130, name:"Google for Startups Hub — All Day", host:"Google for Startups", date:"2026-06-03", day:"Tue Jun 3", time:"9:00 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Google for Startups activates a full-day hub in Chelsea for NY Tech Week.", rsvp:"https://partiful.com/e/ZzxFq9vcfoDUqBBRQTzv?ref=yorkseed", status:"Open" },
   { id:132, name:"Fireside Chat — Bryan Kim of ElevenLabs & Verci", host:"Verci, ElevenLabs", date:"2026-06-03", day:"Tue Jun 3", time:"10:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Bryan Kim of ElevenLabs joins Verci for a morning fireside on building voice AI companies.", rsvp:"https://partiful.com/e/kcNK4Mal67OURfFcBLRy?ref=yorkseed", status:"Open" },
   { id:133, name:"HubSpot — Build Mode: RevOps & GTM Teams as AI-Powered Builders", host:"HubSpot", date:"2026-06-03", day:"Tue Jun 3", time:"6:00 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","marketing","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"HubSpot's flagship Tech Week evening event on how RevOps and GTM teams are becoming AI-native builders.", rsvp:"https://partiful.com/events/o1qradCjiAlnUg3c6ZWj?ref=yorkseed", status:"Open" },
-  { id:134, name:"Anthropic Founder Salon — AI 2.0", host:"Anthropic", date:"2026-06-03", day:"Tue Jun 3", time:"1:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"Anthropic's curated founder salon: AI 2.0. Speakers include Gamma, Factory, and CodeRabbit alongside the Anthropic team.", rsvp:"https://partiful.com/e/titPml1Nw0DKwGl9B6CF?ref=yorkseed", status:"Invite Only" },
+  { id:134, name:"Anthropic Founder Salon — AI 2.0", host:"Anthropic", date:"2026-06-03", day:"Tue Jun 3", time:"1:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"Anthropic's curated founder salon: AI 2.0. Speakers include Gamma, Factory, and CodeRabbit.", rsvp:"https://partiful.com/e/titPml1Nw0DKwGl9B6CF?ref=yorkseed", status:"Invite Only" },
   { id:137, name:"NYSE + PwC IPO Panel", host:"PwC, NYSE", date:"2026-06-03", day:"Tue Jun 3", time:"2:30 PM", venue:"NYSE — Financial District", neighborhood:"Financial District", address:"11 Wall St, New York, NY 10005", types:["fintech","vc","conference"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"PwC and the New York Stock Exchange on the IPO market and capital markets outlook for 2026.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
   { id:138, name:"Ramp x 8VC — Founders & Builders Night", host:"Ramp, 8VC", date:"2026-06-03", day:"Tue Jun 3", time:"6:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","fintech","vc","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Ramp and 8VC host a high-energy builders night for founders and operators.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
-  { id:140, name:"Bootstrapped Founders Breakfast Club", host:"Independent", date:"2026-06-03", day:"Tue Jun 3", time:"8:30 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["community","breakfast"], free:false, drinks:false, food:true, ticket:"Paid", notes:"Morning gathering for bootstrapped and indie founders during NYTW. No VC pitching — just founders who build their own way.", rsvp:"https://www.eventbrite.ch/e/bootstrapped-founders-breakfast-club-nytechweek-tickets-1988023726482?ref=yorkseed", status:"Open" },
+  { id:140, name:"Bootstrapped Founders Breakfast Club", host:"Independent", date:"2026-06-03", day:"Tue Jun 3", time:"8:30 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["community","breakfast"], free:false, drinks:false, food:true, ticket:"Paid", notes:"Morning gathering for bootstrapped and indie founders during NYTW.", rsvp:"https://www.eventbrite.ch/e/bootstrapped-founders-breakfast-club-nytechweek-tickets-1988023726482?ref=yorkseed", status:"Open" },
   { id:142, name:"Hack the Tech Week — a16z Hackathon", host:"a16z", date:"2026-06-03", day:"Tue Jun 3", time:"10:00 AM", venue:"TBD — Brooklyn", neighborhood:"Brooklyn", address:"New York, NY", types:["ai","hackathon","community"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"The premier hackathon of NY Tech Week by a16z. Build an AI agent that generates or saves $1M.", rsvp:"https://partiful.com/e/5b8DE39ZNAUhZsPcSepq?ref=yorkseed", status:"Open" },
-  { id:23, name:"Marketing & Growth — NYTW Meetup", host:"GrowthHackers NYC", date:"2026-06-03", day:"Tue Jun 3", time:"6:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["marketing","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Growth and marketing practitioners gathering during NYTW. Community-led, no pitches.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
-  { id:150, name:"Atlassian — The Journey of an Acquired Founder", host:"Atlassian", date:"2026-06-04", day:"Wed Jun 4", time:"5:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Candid conversations with founders who have been acquired. Deal mechanics, culture, life post-acquisition.", rsvp:"https://partiful.com/e/iC3xjF6JPm0iKeTkvCCG?ref=yorkseed", status:"Open" },
+  { id:23, name:"Marketing & Growth — NYTW Meetup", host:"GrowthHackers NYC", date:"2026-06-03", day:"Tue Jun 3", time:"6:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["marketing","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Growth and marketing practitioners gathering during NYTW.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
+  { id:150, name:"Atlassian — The Journey of an Acquired Founder", host:"Atlassian", date:"2026-06-04", day:"Wed Jun 4", time:"5:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Candid conversations with founders who have been acquired.", rsvp:"https://partiful.com/e/iC3xjF6JPm0iKeTkvCCG?ref=yorkseed", status:"Open" },
   { id:152, name:"Founders & Funders — NYC VC Reverse Pitch", host:"Founders N' Funders, Microsoft", date:"2026-06-04", day:"Wed Jun 4", time:"10:00 AM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"VCs pitch themselves to founders. A rare chance for founders to evaluate investors.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/investors?ref=yorkseed", status:"Open" },
-  { id:153, name:"Alpha Partners — 3rd Annual VC Rooftop Happy Hour", host:"Alpha Partners", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"TBD Rooftop — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Alpha Partners' third annual NYTW rooftop gathering. VCs, angels, and founders.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/investors?ref=yorkseed", status:"Open" },
-  { id:157, name:"AI Launch Party — Pinecone", host:"Pinecone", date:"2026-06-04", day:"Wed Jun 4", time:"5:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Pinecone's AI launch party during NY Tech Week. Vector search, RAG, and AI application builders.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/ai-infra?ref=yorkseed", status:"Open" },
+  { id:153, name:"Alpha Partners — 3rd Annual VC Rooftop Happy Hour", host:"Alpha Partners", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"TBD Rooftop — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Alpha Partners' third annual NYTW rooftop gathering.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/investors?ref=yorkseed", status:"Open" },
+  { id:157, name:"AI Launch Party — Pinecone", host:"Pinecone", date:"2026-06-04", day:"Wed Jun 4", time:"5:00 PM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Pinecone's AI launch party during NY Tech Week.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/ai-infra?ref=yorkseed", status:"Open" },
   { id:158, name:"Vibe Coder Dinner Club", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"8:00 PM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Dinner gathering for vibe coders and builders experimenting with AI-first development.", rsvp:"https://www.eventbrite.com/e/vibe-coder-dinner-club-nytechweek-tickets-1988024060481?ref=yorkseed", status:"Open" },
   { id:159, name:"Wine & Einstein — NPCs and Consciousness", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"6:30 PM", venue:"OS NYC — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"A salon-style discussion on AI consciousness, NPCs, and what intelligence really means.", rsvp:"https://www.eventbrite.com/e/wine-einstein-npcs-and-consciousness-nytechweek-tickets-1988260930967?ref=yorkseed", status:"Open" },
-  { id:160, name:"Planting the Seeds to Launch — Founders & VCs at Miles McEnery Gallery", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"Miles McEnery Gallery — Chelsea", neighborhood:"Chelsea", address:"525 W 22nd St, New York, NY 10011", types:["vc","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"A gallery opening meets startup networking event. Founders and investors in one of Chelsea's premier art spaces.", rsvp:"https://www.eventbrite.com/e/planting-the-seeds-to-launch-nytechweek-tickets-1988002240216?ref=yorkseed", status:"Open" },
+  { id:160, name:"Planting the Seeds to Launch — Founders & VCs at Miles McEnery Gallery", host:"Independent", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"Miles McEnery Gallery — Chelsea", neighborhood:"Chelsea", address:"525 W 22nd St, New York, NY 10011", types:["vc","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"A gallery opening meets startup networking event.", rsvp:"https://www.eventbrite.com/e/planting-the-seeds-to-launch-nytechweek-tickets-1988002240216?ref=yorkseed", status:"Open" },
   { id:27, name:"Black Founders Matter — NYTW Mixer", host:"Black Founders Matter", date:"2026-06-04", day:"Wed Jun 4", time:"6:00 PM", venue:"TBD — Harlem or Midtown", neighborhood:"Harlem / Midtown", address:"New York, NY", types:["community","vc"], free:true, drinks:true, food:true, ticket:"Free", notes:"Annual NYTW mixer celebrating and connecting Black founders, investors, and operators. Open to all.", rsvp:"https://www.tech-week.com/calendar/nyc?ref=yorkseed", status:"Open" },
   { id:171, name:"Sentry, Neon & Harness — The Light Stack Happy Hour", host:"Sentry, Harness, Databricks Neon", date:"2026-06-05", day:"Thu Jun 5", time:"5:00 PM", venue:"TBD — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","community","saas"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"Developer tooling happy hour. Observability, databases, and DevOps for the modern AI stack.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/ai-infra?ref=yorkseed", status:"Open" },
   { id:173, name:"Intuit AI/ML Hackathon", host:"Intuit", date:"2026-06-05", day:"Thu Jun 5", time:"4:00 PM", venue:"TBD — East Village", neighborhood:"East Village", address:"New York, NY", types:["ai","hackathon","fintech"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"Teams build AI/ML solutions for fintech, accounting, and small business using Intuit APIs.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/hackathons?ref=yorkseed", status:"Open" },
-  { id:175, name:"Webflow — Women in Tech: Build Your First AI Workflow with Claude", host:"Webflow", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["women","ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Hands-on morning workshop for women in tech — build AI workflows using Claude. No prior AI experience needed.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/gtm?ref=yorkseed", status:"Open" },
-  { id:31, name:"Women Who Code — NYTW Hackathon", host:"Women Who Code NYC", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","women","hackathon","community"], free:true, drinks:false, food:true, ticket:"Free", notes:"Day-long hackathon for women in tech during NYTW. AI, social impact, and fintech tracks.", rsvp:"https://www.womenwhocode.com/?ref=yorkseed", status:"Open" },
+  { id:175, name:"Webflow — Women in Tech: Build Your First AI Workflow with Claude", host:"Webflow", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["women","ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", notes:"Hands-on morning workshop for women in tech — build AI workflows using Claude.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/gtm?ref=yorkseed", status:"Open" },
+  { id:31, name:"Women Who Code — NYTW Hackathon", host:"Women Who Code NYC", date:"2026-06-05", day:"Thu Jun 5", time:"9:00 AM", venue:"TBD — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["ai","women","hackathon","community"], free:true, drinks:false, food:true, ticket:"Free", notes:"Day-long hackathon for women in tech during NYTW.", rsvp:"https://www.womenwhocode.com/?ref=yorkseed", status:"Open" },
   { id:182, name:"Vibe Code Hackathon — Women Builders Edition", host:"Products by Women, Geeks & Experts", date:"2026-06-06", day:"Fri Jun 6", time:"10:00 AM", venue:"TBD — Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","hackathon","women"], free:false, drinks:false, food:true, ticket:"Application Required", notes:"Hackathon for women builders focused on vibe coding and AI-native product development.", rsvp:"https://www.tech-week.com/calendar/nyc/tracks/hackathons?ref=yorkseed", status:"Open" },
+  { id:200, name:"Speed Pitch — #NYTechWeek", host:"The Startup Station, Pearl Cohen", date:"2026-06-03", day:"Tue Jun 3", time:"4:30 PM", venue:"Pearl Cohen Zedek Latzer Baratz — Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:true, ticket:"Application Required", yorkseed:"partner", notes:"Speed Pitch at NY Tech Week — founders meet matched investors in 8-min 1:1 meetings. Guaranteed 3 investor meetings per founder. Light bites and drinks included. Use code YORKSEED20 for 20% off.", rsvp:"https://partiful.com/e/Na47JQ1068jqK1hCbdaJ?ref=yorkseed", status:"Open" },
 ];
 
-// deduplicate by id
 const seen = new Set();
-const DEDUPED_EVENTS = EVENTS.filter(e => { if (seen.has(e.id)) return false; seen.add(e.id); return true; });
-const EVENTS_FINAL = DEDUPED_EVENTS;
+const EVENTS_FINAL = EVENTS.filter(e => { if (seen.has(e.id)) return false; seen.add(e.id); return true; });
 
 let activeType = 'all', activeDay = 'all', freeFilter = null, searchTerm = '';
 let submittedEvents = [];
 try { const s = sessionStorage.getItem('ys_submitted_nytw'); if (s) submittedEvents = JSON.parse(s); } catch(e) {}
 function saveSubmitted() { try { sessionStorage.setItem('ys_submitted_nytw', JSON.stringify(submittedEvents)); } catch(e) {} }
+
+// ── TIER SORT PRIORITY ──
+// Absolute top placement: Headline(passport)=0, Partner=1, Basic(featured)=2, Free=3
+// Within same tier, sort by time
+function tierPriority(e) {
+  if (e.yorkseed === 'passport') return 0;
+  if (e.yorkseed === 'partner')  return 1;
+  if (e.featured === true)       return 2;
+  return 3;
+}
+function timeToMinutes(t) {
+  if (!t) return 9999;
+  const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!m) return 9999;
+  let h = parseInt(m[1]), mins = parseInt(m[2]), period = m[3].toUpperCase();
+  if (period === 'AM' && h === 12) h = 0;
+  if (period === 'PM' && h !== 12) h += 12;
+  return h * 60 + mins;
+}
 
 function getTypeTags(types) {
   const map = {
@@ -910,19 +637,11 @@ function render() {
   });
   dayOrder.sort();
   dayOrder.forEach(date => {
-    function timeToMinutes(t) {
-      if (!t) return 9999;
-      const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
-      if (!m) return 9999;
-      let h = parseInt(m[1]), mins = parseInt(m[2]), period = m[3].toUpperCase();
-      if (period === "AM" && h === 12) h = 0;
-      if (period === "PM" && h !== 12) h += 12;
-      return h * 60 + mins;
-    }
-    function ysPriority(e) { return e.yorkseed === 'passport' ? 0 : 1; }
+    // Sort: tier priority first (absolute top placement), then by time within same tier
     const events = groups[date].sort((a, b) => {
-      const td = timeToMinutes(a.time) - timeToMinutes(b.time);
-      return td !== 0 ? td : ysPriority(a) - ysPriority(b);
+      const ta = tierPriority(a), tb = tierPriority(b);
+      if (ta !== tb) return ta - tb;
+      return timeToMinutes(a.time) - timeToMinutes(b.time);
     });
     const group = document.createElement('div');
     group.className = 'day-group';
@@ -932,23 +651,27 @@ function render() {
       const card = document.createElement('div');
       const isPassport = e.yorkseed === 'passport';
       const isPartner  = e.yorkseed === 'partner';
-      card.className = 'event-card' + (isPassport ? ' ys-passport' : isPartner ? ' ys-partner' : '');
+      const isFeatured = e.featured === true;
+      let cardClass = 'event-card';
+      if (isPassport) cardClass += ' ys-passport';
+      else if (isPartner) cardClass += ' ys-partner';
+      else if (isFeatured) cardClass += ' ys-featured';
+      card.className = cardClass;
       card.dataset.id = e.id;
       const rsvpBtn = e.rsvp
         ? `<a class="rsvp-btn" href="${e.rsvp}" target="_blank" rel="noopener">RSVP / Register ↗</a>`
         : `<span class="rsvp-btn disabled">Check organiser channels</span>`;
-      const safeRsvp = (e.rsvp || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      const safeRsvp = (e.rsvp || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
       const updateBtn = `<button class="update-event-btn" data-rsvp="${safeRsvp}" onclick="openUpdateForEvent(event,this.dataset.rsvp)">💡 Update info</button>`;
-      const passportBadge = isPassport
-        ? `<div><span class="ys-passport-badge">⭐ Passport Series</span></div>`
-        : isPartner
-        ? `<div><span class="ys-partner-badge">♥ Yorkseed Partner</span></div>`
-        : '';
+      let badge = '';
+      if (isPassport) badge = `<div><span class="ys-passport-badge">⭐ Passport Series</span></div>`;
+      else if (isPartner) badge = `<div><span class="ys-partner-badge">♥ Yorkseed Partner</span></div>`;
+      else if (isFeatured) badge = `<div><span class="ys-featured-badge">★ Featured</span></div>`;
       card.innerHTML = `
         <div class="event-main">
           <div class="event-time-col"><div class="time">${e.time}</div></div>
           <div class="event-body">
-            ${passportBadge}
+            ${badge}
             <div class="event-name">${e.name}</div>
             ${e.host ? `<div class="event-host">Hosted by <span>${e.host}</span></div>` : ''}
             <div class="event-tags">${getTypeTags(e.types)}${getPerks(e)}</div>
@@ -1024,143 +747,35 @@ function buildDayTabs() {
   });
 }
 
-async function importFromLink() {
-  const url = document.getElementById('magic-url').value.trim();
-  if (!url || !url.startsWith('http')) { alert('Please paste a valid event URL.'); return; }
-  const btn = document.getElementById('magicBtn');
-  const status = document.getElementById('magicStatus');
-  const statusIcon = document.getElementById('magicStatusIcon');
-  const statusText = document.getElementById('magicStatusText');
-  btn.style.display = 'none';
-  status.style.display = 'block';
-  statusIcon.textContent = '⏳';
-  statusText.textContent = 'Fetching event page…';
-  try {
-    // Use Apps Script proxy to fetch page and call OpenAI
-    statusText.textContent = 'Fetching event page…';
-    const proxyUrl = APPS_SCRIPT_URL + '?action=parse_event&url=' + encodeURIComponent(url);
-    let response, data;
-    try {
-      response = await fetch(proxyUrl, { method: 'GET', redirect: 'follow' });
-      data = await response.json();
-    } catch(fetchErr) {
-      throw new Error('Could not reach Apps Script: ' + fetchErr.message);
-    }
-    if (!data.ok && data.status !== 200) {
-      throw new Error(data.message || data.error || JSON.stringify(data));
-    }
-    statusText.textContent = 'Got details, adding event…';
-    const evt = data.event;
-    if (!evt || !evt.name) throw new Error('No event data in response');
-    statusIcon.textContent = '✅';
-    statusText.textContent = 'Details found! Adding to list…';
-    // Fill the form fields (in formSubmit) and submit automatically
-    setTimeout(() => {
-      if (evt.name) document.getElementById('sub-name').value = evt.name;
-      if (evt.date) {
-        const sel = document.getElementById('sub-date');
-        for (let o of sel.options) { if (o.value === evt.date) { sel.value = evt.date; break; } }
-      }
-      if (evt.time) document.getElementById('sub-time').value = evt.time;
-      if (evt.host) document.getElementById('sub-host').value = evt.host;
-      if (evt.neighborhood) document.getElementById('sub-neighborhood').value = evt.neighborhood;
-      if (evt.venue) document.getElementById('sub-venue').value = evt.venue;
-      document.getElementById('sub-rsvp').value = url;
-      if (evt.ticket) document.getElementById('sub-ticket').value = evt.ticket;
-      if (evt.category) { document.getElementById('sub-type').value = evt.category; onCatInput(evt.category); }
-      if (evt.notes) document.getElementById('sub-notes').value = evt.notes;
-      if (evt.drinks) document.getElementById('sub-drinks').checked = true;
-      if (evt.food) document.getElementById('sub-food').checked = true;
-      // Auto-detect yorkseed relationship
-      const ysDetected = detectYorkseed(evt.name, evt.host, evt.notes);
-      console.log('Yorkseed detected:', ysDetected, '| host:', evt.host);
-      document.getElementById('sub-yorkseed').value = ysDetected;
-      submitEvent(true, ysDetected);
-    }, 600);
-  } catch(err) {
-    statusIcon.textContent = '⚠️';
-    statusText.textContent = 'Error: ' + err.message;
-    const mb2 = document.getElementById('magicBtn'); if(mb2) mb2.style.display = 'block';
-  }
-}
-
-// Yorkseed relationship chips
-document.querySelectorAll('.cat-chip[data-ys-val]').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.cat-chip[data-ys-val]').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    document.getElementById('sub-yorkseed').value = chip.dataset.ysVal;
-  });
-});
-// Default to "None"
-const noneChip = document.querySelector('.cat-chip[data-ys-val=""]');
-if (noneChip) noneChip.classList.add('active');
-
-// Auto-detect Yorkseed relationship from name/host/notes text
-function detectYorkseed(name, host, notes) {
-  const allText = ((name||'') + ' ' + (host||'') + ' ' + (notes||'')).toLowerCase();
-  const hostText = (host||'').toLowerCase();
-  if (!allText.includes('yorkseed')) return '';
-  // If Yorkseed is a host/organizer → Passport Series
-  const cohostTerms = ['co-host','cohost','co host','hosted by yorkseed','yorkseed host',
-    'yorkseed presents','x yorkseed','& yorkseed','yorkseed &','yorkseed x',
-    'yorkseed global','yorkseed connect'];
-  if (cohostTerms.some(t => allText.includes(t))) return 'passport';
-  // If Yorkseed appears directly in the host field → Passport Series
-  if (hostText.includes('yorkseed')) return 'passport';
-  // Partner signals
-  const partnerTerms = ['community partner','media partner','in partnership','supported by yorkseed','powered by yorkseed'];
-  if (partnerTerms.some(t => allText.includes(t))) return 'partner';
-  // Any other Yorkseed mention → partner
-  return 'partner';
-}
-
 function renderPassportHero() {
-  // Passport Series
   const passportContainer = document.getElementById('passportCards');
   const passportSection = document.getElementById('passportSection');
   if (passportContainer) {
-    const passportEvents = allEvents()
-      .filter(e => e.yorkseed === 'passport')
-      .sort((a, b) => a.date.localeCompare(b.date));
-    if (!passportEvents.length) {
-      passportSection.style.display = 'none';
-    } else {
-      passportSection.style.display = 'block';
-      passportContainer.innerHTML = passportEvents.map(e => `
-        <a class="passport-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
-          <div class="phc-date">${e.day} · ${e.time}</div>
-          <div class="phc-name">${e.name}</div>
-          <div class="phc-meta">${e.neighborhood||'New York'}</div>
-          <span class="phc-rsvp">RSVP ↗</span>
-        </a>
-      `).join('');
-    }
+    const pe = allEvents().filter(e => e.yorkseed === 'passport').sort((a,b) => a.date.localeCompare(b.date));
+    passportSection.style.display = pe.length ? 'block' : 'none';
+    passportContainer.innerHTML = pe.map(e => `
+      <a class="passport-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
+        <div class="phc-date">${e.day} · ${e.time}</div>
+        <div class="phc-name">${e.name}</div>
+        <div class="phc-meta">${e.neighborhood||'New York'}</div>
+        <span class="phc-rsvp">RSVP ↗</span>
+      </a>`).join('');
   }
-  // Community / Media Partners
   const partnerContainer = document.getElementById('partnerCards');
   const partnerSection = document.getElementById('partnerSection');
   if (partnerContainer) {
-    const partnerEvents = allEvents()
-      .filter(e => e.yorkseed === 'partner')
-      .sort((a, b) => a.date.localeCompare(b.date));
-    if (!partnerEvents.length) {
-      partnerSection.style.display = 'none';
-    } else {
-      partnerSection.style.display = 'block';
-      partnerContainer.innerHTML = partnerEvents.map(e => `
-        <a class="partner-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
-          <div class="phc-date">${e.day} · ${e.time}</div>
-          <div class="phc-name">${e.name}</div>
-          <div class="phc-meta">${e.neighborhood||'New York'}</div>
-          <span class="phc-rsvp">RSVP ↗</span>
-        </a>
-      `).join('');
-    }
+    const pe2 = allEvents().filter(e => e.yorkseed === 'partner').sort((a,b) => a.date.localeCompare(b.date));
+    partnerSection.style.display = pe2.length ? 'block' : 'none';
+    partnerContainer.innerHTML = pe2.map(e => `
+      <a class="partner-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
+        <div class="phc-date">${e.day} · ${e.time}</div>
+        <div class="phc-name">${e.name}</div>
+        <div class="phc-meta">${e.neighborhood||'New York'}</div>
+        <span class="phc-rsvp">RSVP ↗</span>
+      </a>`).join('');
   }
 }
 
-// Category chip selection — fills the text input
 function onCatInput(val) {
   if (!val) return;
   document.querySelectorAll('.cat-chip[data-val]').forEach(c => {
@@ -1171,9 +786,19 @@ document.querySelectorAll('.cat-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
-    document.getElementById('sub-type').value = chip.dataset.val;
+    const subType = document.getElementById('sub-type');
+    if (subType && chip.dataset.val) subType.value = chip.dataset.val;
   });
 });
+document.querySelectorAll('.cat-chip[data-ys-val]').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.cat-chip[data-ys-val]').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('sub-yorkseed').value = chip.dataset.ysVal;
+  });
+});
+const noneChip = document.querySelector('.cat-chip[data-ys-val=""]');
+if (noneChip) noneChip.classList.add('active');
 
 document.querySelectorAll('.filter-chip[data-type]').forEach(chip => {
   chip.addEventListener('click', () => {
@@ -1192,12 +817,21 @@ document.querySelectorAll('.filter-chip[data-free]').forEach(chip => {
   });
 });
 document.getElementById('searchInput').addEventListener('input', function() { searchTerm = this.value.trim(); render(); });
+
 buildDayTabs();
 render();
 renderPassportHero();
 document.getElementById('headerCount').textContent = allEvents().length + ' events';
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-TrSR3O--PcsozWxzyUNJl6vw3wNgRx7SpbjmPgGjVM3v2ohaO8ZwIVK0vYd4QgVviA/exec";
+
+// ── STRIPE PAYMENT LINKS — replace with your real links ──
+const STRIPE = {
+  basic:    'https://buy.stripe.com/YOUR_BASIC_LINK',
+  partner:  'https://buy.stripe.com/YOUR_PARTNER_LINK',
+  headline: 'https://buy.stripe.com/YOUR_HEADLINE_LINK'
+};
+
 const GATE_TRIGGER = 3;
 let eventOpenCount = 0, gateShown = false, gateCleared = false;
 try { if (localStorage.getItem('ys_nytw_gate_cleared') === '1') gateCleared = true; } catch(e) {}
@@ -1228,15 +862,17 @@ async function submitGateEmail() {
 }
 
 function updateHeaderCount() { document.getElementById('headerCount').textContent = allEvents().length + ' events'; }
+
 function openModal(tab) {
   document.getElementById('modalOverlay').classList.add('open');
   switchTab(tab || 'quick');
   document.getElementById('successState').classList.remove('show');
+  document.body.style.overflow = 'hidden';
 }
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
   resetForms();
-  // Scroll to content area so new event is visible
   const content = document.getElementById('content');
   const header = document.querySelector('.header');
   const sticky = document.querySelector('.sticky-controls-wrap');
@@ -1247,36 +883,32 @@ function closeModal() {
   }
 }
 function switchTab(tab) {
-  document.getElementById('tab-quick').classList.toggle('active', tab === 'quick');
-  document.getElementById('tab-submit').classList.toggle('active', tab === 'submit');
-  document.getElementById('tab-update').classList.toggle('active', tab === 'update');
-  document.getElementById('formQuick').style.display = tab === 'quick' ? 'block' : 'none';
-  document.getElementById('formSubmit').style.display = tab === 'submit' ? 'block' : 'none';
-  document.getElementById('formUpdate').style.display = tab === 'update' ? 'block' : 'none';
+  ['quick','submit','update','feature'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+    document.getElementById('form-'+t).style.display = t === tab ? 'block' : 'none';
+  });
   document.getElementById('successState').classList.remove('show');
-  const titles = { quick: 'Submit an Event', submit: 'Submit an Event', update: 'Update an Event' };
+  const titles = { quick:'Submit an Event', submit:'Submit an Event', update:'Update an Event', feature:'⭐ Feature Your Event' };
   document.getElementById('modalTitle').textContent = titles[tab];
 }
 function resetForms() {
-  ['sub-name','sub-time','sub-host','sub-neighborhood','sub-venue','sub-rsvp','sub-notes','upd-rsvp','upd-time','upd-venue','upd-host','upd-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  ['sub-name','sub-time','sub-host','sub-neighborhood','sub-venue','sub-rsvp','sub-notes',
+   'upd-rsvp','upd-time','upd-venue','upd-host','upd-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
   ['sub-date','upd-date'].forEach(id => { const el=document.getElementById(id); if(el) el.selectedIndex=0; });
-  const dc = document.getElementById('sub-drinks'); if(dc) dc.checked=false;
-  const fc = document.getElementById('sub-food'); if(fc) fc.checked=false;
-  const dw = document.getElementById('duplicateWarning'); if(dw) dw.classList.remove('show');
-  const rb = document.getElementById('rsvpBadge'); if(rb) rb.style.display='none';
-  const uf = document.getElementById('upd-fields'); if(uf) uf.style.display='none';
-  const ul = document.getElementById('upd-found-label'); if(ul) ul.textContent='';
-  // Reset category chips and text input
+  const dc=document.getElementById('sub-drinks'); if(dc) dc.checked=false;
+  const fc=document.getElementById('sub-food'); if(fc) fc.checked=false;
+  const dw=document.getElementById('duplicateWarning'); if(dw) dw.classList.remove('show');
+  const rb=document.getElementById('rsvpBadge'); if(rb) rb.style.display='none';
+  const uf=document.getElementById('upd-fields'); if(uf) uf.style.display='none';
+  const ul=document.getElementById('upd-found-label'); if(ul) ul.textContent='';
   document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-  const subType = document.getElementById('sub-type'); if(subType) subType.value = '';
-  // Reset yorkseed relationship
+  const subType=document.getElementById('sub-type'); if(subType) subType.value='';
   document.querySelectorAll('.cat-chip[data-ys-val]').forEach(c => c.classList.remove('active'));
-  const noneYs = document.querySelector('.cat-chip[data-ys-val=""]'); if(noneYs) noneYs.classList.add('active');
-  const subYs = document.getElementById('sub-yorkseed'); if(subYs) subYs.value = '';
-  // Reset magic URL and status
-  const mu = document.getElementById('magic-url'); if(mu) mu.value = '';
-  const ms = document.getElementById('magicStatus'); if(ms) ms.style.display = 'none';
-  const mb = document.getElementById('magicBtn'); if(mb) mb.style.display = 'block';
+  const noneYs=document.querySelector('.cat-chip[data-ys-val=""]'); if(noneYs) noneYs.classList.add('active');
+  const subYs=document.getElementById('sub-yorkseed'); if(subYs) subYs.value='';
+  const mu=document.getElementById('magic-url'); if(mu) mu.value='';
+  const ms=document.getElementById('magicStatus'); if(ms) ms.style.display='none';
+  const mb=document.getElementById('magicBtn'); if(mb) mb.style.display='block';
 }
 function openUpdateForEvent(ev, rsvpLink) {
   if (ev) ev.stopPropagation();
@@ -1326,15 +958,20 @@ function dayLabelFromISO(iso){
   return map[iso]||iso;
 }
 function slugifyCategory(raw) {
-  const map = {
-    'ai & tech':'ai','ai':'ai','fintech':'fintech','vc & investors':'vc','vc':'vc',
-    'web3':'web3','saas':'saas','deep tech':'deeptech','women in tech':'women','women':'women',
-    'marketing':'marketing','legal':'legal','health':'health','climate':'climate','community':'community',
-    'beauty tech':'beautytech','sport tech':'sporttech','proptech':'proptech','edtech':'edtech',
-    'govtech':'govtech','robotics':'robotics','crypto':'crypto'
-  };
+  const map = {'ai & tech':'ai','ai':'ai','fintech':'fintech','vc & investors':'vc','vc':'vc','web3':'web3','saas':'saas','deep tech':'deeptech','women in tech':'women','women':'women','marketing':'marketing','legal':'legal','health':'health','climate':'climate','community':'community'};
   const key = (raw||'').toLowerCase().trim();
   return map[key] || key.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'community';
+}
+function detectYorkseed(name, host, notes) {
+  const allText = ((name||'')+' '+(host||'')+' '+(notes||'')).toLowerCase();
+  const hostText = (host||'').toLowerCase();
+  if (!allText.includes('yorkseed')) return '';
+  const cohostTerms = ['co-host','cohost','co host','hosted by yorkseed','yorkseed host','yorkseed presents','x yorkseed','& yorkseed','yorkseed &','yorkseed x','yorkseed global','yorkseed connect'];
+  if (cohostTerms.some(t => allText.includes(t))) return 'passport';
+  if (hostText.includes('yorkseed')) return 'passport';
+  const partnerTerms = ['community partner','media partner','in partnership','supported by yorkseed','powered by yorkseed'];
+  if (partnerTerms.some(t => allText.includes(t))) return 'partner';
+  return 'partner';
 }
 function submitEvent(skipValidation, ysOverride) {
   const name=document.getElementById('sub-name').value.trim(), date=document.getElementById('sub-date').value,
@@ -1344,50 +981,79 @@ function submitEvent(skipValidation, ysOverride) {
     ticket=document.getElementById('sub-ticket').value, type=slugifyCategory(document.getElementById('sub-type').value),
     notes=document.getElementById('sub-notes').value.trim(), drinks=document.getElementById('sub-drinks').checked,
     food=document.getElementById('sub-food').checked;
-  // Yorkseed: direct override (from Quick Add) → manual selection → auto-detect
   const ysManual = document.getElementById('sub-yorkseed') ? document.getElementById('sub-yorkseed').value : '';
   const yorkseed = ysOverride !== undefined ? ysOverride : (ysManual || detectYorkseed(name, host, notes));
-  console.log('submitEvent yorkseed:', yorkseed, '| override:', ysOverride);
   if(!name){alert('Please enter an event name.');return;}
   if(!skipValidation && !date){alert('Please select a date.');return;}
   if(!rsvp){alert('Please enter an RSVP link.');return;}
   const dup=findDuplicate(name,rsvp);
   if(dup){if(notes) dup.notes=(dup.notes?dup.notes+' · ':'')+notes;showSuccess('duplicate');render();return;}
   const finalDate = date || '2026-06-01';
-  const finalDay = dayLabelFromISO(finalDate);
   const newEvent={
-    id:'sub_'+Date.now(),name,host,
-    date: finalDate,
-    day: finalDay,
-    time,venue,neighborhood,
-    address:'New York, NY',types:[type||'community'],
+    id:'sub_'+Date.now(),name,host,date:finalDate,day:dayLabelFromISO(finalDate),
+    time,venue,neighborhood,address:'New York, NY',types:[type||'community'],
     free:ticket==='Free',drinks,food,ticket,notes,
     rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',
-    status:'Open',submitted:true,
-    yorkseed: yorkseed || undefined
+    status:'Open',submitted:true,yorkseed:yorkseed||undefined
   };
-  console.log('New event object:', newEvent);
   submittedEvents.push(newEvent);
   saveSubmitted();
-  activeDay = 'all';
-  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
-  const allTab = document.querySelector('.day-tab[data-date="all"]');
-  if (allTab) allTab.classList.add('active');
-  document.getElementById('dayTabs').innerHTML = '';
+  activeDay='all';
+  document.querySelectorAll('.day-tab').forEach(t=>t.classList.remove('active'));
+  const allTab=document.querySelector('.day-tab[data-date="all"]');
+  if(allTab) allTab.classList.add('active');
+  document.getElementById('dayTabs').innerHTML='';
   buildDayTabs();
   showSuccess('added');
   render();
   renderPassportHero();
   updateHeaderCount();
 }
+async function importFromLink() {
+  const url = document.getElementById('magic-url').value.trim();
+  if (!url || !url.startsWith('http')) { alert('Please paste a valid event URL.'); return; }
+  const btn=document.getElementById('magicBtn'), status=document.getElementById('magicStatus'),
+    statusIcon=document.getElementById('magicStatusIcon'), statusText=document.getElementById('magicStatusText');
+  btn.style.display='none'; status.style.display='block'; statusIcon.textContent='⏳'; statusText.textContent='Fetching event page…';
+  try {
+    const proxyUrl=APPS_SCRIPT_URL+'?action=parse_event&url='+encodeURIComponent(url);
+    let response, data;
+    try { response=await fetch(proxyUrl,{method:'GET',redirect:'follow'}); data=await response.json(); }
+    catch(fetchErr) { throw new Error('Could not reach Apps Script: '+fetchErr.message); }
+    if (!data.ok && data.status !== 200) throw new Error(data.message || data.error || JSON.stringify(data));
+    statusText.textContent='Got details, adding event…';
+    const evt=data.event;
+    if (!evt || !evt.name) throw new Error('No event data in response');
+    statusIcon.textContent='✅'; statusText.textContent='Details found! Adding to list…';
+    setTimeout(() => {
+      if(evt.name) document.getElementById('sub-name').value=evt.name;
+      if(evt.date){const sel=document.getElementById('sub-date');for(let o of sel.options){if(o.value===evt.date){sel.value=evt.date;break;}}}
+      if(evt.time) document.getElementById('sub-time').value=evt.time;
+      if(evt.host) document.getElementById('sub-host').value=evt.host;
+      if(evt.neighborhood) document.getElementById('sub-neighborhood').value=evt.neighborhood;
+      if(evt.venue) document.getElementById('sub-venue').value=evt.venue;
+      document.getElementById('sub-rsvp').value=url;
+      if(evt.ticket) document.getElementById('sub-ticket').value=evt.ticket;
+      if(evt.category){document.getElementById('sub-type').value=evt.category;onCatInput(evt.category);}
+      if(evt.notes) document.getElementById('sub-notes').value=evt.notes;
+      if(evt.drinks) document.getElementById('sub-drinks').checked=true;
+      if(evt.food) document.getElementById('sub-food').checked=true;
+      const ysDetected=detectYorkseed(evt.name,evt.host,evt.notes);
+      document.getElementById('sub-yorkseed').value=ysDetected;
+      submitEvent(true,ysDetected);
+    }, 600);
+  } catch(err) {
+    statusIcon.textContent='⚠️'; statusText.textContent='Error: '+err.message;
+    const mb2=document.getElementById('magicBtn'); if(mb2) mb2.style.display='block';
+  }
+}
 let updTargetEvent=null;
 function findEventByRsvp() {
   const rsvp=document.getElementById('upd-rsvp').value.trim(), label=document.getElementById('upd-found-label'), fields=document.getElementById('upd-fields');
   if(!rsvp||rsvp.length<6){label.textContent='';fields.style.display='none';updTargetEvent=null;return;}
-  // Normalise: strip protocol, trailing slash, query params
-  const norm = s => s.replace(/https?:\/\//,'').replace(/[?#].*/,'').replace(/\/$/,'').toLowerCase();
-  const cleanInput = norm(rsvp);
-  const found = allEvents().find(e => e.rsvp && norm(e.rsvp) === cleanInput);
+  const norm=s=>s.replace(/https?:\/\//,'').replace(/[?#].*/,'').replace(/\/$/,'').toLowerCase();
+  const cleanInput=norm(rsvp);
+  const found=allEvents().find(e=>e.rsvp&&norm(e.rsvp)===cleanInput);
   if(found){updTargetEvent=found;label.innerHTML=`<span style="color:#1a7a40;font-weight:600;">✓ Found: ${found.name}</span>`;document.getElementById('upd-event-name').textContent=found.name;fields.style.display='block';}
   else{updTargetEvent=null;label.innerHTML='<span style="color:#cc0000;">No matching event found. Try pasting just the base URL without ?ref=...</span>';fields.style.display='none';}
 }
@@ -1403,12 +1069,10 @@ async function submitUpdate() {
   if(newVenue) updTargetEvent.venue=newVenue;
   if(newHost) updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;
   if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}
-  // Save if it's a submitted event
   saveSubmitted();
   btn.disabled=false; btn.textContent='Apply Update';
-  // Reset to All Days so updated event is visible regardless of date change
-  activeDay = 'all';
-  document.getElementById('dayTabs').innerHTML = '';
+  activeDay='all';
+  document.getElementById('dayTabs').innerHTML='';
   buildDayTabs();
   showSuccess('updated');
   render();
@@ -1418,9 +1082,8 @@ function showSuccess(type) {
   const icon=document.getElementById('successIcon'), title=document.getElementById('successTitle'), msg=document.getElementById('successMsg');
   if(type==='added'){icon.textContent='✅';title.textContent='Event Added!';msg.textContent='Your event has been added to the list and is now visible to everyone.';}
   else if(type==='duplicate'){icon.textContent='🔀';title.textContent='Merged with Existing Event';msg.textContent='A similar event already exists. Your additional details have been merged in.';}
-  else if(type==='updated'){icon.textContent='✏️';title.textContent='Event Updated!';msg.textContent='The event has been updated with your new information. Changes are live.';}
-  document.getElementById('formSubmit').style.display='none';
-  document.getElementById('formUpdate').style.display='none';
+  else if(type==='updated'){icon.textContent='✏️';title.textContent='Event Updated!';msg.textContent='The event has been updated. Changes are live.';}
+  ['form-submit','form-update'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
   document.getElementById('successState').classList.add('show');
 }
 (function() {
@@ -1435,7 +1098,7 @@ function showSuccess(type) {
 })();
 </script>
 
-<!-- SUBMIT / UPDATE MODAL -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
@@ -1445,17 +1108,19 @@ function showSuccess(type) {
     <div class="modal-body">
       <div class="modal-tabs">
         <div class="modal-tab active" onclick="switchTab('quick')" id="tab-quick">✨ Quick Add</div>
-        <div class="modal-tab" onclick="switchTab('submit')" id="tab-submit">📝 Full Details</div>
+        <div class="modal-tab" onclick="switchTab('submit')" id="tab-submit">📝 Details</div>
         <div class="modal-tab" onclick="switchTab('update')" id="tab-update">✏️ Update</div>
+        <div class="modal-tab" onclick="switchTab('feature')" id="tab-feature" style="color:var(--gold);font-weight:600;">⭐ Feature</div>
       </div>
       <div class="success-state" id="successState">
         <div class="success-icon" id="successIcon">✅</div>
-        <h3 id="successTitle">Event Added!</h3>
-        <p id="successMsg">Your event has been added to the list.</p>
+        <h3 id="successTitle">Done!</h3>
+        <p id="successMsg"></p>
         <button class="form-submit" style="margin-top:16px;" onclick="closeModal()">Close</button>
       </div>
-      <!-- QUICK ADD TAB -->
-      <div id="formQuick">
+
+      <!-- QUICK ADD -->
+      <div id="form-quick">
         <div style="text-align:center;padding:8px 0 18px;">
           <div style="font-size:32px;margin-bottom:8px;">✨</div>
           <div style="font-size:15px;font-weight:700;color:var(--black);margin-bottom:6px;">Paste your event link</div>
@@ -1471,8 +1136,8 @@ function showSuccess(type) {
         </div>
       </div>
 
-      <!-- FULL DETAILS TAB -->
-      <div id="formSubmit" style="display:none;">
+      <!-- FULL DETAILS -->
+      <div id="form-submit" style="display:none;">
         <div class="modal-notice"><strong>Auto-approved</strong> for May 27 – June 8, 2026. Duplicates detected and merged automatically.</div>
         <div class="duplicate-warning" id="duplicateWarning">⚠️ <strong>Possible duplicate:</strong> <span id="duplicateEventName"></span>. Your details will be merged in.</div>
         <div class="form-group"><label>Event Name <span>*</span></label><input type="text" id="sub-name" placeholder="e.g. AI Happy Hour at SoHo House" oninput="checkDuplicate()"></div>
@@ -1496,10 +1161,7 @@ function showSuccess(type) {
           <div class="form-group"><label>Neighborhood</label><input type="text" id="sub-neighborhood" placeholder="e.g. SoHo, Midtown, FiDi"></div>
         </div>
         <div class="form-group"><label>Venue / Address</label><input type="text" id="sub-venue" placeholder="e.g. Soho House NYC, 29-35 9th Ave"></div>
-        <div class="form-group">
-          <label>RSVP / Registration Link <span>*</span></label>
-          <input type="url" id="sub-rsvp" placeholder="https://lu.ma/..." oninput="checkDuplicate()">
-        </div>
+        <div class="form-group"><label>RSVP / Registration Link <span>*</span></label><input type="url" id="sub-rsvp" placeholder="https://lu.ma/..." oninput="checkDuplicate()"><span id="rsvpBadge" class="verify-badge" style="display:none;"></span></div>
         <div class="form-group"><label>Ticket Type</label>
           <select id="sub-ticket">
             <option value="Free">Free</option><option value="Paid">Paid</option>
@@ -1510,8 +1172,8 @@ function showSuccess(type) {
         </div>
         <div class="form-group">
           <label>Category</label>
-          <input type="text" id="sub-type" placeholder="e.g. AI & Tech, Beauty Tech, Sport Tech…" autocomplete="off" style="margin-bottom:8px;" oninput="onCatInput(this.value)">
-          <div class="cat-chips" id="catChips">
+          <input type="text" id="sub-type" placeholder="e.g. AI & Tech, Fintech…" autocomplete="off" style="margin-bottom:8px;" oninput="onCatInput(this.value)">
+          <div class="cat-chips">
             <button type="button" class="cat-chip" data-val="AI & Tech">🤖 AI &amp; Tech</button>
             <button type="button" class="cat-chip" data-val="Fintech">💳 Fintech</button>
             <button type="button" class="cat-chip" data-val="VC & Investors">💼 VC &amp; Investors</button>
@@ -1528,7 +1190,7 @@ function showSuccess(type) {
         </div>
         <div class="form-group">
           <label>Yorkseed Relationship</label>
-          <div class="cat-chips" id="ysRelChips" style="margin-top:2px;">
+          <div class="cat-chips">
             <button type="button" class="cat-chip" data-ys-val="">None</button>
             <button type="button" class="cat-chip" data-ys-val="passport">⭐ Yorkseed Co-host</button>
             <button type="button" class="cat-chip" data-ys-val="partner">♥ Community / Media Partner</button>
@@ -1540,13 +1202,15 @@ function showSuccess(type) {
           <div class="form-group"><label><input type="checkbox" id="sub-drinks" style="width:auto;margin-right:5px;">Drinks included</label></div>
           <div class="form-group"><label><input type="checkbox" id="sub-food" style="width:auto;margin-right:5px;">Food included</label></div>
         </div>
-        <button class="form-submit" id="submitBtn" onclick="submitEvent()">Add Event to List</button>
+        <button class="form-submit" onclick="submitEvent()">Add Event to List</button>
       </div>
-      <div id="formUpdate" style="display:none;">
-        <div class="public-update-notice">💡 <strong>Anyone can update event info</strong> — changes go live immediately. Correct times, venues, hosts, or add notes.</div>
-        <div class="modal-notice">Paste the RSVP link of the event you want to update. We'll find the matching event and apply your changes instantly.</div>
+
+      <!-- UPDATE -->
+      <div id="form-update" style="display:none;">
+        <div class="public-update-notice">💡 <strong>Anyone can update event info</strong> — changes go live immediately.</div>
+        <div class="modal-notice">Paste the RSVP link of the event you want to update.</div>
         <div class="form-group">
-          <label>Event RSVP Link (to identify the event) <span>*</span></label>
+          <label>Event RSVP Link <span>*</span></label>
           <input type="url" id="upd-rsvp" placeholder="https://lu.ma/..." oninput="findEventByRsvp()">
           <div class="form-hint" id="upd-found-label"></div>
         </div>
@@ -1567,12 +1231,99 @@ function showSuccess(type) {
             </div>
             <div class="form-group"><label>New Time (if changed)</label><input type="text" id="upd-time" placeholder="e.g. 7:00 PM"></div>
           </div>
-          <div class="form-group"><label>New Venue / Address (if changed)</label><input type="text" id="upd-venue" placeholder="New location…"></div>
-          <div class="form-group"><label>New / Additional Host (if changed)</label><input type="text" id="upd-host" placeholder="e.g. Added: Stripe"></div>
+          <div class="form-group"><label>New Venue / Address</label><input type="text" id="upd-venue" placeholder="New location…"></div>
+          <div class="form-group"><label>New / Additional Host</label><input type="text" id="upd-host" placeholder="e.g. Added: Stripe"></div>
           <div class="form-group"><label>Update Notes</label><textarea id="upd-notes" placeholder="What changed?" style="min-height:60px;"></textarea></div>
           <button class="form-submit" id="updateBtn" onclick="submitUpdate()">Apply Update</button>
         </div>
       </div>
+
+      <!-- ⭐ FEATURE YOUR EVENT -->
+      <div id="form-feature" style="display:none;">
+        <div style="text-align:center;padding:6px 0 18px;">
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.65;">Get your event seen by thousands of founders and investors.<br>After payment, email <strong style="color:var(--black);">partnership@yorkseed.co</strong> with your RSVP link — we'll upgrade your listing within a few hours.</div>
+        </div>
+
+        <!-- BASIC -->
+        <div class="tier-card tier-basic">
+          <div class="tier-header">
+            <div>
+              <span class="ys-featured-badge" style="margin-bottom:6px;display:inline-flex;">★ Basic Featured</span>
+              <div class="tier-name" style="color:#0a0a0a;">Basic</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tier-price" style="color:#3355cc;">$150</div>
+              <div class="tier-price-sub">one-time</div>
+            </div>
+          </div>
+          <div class="tier-features" style="color:var(--gray-500);">
+            ✓ Featured badge on your card<br>
+            ✓ Top-of-day sort placement (absolute)<br>
+            ✓ Blue border highlight<br>
+            ✗ No hero carousel<br>
+            ✗ No newsletter or WhatsApp blast
+          </div>
+          <a href="https://buy.stripe.com/YOUR_BASIC_LINK" target="_blank" rel="noopener" class="tier-btn tier-btn-basic">Get Basic — $150 ↗</a>
+        </div>
+
+        <div class="tier-divider"><span>most popular</span></div>
+
+        <!-- PARTNER -->
+        <div class="tier-card tier-partner">
+          <div class="tier-header">
+            <div>
+              <span class="ys-partner-badge" style="margin-bottom:6px;display:inline-flex;">♥ Yorkseed Partner</span>
+              <div class="tier-name" style="color:#0a0a0a;">Partner</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tier-price" style="color:var(--red);">$400</div>
+              <div class="tier-price-sub">one-time</div>
+            </div>
+          </div>
+          <div class="tier-features" style="color:var(--gray-500);">
+            ✓ Warm cream card with red left border<br>
+            ✓ "♥ Yorkseed Partner" badge<br>
+            ✓ Top-of-day sort placement (absolute)<br>
+            ✓ Hero carousel placement<br>
+            ✓ WhatsApp channel blast<br>
+            ✓ Newsletter mention<br>
+            ✗ No co-host branding
+          </div>
+          <a href="https://buy.stripe.com/YOUR_PARTNER_LINK" target="_blank" rel="noopener" class="tier-btn tier-btn-partner">Get Partner — $400 ↗</a>
+        </div>
+
+        <div class="tier-divider"><span>full endorsement</span></div>
+
+        <!-- HEADLINE -->
+        <div class="tier-card tier-headline">
+          <div class="tier-header">
+            <div>
+              <span class="ys-passport-badge" style="margin-bottom:6px;display:inline-flex;">⭐ Passport Series</span>
+              <div class="tier-name" style="color:white;">Headline / Passport</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tier-price" style="color:var(--gold);">$900</div>
+              <div class="tier-price-sub" style="color:rgba(255,255,255,0.4);">one-time</div>
+            </div>
+          </div>
+          <div class="tier-features" style="color:rgba(255,255,255,0.6);">
+            ✓ Black card with gold border — Passport styling<br>
+            ✓ "⭐ Passport Series" gold badge<br>
+            ✓ Absolute top of every day it appears<br>
+            ✓ Gold hero carousel placement<br>
+            ✓ WhatsApp channel blast<br>
+            ✓ Newsletter feature<br>
+            ✓ Host line reads "Your Event x Yorkseed"<br>
+            ✓ Yorkseed co-host branding &amp; endorsement
+          </div>
+          <a href="https://buy.stripe.com/YOUR_HEADLINE_LINK" target="_blank" rel="noopener" class="tier-btn tier-btn-headline">Get Headline — $900 ↗</a>
+        </div>
+
+        <div style="margin-top:14px;padding:10px 12px;background:var(--gray-100);border-radius:7px;font-size:11.5px;color:var(--gray-500);line-height:1.6;text-align:center;">
+          Questions? Email <a href="mailto:partnership@yorkseed.co" style="color:var(--red);text-decoration:none;font-weight:600;">partnership@yorkseed.co</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1599,38 +1350,30 @@ function showSuccess(type) {
 
 <script>
 (function () {
-  const pill    = document.getElementById('liveViewersPill');
-  const countEl = document.getElementById('liveViewerCount');
-  function setCount(n) { if (!pill || !countEl) return; countEl.textContent = n; pill.style.display = 'inline-flex'; }
+  const pill=document.getElementById('liveViewersPill'), countEl=document.getElementById('liveViewerCount');
+  function setCount(n) { if(!pill||!countEl) return; countEl.textContent=n; pill.style.display='inline-flex'; }
   setCount(1);
-  try {
-    if (typeof WebSocket === 'undefined' || window.isSecureContext === false) return;
-  } catch(e) { return; }
-  const SUPABASE_URL      = 'https://vdjfrloafzgedcancpbu.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
+  try { if(typeof WebSocket==='undefined'||window.isSecureContext===false) return; } catch(e){return;}
+  const SUPABASE_URL='https://vdjfrloafzgedcancpbu.supabase.co';
+  const SUPABASE_ANON_KEY='sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
   function initPresence() {
     try {
-      const client  = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      const myId    = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
-      const channel = client.channel('yorkseed-nytw-2026', { config: { presence: { key: myId } } });
-      channel
-        .on('presence', { event: 'sync' }, () => { setCount(Math.max(Object.keys(channel.presenceState()).length, 1)); })
-        .subscribe(async (status) => {
-          if (status === 'SUBSCRIBED') { await channel.track({ joined_at: Date.now(), id: myId }); setTimeout(() => setCount(Math.max(Object.keys(channel.presenceState()).length, 1)), 800); }
-          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') setCount(1);
+      const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+      const myId=crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2);
+      const channel=client.channel('yorkseed-nytw-2026',{config:{presence:{key:myId}}});
+      channel.on('presence',{event:'sync'},()=>{setCount(Math.max(Object.keys(channel.presenceState()).length,1));})
+        .subscribe(async(status)=>{
+          if(status==='SUBSCRIBED'){await channel.track({joined_at:Date.now(),id:myId});setTimeout(()=>setCount(Math.max(Object.keys(channel.presenceState()).length,1)),800);}
+          if(status==='CHANNEL_ERROR'||status==='TIMED_OUT') setCount(1);
         });
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden') channel.untrack();
-        else channel.track({ joined_at: Date.now(), id: myId });
-      });
-      window.addEventListener('beforeunload', () => channel.untrack());
-      window.addEventListener('pagehide', () => channel.untrack());
-    } catch(err) { setCount(1); }
+      document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')channel.untrack();else channel.track({joined_at:Date.now(),id:myId});});
+      window.addEventListener('beforeunload',()=>channel.untrack());
+      window.addEventListener('pagehide',()=>channel.untrack());
+    } catch(err){setCount(1);}
   }
-  const s = document.createElement('script');
-  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-  s.onload  = initPresence;
-  s.onerror = () => setCount(1);
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+  s.onload=initPresence; s.onerror=()=>setCount(1);
   document.head.appendChild(s);
 })();
 </script>
