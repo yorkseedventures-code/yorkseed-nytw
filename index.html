@@ -979,16 +979,20 @@ if (noneChip) noneChip.classList.add('active');
 
 // Auto-detect Yorkseed relationship from name/host/notes text
 function detectYorkseed(name, host, notes) {
-  const all = ((name||'') + ' ' + (host||'') + ' ' + (notes||'')).toLowerCase();
-  const isYs = all.includes('yorkseed');
-  if (!isYs) return '';
-  // Co-host signals
-  const cohostTerms = ['co-host','cohost','co host','hosted by yorkseed','yorkseed host','yorkseed presents','x yorkseed','& yorkseed','yorkseed &','yorkseed x '];
-  if (cohostTerms.some(t => all.includes(t))) return 'passport';
+  const allText = ((name||'') + ' ' + (host||'') + ' ' + (notes||'')).toLowerCase();
+  const hostText = (host||'').toLowerCase();
+  if (!allText.includes('yorkseed')) return '';
+  // If Yorkseed is a host/organizer → Passport Series
+  const cohostTerms = ['co-host','cohost','co host','hosted by yorkseed','yorkseed host',
+    'yorkseed presents','x yorkseed','& yorkseed','yorkseed &','yorkseed x',
+    'yorkseed global','yorkseed connect'];
+  if (cohostTerms.some(t => allText.includes(t))) return 'passport';
+  // If Yorkseed appears directly in the host field → Passport Series
+  if (hostText.includes('yorkseed')) return 'passport';
   // Partner signals
   const partnerTerms = ['community partner','media partner','in partnership','supported by yorkseed','powered by yorkseed'];
-  if (partnerTerms.some(t => all.includes(t))) return 'partner';
-  // Generic Yorkseed mention → partner
+  if (partnerTerms.some(t => allText.includes(t))) return 'partner';
+  // Any other Yorkseed mention → partner
   return 'partner';
 }
 
