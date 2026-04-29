@@ -347,6 +347,19 @@
   .success-icon { font-size: 40px; margin-bottom: 12px; }
   .success-state h3 { font-size: 17px; font-weight: 700; color: var(--black); margin: 0 0 8px; }
   .success-state p { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin: 0; }
+  .cat-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;
+  }
+  .cat-chip {
+    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    cursor: pointer; border: 1.5px solid var(--border);
+    background: white; color: var(--gray-500);
+    transition: all 0.15s; white-space: nowrap; user-select: none;
+    font-family: 'Sora', sans-serif; line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cat-chip:hover { border-color: var(--red); color: var(--red); }
+  .cat-chip.active { background: var(--red); border-color: var(--red); color: white; }
   .verify-badge {
     display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px;
     font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 6px;
@@ -888,6 +901,15 @@ function buildDayTabs() {
   });
 }
 
+// Category chip selection
+document.querySelectorAll('.cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('sub-type').value = chip.dataset.val;
+  });
+});
+
 document.querySelectorAll('.filter-chip[data-type]').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('.filter-chip[data-type]').forEach(c => c.classList.remove('active'));
@@ -965,6 +987,11 @@ function resetForms() {
   const rb = document.getElementById('rsvpBadge'); if(rb) rb.style.display='none';
   const uf = document.getElementById('upd-fields'); if(uf) uf.style.display='none';
   const ul = document.getElementById('upd-found-label'); if(ul) ul.textContent='';
+  // Reset category chips to default (ai)
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  const defaultChip = document.querySelector('.cat-chip[data-val="ai"]');
+  if (defaultChip) defaultChip.classList.add('active');
+  const subType = document.getElementById('sub-type'); if(subType) subType.value = 'ai';
 }
 function openUpdateForEvent(ev, rsvpLink) {
   if (ev) ev.stopPropagation();
@@ -1121,24 +1148,30 @@ function showSuccess(type) {
           <input type="url" id="sub-rsvp" placeholder="https://lu.ma/..." oninput="scheduleVerify()">
           <div class="form-hint">We'll verify this link is reachable before adding.</div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label>Ticket Type</label>
-            <select id="sub-ticket">
-              <option value="Free">Free</option><option value="Paid">Paid</option>
-              <option value="Invite Only">Invite Only</option>
-              <option value="Free (Approval Required)">Free (Approval Required)</option>
-              <option value="Application Required">Application Required</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Category</label>
-            <select id="sub-type">
-              <option value="ai">AI &amp; Tech</option><option value="fintech">Fintech</option>
-              <option value="vc">VC / Investors</option><option value="web3">Web3</option>
-              <option value="saas">SaaS</option><option value="deeptech">Deep Tech</option>
-              <option value="women">Women in Tech</option><option value="marketing">Marketing</option>
-              <option value="legal">Legal</option><option value="health">Health</option>
-              <option value="climate">Climate</option><option value="community">Community</option>
-            </select>
+        <div class="form-group"><label>Ticket Type</label>
+          <select id="sub-ticket">
+            <option value="Free">Free</option><option value="Paid">Paid</option>
+            <option value="Invite Only">Invite Only</option>
+            <option value="Free (Approval Required)">Free (Approval Required)</option>
+            <option value="Application Required">Application Required</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Category <span>*</span></label>
+          <input type="hidden" id="sub-type" value="ai">
+          <div class="cat-chips" id="catChips">
+            <button type="button" class="cat-chip active" data-val="ai">🤖 AI &amp; Tech</button>
+            <button type="button" class="cat-chip" data-val="fintech">💳 Fintech</button>
+            <button type="button" class="cat-chip" data-val="vc">💼 VC &amp; Investors</button>
+            <button type="button" class="cat-chip" data-val="web3">🔗 Web3</button>
+            <button type="button" class="cat-chip" data-val="saas">☁️ SaaS</button>
+            <button type="button" class="cat-chip" data-val="deeptech">🔬 Deep Tech</button>
+            <button type="button" class="cat-chip" data-val="women">♀️ Women in Tech</button>
+            <button type="button" class="cat-chip" data-val="marketing">📣 Marketing</button>
+            <button type="button" class="cat-chip" data-val="legal">⚖️ Legal</button>
+            <button type="button" class="cat-chip" data-val="health">🏥 Health</button>
+            <button type="button" class="cat-chip" data-val="climate">🌱 Climate</button>
+            <button type="button" class="cat-chip" data-val="community">🤝 Community</button>
           </div>
         </div>
         <div class="form-group"><label>Description / Notes</label><textarea id="sub-notes" placeholder="Brief description of the event…"></textarea></div>
