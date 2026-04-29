@@ -1027,6 +1027,16 @@ document.getElementById('headerCount').textContent = allEvents().length + ' even
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-TrSR3O--PcsozWxzyUNJl6vw3wNgRx7SpbjmPgGjVM3v2ohaO8ZwIVK0vYd4QgVviA/exec";
 
+// ── STRIPE PAYMENT LINKS ──
+const STRIPE = {
+  basic:        'https://buy.stripe.com/bJe5kw18b6Sy6bS9UNbo40b',
+  partner:      'https://buy.stripe.com/3cI5kwbMP7WC7fW8QJbo40c',
+  headline:     'https://buy.stripe.com/eVqaEQ2cfb8OeIo4Atbo40f',
+  logo:         'https://buy.stripe.com/3cI5kw5or3Gm43K0kdbo40e',
+  pack3:        'https://buy.stripe.com/8x29AMdUX1ye57Off7bo40h',
+  allaccess:    'https://buy.stripe.com/bJeeV6dUX3GmgQwc2Vbo40i'
+};
+
 const GATE_TRIGGER = 3;
 let eventOpenCount = 0, gateShown = false, gateCleared = false;
 try { if (localStorage.getItem('ys_nytw_gate_cleared') === '1') gateCleared = true; } catch(e) {}
@@ -1433,7 +1443,7 @@ function showSuccess(type) {
         </div>
       </div>
 
-      <!-- ⭐ FEATURE YOUR EVENT -->
+  <!-- ⭐ FEATURE YOUR EVENT -->
       <div id="form-feature" style="display:none;">
         <div style="text-align:center;padding:6px 0 18px;">
           <div style="font-size:11px;color:var(--gray-500);line-height:1.65;">Get your event seen by thousands of founders and investors.<br>After payment, email <strong style="color:var(--black);">partnership@yorkseed.co</strong> with your RSVP link — we'll upgrade your listing within a few hours.</div>
@@ -1448,15 +1458,15 @@ function showSuccess(type) {
             </div>
             <div style="text-align:right;">
               <div class="tier-price" style="color:#3355cc;">$150</div>
-              <div class="tier-price-sub">one-time</div>
+              <div class="tier-price-sub">one-time · 1 event</div>
             </div>
           </div>
           <div class="tier-features" style="color:var(--gray-500);">
             ✓ Featured badge on your card<br>
-            ✓ Top-of-day sort placement (absolute)<br>
+            ✓ Top-of-day sort placement<br>
             ✓ Blue border highlight<br>
             ✗ No hero carousel<br>
-            ✗ No newsletter or WhatsApp blast
+            ✗ No WhatsApp blast or newsletter
           </div>
           <a href="https://buy.stripe.com/bJe5kw18b6Sy6bS9UNbo40b" target="_blank" rel="noopener" class="tier-btn tier-btn-basic">Get Basic — $150 ↗</a>
         </div>
@@ -1472,17 +1482,17 @@ function showSuccess(type) {
             </div>
             <div style="text-align:right;">
               <div class="tier-price" style="color:var(--red);">$400</div>
-              <div class="tier-price-sub">one-time</div>
+              <div class="tier-price-sub">one-time · 1 event</div>
             </div>
           </div>
           <div class="tier-features" style="color:var(--gray-500);">
-            ✓ Warm cream card with red left border<br>
-            ✓ "♥ Yorkseed Partner" badge<br>
-            ✓ Top-of-day sort placement (absolute)<br>
+            ✓ Warm cream card with Yorkseed Partner badge<br>
+            ✓ Top-of-day sort placement<br>
             ✓ Hero carousel placement<br>
-            ✓ WhatsApp channel blast<br>
+            ✓ WhatsApp blast<br>
             ✓ Newsletter mention<br>
-            ✗ No co-host branding
+            ✗ No co-host branding<br>
+            ✗ No logo on sponsor strip
           </div>
           <a href="https://buy.stripe.com/3cI5kwbMP7WC7fW8QJbo40c" target="_blank" rel="noopener" class="tier-btn tier-btn-partner">Get Partner — $400 ↗</a>
         </div>
@@ -1497,27 +1507,83 @@ function showSuccess(type) {
               <div class="tier-name" style="color:white;">Headline / Passport</div>
             </div>
             <div style="text-align:right;">
-              <div class="tier-price" style="color:var(--gold);">$900</div>
-              <div class="tier-price-sub" style="color:rgba(255,255,255,0.4);">one-time</div>
+              <div class="tier-price" style="color:var(--gold);">$1,000</div>
+              <div class="tier-price-sub" style="color:rgba(255,255,255,0.4);">one-time · 1 event</div>
             </div>
           </div>
           <div class="tier-features" style="color:rgba(255,255,255,0.6);">
-            ✓ Black card with gold border — Passport styling<br>
-            ✓ "⭐ Passport Series" gold badge<br>
+            ✓ Black gold Passport Series card<br>
             ✓ Absolute top of every day it appears<br>
             ✓ Gold hero carousel placement<br>
-            ✓ WhatsApp channel blast<br>
+            ✓ WhatsApp blast<br>
             ✓ Newsletter feature<br>
             ✓ Host line reads "Your Event x Yorkseed"<br>
-            ✓ Yorkseed co-host branding &amp; endorsement
+            ✓ Yorkseed co-host branding &amp; endorsement<br>
+            ✗ No logo on sponsor strip
           </div>
-          <a href="https://buy.stripe.com/00w4gs9EHb8O9o41ohbo40d" target="_blank" rel="noopener" class="tier-btn tier-btn-headline">Get Headline — $900 ↗</a>
+          <a href="https://buy.stripe.com/eVqaEQ2cfb8OeIo4Atbo40f" target="_blank" rel="noopener" class="tier-btn tier-btn-headline">Get Headline — $1,000 ↗</a>
         </div>
 
-        <div style="margin-top:14px;padding:10px 12px;background:var(--gray-100);border-radius:7px;font-size:11.5px;color:var(--gray-500);line-height:1.6;text-align:center;">
-          Questions? Email <a href="mailto:partnership@yorkseed.co" style="color:var(--red);text-decoration:none;font-weight:600;">partnership@yorkseed.co</a>
+        <div class="tier-divider"><span>logo on sponsor strip</span></div>
+
+        <!-- LOGO ONLY -->
+        <div class="tier-card" style="border:1.5px solid #e8e8e8;background:#fafafa;">
+          <div class="tier-header">
+            <div>
+              <span style="display:inline-flex;align-items:center;gap:4px;background:#0a0a0a;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;">🏢 Logo Sponsor</span>
+              <div class="tier-name" style="color:#0a0a0a;">Logo Only</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tier-price" style="color:#0a0a0a;">$1,500</div>
+              <div class="tier-price-sub">one-time · no event</div>
+            </div>
+          </div>
+          <div class="tier-features" style="color:var(--gray-500);">
+            ✓ Logo on the Yorkseed NYTW sponsor strip<br>
+            ✓ Year-long exposure until NY Tech Week 2027<br>
+            ✓ Maximum exposure to founders, investors &amp; operators<br>
+            ✓ Linked to your website<br>
+            ✓ No event listing required<br>
+            ✗ Limited to 6 slots total
+          </div>
+          <a href="https://buy.stripe.com/3cI5kw5or3Gm43K0kdbo40e" target="_blank" rel="noopener" class="tier-btn" style="background:#0a0a0a;color:white;display:block;width:100%;padding:9px;text-align:center;border-radius:7px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;text-decoration:none;">Get Logo Sponsor — $1,500 ↗</a>
         </div>
-      </div>
+
+        <div class="tier-divider"><span>multi-event packages</span></div>
+
+        <!-- PARTNER 3-PACK -->
+        <div class="tier-card tier-headline">
+          <div class="tier-header">
+            <div>
+              <span class="ys-passport-badge" style="margin-bottom:6px;display:inline-flex;">⭐ Partner 3-Pack</span>
+              <div class="tier-name" style="color:white;">Partner 3-Pack</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tier-price" style="color:var(--gold);">$2,500</div>
+              <div class="tier-price-sub" style="color:rgba(255,255,255,0.4);">one-time · 3 events</div>
+            </div>
+          </div>
+          <div class="tier-features" style="color:rgba(255,255,255,0.6);">
+            ✓ Passport Series treatment for 3 events<br>
+            ✓ Absolute top-of-day for all 3 events<br>
+            ✓ Gold hero carousel for all 3 events<br>
+            ✓ WhatsApp blast for all 3 events<br>
+            ✓ Newsletter feature for all 3 events<br>
+            ✓ "Your Event x Yorkseed" on all 3 listings<br>
+            ✓ Logo on sponsor strip<br>
+            ✓ <strong style="color:var(--gold);">Logo &amp; branding stay live until NYTW 2027</strong><br>
+            ✓ Saves $500 vs 3 individual Headline slots
+          </div>
+          <a href="https://buy.stripe.com/8x29AMdUX1ye57Off7bo40h" target="_blank" rel="noopener" class="tier-btn tier-btn-headline">Get 3-Pack — $2,500 ↗</a>
+        </div>
+
+        <div class="tier-divider"><span>best value</span></div>
+
+        <!-- PARTNER ALL-ACCESS -->
+        <div class="tier-card tier-headline" style="border-color:#e8d5aa;box-shadow:0 4px 24px rgba(201,168,76,0.25);">
+          <div class="tier-header">
+            <div>
+              <span class="ys-passport-badge" style="margin-bottom:6px;display:inline
 
     </div>
   </div>
