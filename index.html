@@ -8,6 +8,8 @@
 <meta name="author" content="Jessica Sophia Wong — Yorkseed">
 <meta name="copyright" content="© 2026 Yorkseed. All rights reserved. nyftw.yorkseed.co">
 <meta name="robots" content="index, follow">
+<link rel="icon" type="image/x-icon" href="https://yorkseed.co/favicon.ico">
+<link rel="apple-touch-icon" href="https://yorkseed.co/favicon.ico">
 <link rel="canonical" href="https://nyftw.yorkseed.co">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nyftw.yorkseed.co">
@@ -368,6 +370,107 @@
     <div class="event-count-pill" id="headerCount">— events</div>
   </div>
 </header>
+
+
+<!-- 📱 ADD TO HOME SCREEN BANNER -->
+<div id="pwaBanner" style="display:none;background:#0a0a0a;border-bottom:1px solid rgba(201,168,76,0.3);padding:10px 20px;">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:20px;">📱</span>
+      <div>
+        <div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:white;line-height:1.3;">Save this to your Home Screen for quick access all week</div>
+        <div id="pwaInstructions" style="font-family:'Sora',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;"></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button id="pwaInstallBtn" style="display:none;background:var(--gold);color:#0a0a0a;font-family:'Sora',sans-serif;font-size:11px;font-weight:700;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;">Add to Home Screen</button>
+      <button onclick="document.getElementById('pwaHowTo').style.display=document.getElementById('pwaHowTo').style.display==='none'?'block':'none'" style="background:rgba(255,255,255,0.1);color:white;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);cursor:pointer;white-space:nowrap;">How to ↓</button>
+      <button onclick="dismissPWA()" style="background:transparent;color:rgba(255,255,255,0.4);border:none;cursor:pointer;font-size:18px;padding:2px 4px;line-height:1;">✕</button>
+    </div>
+  </div>
+  <div id="pwaHowTo" style="display:none;max-width:900px;margin:10px auto 0;padding:12px 14px;background:rgba(255,255,255,0.05);border-radius:8px;border:1px solid rgba(255,255,255,0.1);">
+    <div id="pwaIOS" style="display:none;">
+      <div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px;">iPhone / iPad (Safari)</div>
+      <div style="font-family:'Sora',sans-serif;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8;">
+        1. Tap the <strong style="color:white;">Share</strong> button at the bottom of Safari (the box with an arrow pointing up ↑)<br>
+        2. Scroll down and tap <strong style="color:white;">"Add to Home Screen"</strong><br>
+        3. Tap <strong style="color:white;">"Add"</strong> in the top right — done! ✓
+      </div>
+    </div>
+    <div id="pwaAndroid" style="display:none;">
+      <div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px;">Android (Chrome)</div>
+      <div style="font-family:'Sora',sans-serif;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8;">
+        1. Tap the <strong style="color:white;">three dots menu</strong> (⋮) in the top right of Chrome<br>
+        2. Tap <strong style="color:white;">"Add to Home screen"</strong><br>
+        3. Tap <strong style="color:white;">"Add"</strong> — done! ✓
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'ys_pwa_dismissed_v2';
+  var MAY28 = new Date('2026-05-28T00:00:00');
+
+  function isDismissed() {
+    try { return localStorage.getItem(STORAGE_KEY) === '1'; } catch(e) { return false; }
+  }
+  function dismissPWA() {
+    try { localStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
+    document.getElementById('pwaBanner').style.display = 'none';
+  }
+  window.dismissPWA = dismissPWA;
+
+  // Only show on mobile/tablet
+  var ua = navigator.userAgent;
+  var isIOS = /iphone|ipad|ipod/i.test(ua);
+  var isAndroid = /android/i.test(ua);
+  if (!isIOS && !isAndroid) return;
+
+  if (isDismissed()) return;
+
+  var today = new Date();
+  var isFirstVisit = (function() {
+    try { return !localStorage.getItem('ys_nytw_gate_cleared'); } catch(e) { return true; }
+  })();
+  var isMay28Plus = today >= MAY28;
+
+  // Show on first visit OR from May 28 onwards
+  if (!isFirstVisit && !isMay28Plus) return;
+
+  var banner = document.getElementById('pwaBanner');
+  var instructions = document.getElementById('pwaInstructions');
+  var installBtn = document.getElementById('pwaInstallBtn');
+
+  if (isIOS) {
+    instructions.textContent = 'Tap Share ↑ then "Add to Home Screen"';
+    document.getElementById('pwaIOS').style.display = 'block';
+  } else {
+    instructions.textContent = 'Tap ⋮ menu then "Add to Home screen"';
+    document.getElementById('pwaAndroid').style.display = 'block';
+  }
+
+  // Chrome/Android install prompt
+  var deferredPrompt;
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'inline-block';
+    installBtn.addEventListener('click', function() {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function() {
+        installBtn.style.display = 'none';
+        deferredPrompt = null;
+        dismissPWA();
+      });
+    });
+  });
+
+  // Show after 3 seconds
+  setTimeout(function() { banner.style.display = 'block'; }, 3000);
+})();
+</script>
 
 <button class="mobile-fab" onclick="openModal('submit')" aria-label="Submit an event">+</button>
 
