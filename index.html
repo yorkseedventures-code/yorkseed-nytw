@@ -951,7 +951,7 @@ async function importFromLink() {
       // Auto-detect yorkseed relationship
       const ysDetected = detectYorkseed(evt.name, evt.host, evt.notes);
       document.getElementById('sub-yorkseed').value = ysDetected;
-      submitEvent();
+      submitEvent(true); // skip date validation for Quick Add
     }, 600);
   } catch(err) {
     statusIcon.textContent = '⚠️';
@@ -1150,7 +1150,7 @@ function slugifyCategory(raw) {
   const key = (raw||'').toLowerCase().trim();
   return map[key] || key.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'community';
 }
-function submitEvent() {
+function submitEvent(skipValidation) {
   const name=document.getElementById('sub-name').value.trim(), date=document.getElementById('sub-date').value,
     time=document.getElementById('sub-time').value.trim()||'TBD', host=document.getElementById('sub-host').value.trim(),
     neighborhood=document.getElementById('sub-neighborhood').value.trim()||'Manhattan',
@@ -1158,16 +1158,33 @@ function submitEvent() {
     ticket=document.getElementById('sub-ticket').value, type=slugifyCategory(document.getElementById('sub-type').value),
     notes=document.getElementById('sub-notes').value.trim(), drinks=document.getElementById('sub-drinks').checked,
     food=document.getElementById('sub-food').checked;
-  // Yorkseed relationship: manual selection takes priority, then auto-detect
   const ysManual = document.getElementById('sub-yorkseed').value;
   const yorkseed = ysManual || detectYorkseed(name, host, notes);
   if(!name){alert('Please enter an event name.');return;}
-  if(!date){alert('Please select a date.');return;}
+  if(!skipValidation && !date){alert('Please select a date.');return;}
   if(!rsvp){alert('Please enter an RSVP link.');return;}
   const dup=findDuplicate(name,rsvp);
   if(dup){if(notes) dup.notes=(dup.notes?dup.notes+' · ':'')+notes;showSuccess('duplicate');render();return;}
-  const newEvent={id:9000+submittedEvents.length+1,name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],free:ticket==='Free',drinks,food,ticket,notes,rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',status:'Open',submitted:true,yorkseed:yorkseed||undefined};
-  submittedEvents.push(newEvent);saveSubmitted();showSuccess('added');render();updateHeaderCount();
+  // Use a fallback date label if date is missing
+  const dayLabel = date ? dayLabelFromISO(date) : 'Date TBC';
+  const newEvent={
+    id:'sub_'+Date.now(),name,host,
+    date:date||'2026-06-01', // fallback so it renders somewhere
+    day:dayLabel,time,venue,neighborhood,
+    address:'New York, NY',types:[type||'community'],
+    free:ticket==='Free',drinks,food,ticket,notes,
+    rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',
+    status:'Open',submitted:true,
+    yorkseed:yorkseed||undefined
+  };
+  submittedEvents.push(newEvent);
+  saveSubmitted();
+  // Rebuild day tabs in case new date appeared
+  document.getElementById('dayTabs').innerHTML = '';
+  buildDayTabs();
+  showSuccess('added');
+  render();
+  updateHeaderCount();
 }
 let updTargetEvent=null;
 function findEventByRsvp() {
