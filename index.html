@@ -913,49 +913,13 @@ async function importFromLink() {
   statusIcon.textContent = '⏳';
   statusText.textContent = 'Fetching event page…';
   try {
-    // Use Claude API to extract event details from the URL
-    const prompt = `You are extracting event details from an event page URL for a NY Tech Week 2026 event list (May 27 – June 8, 2026).
-
-Fetch and parse this event URL: ${url}
-
-Extract and return ONLY a JSON object with these exact fields (no markdown, no explanation, just raw JSON):
-{
-  "name": "full event name",
-  "host": "organizer or host name(s)",
-  "date": "YYYY-MM-DD format, must be between 2026-05-27 and 2026-06-08",
-  "time": "start time in 12h format e.g. 6:30 PM",
-  "venue": "venue name and/or address",
-  "neighborhood": "NYC neighborhood e.g. SoHo, Midtown, FiDi, Lower East Side",
-  "address": "full street address if available",
-  "ticket": "one of: Free, Paid, Invite Only, Free (Approval Required), Application Required",
-  "category": "one of: AI & Tech, Fintech, VC & Investors, Web3, SaaS, Deep Tech, Women in Tech, Marketing, Legal, Health, Climate, Community",
-  "notes": "1-2 sentence description of the event",
-  "drinks": true or false,
-  "food": true or false
-}
-
-If the date is not between May 27 and June 8 2026, still extract it but set date to the closest valid date and add a note.
-If you cannot determine a field, use an empty string or false for booleans.`;
-
+    // Use Apps Script proxy to fetch page and call Claude
     statusText.textContent = 'Reading event details…';
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
+    const proxyUrl = APPS_SCRIPT_URL + '?action=parse_event&url=' + encodeURIComponent(url);
+    const response = await fetch(proxyUrl, { method: 'GET', redirect: 'follow' });
     const data = await response.json();
-    // Find text content in response
-    const textBlock = (data.content || []).find(b => b.type === 'text');
-    if (!textBlock) throw new Error('No response from AI');
-    // Parse JSON from response
-    const jsonMatch = textBlock.text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('Could not parse event details');
-    const evt = JSON.parse(jsonMatch[0]);
+    if (!data.ok) throw new Error(data.error || 'Parse failed');
+    const evt = data.event;
     statusIcon.textContent = '✅';
     statusText.textContent = 'Details found! Adding to list…';
     // Fill the form fields (in formSubmit) and submit automatically
@@ -975,6 +939,9 @@ If you cannot determine a field, use an empty string or false for booleans.`;
       if (evt.notes) document.getElementById('sub-notes').value = evt.notes;
       if (evt.drinks) document.getElementById('sub-drinks').checked = true;
       if (evt.food) document.getElementById('sub-food').checked = true;
+      // Auto-detect yorkseed relationship
+      const ysDetected = detectYorkseed(evt.name, evt.host, evt.notes);
+      document.getElementById('sub-yorkseed').value = ysDetected;
       submitEvent();
     }, 600);
   } catch(err) {
@@ -982,6 +949,33 @@ If you cannot determine a field, use an empty string or false for booleans.`;
     statusText.textContent = 'Could not auto-fill. Switch to Full Details tab to add manually.';
     const mb2 = document.getElementById('magicBtn'); if(mb2) mb2.style.display = 'block';
   }
+}
+
+// Yorkseed relationship chips
+document.querySelectorAll('.cat-chip[data-ys-val]').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.cat-chip[data-ys-val]').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('sub-yorkseed').value = chip.dataset.ysVal;
+  });
+});
+// Default to "None"
+const noneChip = document.querySelector('.cat-chip[data-ys-val=""]');
+if (noneChip) noneChip.classList.add('active');
+
+// Auto-detect Yorkseed relationship from name/host/notes text
+function detectYorkseed(name, host, notes) {
+  const all = ((name||'') + ' ' + (host||'') + ' ' + (notes||'')).toLowerCase();
+  const isYs = all.includes('yorkseed');
+  if (!isYs) return '';
+  // Co-host signals
+  const cohostTerms = ['co-host','cohost','co host','hosted by yorkseed','yorkseed host','yorkseed presents','x yorkseed','& yorkseed','yorkseed &','yorkseed x '];
+  if (cohostTerms.some(t => all.includes(t))) return 'passport';
+  // Partner signals
+  const partnerTerms = ['community partner','media partner','in partnership','supported by yorkseed','powered by yorkseed'];
+  if (partnerTerms.some(t => all.includes(t))) return 'partner';
+  // Generic Yorkseed mention → partner
+  return 'partner';
 }
 
 // Category chip selection — fills the text input
@@ -1080,6 +1074,10 @@ function resetForms() {
   // Reset category chips and text input
   document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
   const subType = document.getElementById('sub-type'); if(subType) subType.value = '';
+  // Reset yorkseed relationship
+  document.querySelectorAll('.cat-chip[data-ys-val]').forEach(c => c.classList.remove('active'));
+  const noneYs = document.querySelector('.cat-chip[data-ys-val=""]'); if(noneYs) noneYs.classList.add('active');
+  const subYs = document.getElementById('sub-yorkseed'); if(subYs) subYs.value = '';
   // Reset magic URL and status
   const mu = document.getElementById('magic-url'); if(mu) mu.value = '';
   const ms = document.getElementById('magicStatus'); if(ms) ms.style.display = 'none';
@@ -1151,12 +1149,15 @@ function submitEvent() {
     ticket=document.getElementById('sub-ticket').value, type=slugifyCategory(document.getElementById('sub-type').value),
     notes=document.getElementById('sub-notes').value.trim(), drinks=document.getElementById('sub-drinks').checked,
     food=document.getElementById('sub-food').checked;
+  // Yorkseed relationship: manual selection takes priority, then auto-detect
+  const ysManual = document.getElementById('sub-yorkseed').value;
+  const yorkseed = ysManual || detectYorkseed(name, host, notes);
   if(!name){alert('Please enter an event name.');return;}
   if(!date){alert('Please select a date.');return;}
   if(!rsvp){alert('Please enter an RSVP link.');return;}
   const dup=findDuplicate(name,rsvp);
   if(dup){if(notes) dup.notes=(dup.notes?dup.notes+' · ':'')+notes;showSuccess('duplicate');render();return;}
-  const newEvent={id:9000+submittedEvents.length+1,name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],free:ticket==='Free',drinks,food,ticket,notes,rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',status:'Open',submitted:true};
+  const newEvent={id:9000+submittedEvents.length+1,name,host,date,day:dayLabelFromISO(date),time,venue,neighborhood,address:'New York, NY',types:[type],free:ticket==='Free',drinks,food,ticket,notes,rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',status:'Open',submitted:true,yorkseed:yorkseed||undefined};
   submittedEvents.push(newEvent);saveSubmitted();showSuccess('added');render();updateHeaderCount();
 }
 let updTargetEvent=null;
@@ -1294,6 +1295,15 @@ function showSuccess(type) {
             <button type="button" class="cat-chip" data-val="Climate">🌱 Climate</button>
             <button type="button" class="cat-chip" data-val="Community">🤝 Community</button>
           </div>
+        </div>
+        <div class="form-group">
+          <label>Yorkseed Relationship</label>
+          <div class="cat-chips" id="ysRelChips" style="margin-top:2px;">
+            <button type="button" class="cat-chip" data-ys-val="">None</button>
+            <button type="button" class="cat-chip" data-ys-val="passport">⭐ Yorkseed Co-host</button>
+            <button type="button" class="cat-chip" data-ys-val="partner">♥ Community / Media Partner</button>
+          </div>
+          <input type="hidden" id="sub-yorkseed" value="">
         </div>
         <div class="form-group"><label>Description / Notes</label><textarea id="sub-notes" placeholder="Brief description of the event…"></textarea></div>
         <div class="form-row">
