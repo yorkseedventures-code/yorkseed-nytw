@@ -913,13 +913,22 @@ async function importFromLink() {
   statusIcon.textContent = '⏳';
   statusText.textContent = 'Fetching event page…';
   try {
-    // Use Apps Script proxy to fetch page and call Claude
-    statusText.textContent = 'Reading event details…';
+    // Use Apps Script proxy to fetch page and call OpenAI
+    statusText.textContent = 'Fetching event page…';
     const proxyUrl = APPS_SCRIPT_URL + '?action=parse_event&url=' + encodeURIComponent(url);
-    const response = await fetch(proxyUrl, { method: 'GET', redirect: 'follow' });
-    const data = await response.json();
-    if (!data.ok) throw new Error(data.error || 'Parse failed');
+    let response, data;
+    try {
+      response = await fetch(proxyUrl, { method: 'GET', redirect: 'follow' });
+      data = await response.json();
+    } catch(fetchErr) {
+      throw new Error('Could not reach Apps Script: ' + fetchErr.message);
+    }
+    if (!data.ok && data.status !== 200) {
+      throw new Error(data.message || data.error || JSON.stringify(data));
+    }
+    statusText.textContent = 'Got details, adding event…';
     const evt = data.event;
+    if (!evt || !evt.name) throw new Error('No event data in response');
     statusIcon.textContent = '✅';
     statusText.textContent = 'Details found! Adding to list…';
     // Fill the form fields (in formSubmit) and submit automatically
@@ -946,7 +955,7 @@ async function importFromLink() {
     }, 600);
   } catch(err) {
     statusIcon.textContent = '⚠️';
-    statusText.textContent = 'Could not auto-fill. Switch to Full Details tab to add manually.';
+    statusText.textContent = 'Error: ' + err.message;
     const mb2 = document.getElementById('magicBtn'); if(mb2) mb2.style.display = 'block';
   }
 }
