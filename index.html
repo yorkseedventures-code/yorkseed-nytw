@@ -901,6 +901,89 @@ function buildDayTabs() {
   });
 }
 
+async function importFromLink() {
+  const url = document.getElementById('magic-url').value.trim();
+  if (!url || !url.startsWith('http')) { alert('Please paste a valid event URL.'); return; }
+  const btn = document.getElementById('magicBtn');
+  const status = document.getElementById('magicStatus');
+  const statusIcon = document.getElementById('magicStatusIcon');
+  const statusText = document.getElementById('magicStatusText');
+  btn.style.display = 'none';
+  status.style.display = 'block';
+  statusIcon.textContent = '⏳';
+  statusText.textContent = 'Fetching event page…';
+  try {
+    // Use Claude API to extract event details from the URL
+    const prompt = `You are extracting event details from an event page URL for a NY Tech Week 2026 event list (May 27 – June 8, 2026).
+
+Fetch and parse this event URL: ${url}
+
+Extract and return ONLY a JSON object with these exact fields (no markdown, no explanation, just raw JSON):
+{
+  "name": "full event name",
+  "host": "organizer or host name(s)",
+  "date": "YYYY-MM-DD format, must be between 2026-05-27 and 2026-06-08",
+  "time": "start time in 12h format e.g. 6:30 PM",
+  "venue": "venue name and/or address",
+  "neighborhood": "NYC neighborhood e.g. SoHo, Midtown, FiDi, Lower East Side",
+  "address": "full street address if available",
+  "ticket": "one of: Free, Paid, Invite Only, Free (Approval Required), Application Required",
+  "category": "one of: AI & Tech, Fintech, VC & Investors, Web3, SaaS, Deep Tech, Women in Tech, Marketing, Legal, Health, Climate, Community",
+  "notes": "1-2 sentence description of the event",
+  "drinks": true or false,
+  "food": true or false
+}
+
+If the date is not between May 27 and June 8 2026, still extract it but set date to the closest valid date and add a note.
+If you cannot determine a field, use an empty string or false for booleans.`;
+
+    statusText.textContent = 'Reading event details…';
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    // Find text content in response
+    const textBlock = (data.content || []).find(b => b.type === 'text');
+    if (!textBlock) throw new Error('No response from AI');
+    // Parse JSON from response
+    const jsonMatch = textBlock.text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('Could not parse event details');
+    const evt = JSON.parse(jsonMatch[0]);
+    statusIcon.textContent = '✅';
+    statusText.textContent = 'Details found! Adding to list…';
+    // Fill the form fields (in formSubmit) and submit automatically
+    setTimeout(() => {
+      if (evt.name) document.getElementById('sub-name').value = evt.name;
+      if (evt.date) {
+        const sel = document.getElementById('sub-date');
+        for (let o of sel.options) { if (o.value === evt.date) { sel.value = evt.date; break; } }
+      }
+      if (evt.time) document.getElementById('sub-time').value = evt.time;
+      if (evt.host) document.getElementById('sub-host').value = evt.host;
+      if (evt.neighborhood) document.getElementById('sub-neighborhood').value = evt.neighborhood;
+      if (evt.venue) document.getElementById('sub-venue').value = evt.venue;
+      document.getElementById('sub-rsvp').value = url;
+      if (evt.ticket) document.getElementById('sub-ticket').value = evt.ticket;
+      if (evt.category) { document.getElementById('sub-type').value = evt.category; onCatInput(evt.category); }
+      if (evt.notes) document.getElementById('sub-notes').value = evt.notes;
+      if (evt.drinks) document.getElementById('sub-drinks').checked = true;
+      if (evt.food) document.getElementById('sub-food').checked = true;
+      submitEvent();
+    }, 600);
+  } catch(err) {
+    statusIcon.textContent = '⚠️';
+    statusText.textContent = 'Could not auto-fill. Switch to Full Details tab to add manually.';
+    const mb2 = document.getElementById('magicBtn'); if(mb2) mb2.style.display = 'block';
+  }
+}
+
 // Category chip selection — fills the text input
 function onCatInput(val) {
   // Deactivate chips if user types something custom
@@ -970,19 +1053,20 @@ async function submitGateEmail() {
 function updateHeaderCount() { document.getElementById('headerCount').textContent = allEvents().length + ' events'; }
 function openModal(tab) {
   document.getElementById('modalOverlay').classList.add('open');
-  switchTab(tab || 'submit');
+  switchTab(tab || 'quick');
   document.getElementById('successState').classList.remove('show');
-  document.getElementById('formSubmit').style.display = 'block';
-  document.getElementById('formUpdate').style.display = 'none';
 }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); resetForms(); }
 function switchTab(tab) {
+  document.getElementById('tab-quick').classList.toggle('active', tab === 'quick');
   document.getElementById('tab-submit').classList.toggle('active', tab === 'submit');
   document.getElementById('tab-update').classList.toggle('active', tab === 'update');
+  document.getElementById('formQuick').style.display = tab === 'quick' ? 'block' : 'none';
   document.getElementById('formSubmit').style.display = tab === 'submit' ? 'block' : 'none';
   document.getElementById('formUpdate').style.display = tab === 'update' ? 'block' : 'none';
   document.getElementById('successState').classList.remove('show');
-  document.getElementById('modalTitle').textContent = tab === 'submit' ? 'Submit an Event' : 'Update an Event';
+  const titles = { quick: 'Submit an Event', submit: 'Submit an Event', update: 'Update an Event' };
+  document.getElementById('modalTitle').textContent = titles[tab];
 }
 function resetForms() {
   ['sub-name','sub-time','sub-host','sub-neighborhood','sub-venue','sub-rsvp','sub-notes','upd-rsvp','upd-time','upd-venue','upd-host','upd-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
@@ -996,6 +1080,10 @@ function resetForms() {
   // Reset category chips and text input
   document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
   const subType = document.getElementById('sub-type'); if(subType) subType.value = '';
+  // Reset magic URL and status
+  const mu = document.getElementById('magic-url'); if(mu) mu.value = '';
+  const ms = document.getElementById('magicStatus'); if(ms) ms.style.display = 'none';
+  const mb = document.getElementById('magicBtn'); if(mb) mb.style.display = 'block';
 }
 function openUpdateForEvent(ev, rsvpLink) {
   if (ev) ev.stopPropagation();
@@ -1125,8 +1213,9 @@ function showSuccess(type) {
     </div>
     <div class="modal-body">
       <div class="modal-tabs">
-        <div class="modal-tab active" onclick="switchTab('submit')" id="tab-submit">➕ Submit New Event</div>
-        <div class="modal-tab" onclick="switchTab('update')" id="tab-update">✏️ Update Existing Event</div>
+        <div class="modal-tab active" onclick="switchTab('quick')" id="tab-quick">✨ Quick Add</div>
+        <div class="modal-tab" onclick="switchTab('submit')" id="tab-submit">📝 Full Details</div>
+        <div class="modal-tab" onclick="switchTab('update')" id="tab-update">✏️ Update</div>
       </div>
       <div class="success-state" id="successState">
         <div class="success-icon" id="successIcon">✅</div>
@@ -1134,9 +1223,27 @@ function showSuccess(type) {
         <p id="successMsg">Your event has been added to the list.</p>
         <button class="form-submit" style="margin-top:16px;" onclick="closeModal()">Close</button>
       </div>
-      <div id="formSubmit">
-        <div class="modal-notice"><strong>Auto-approved</strong> for May 27 – June 8, 2026. Duplicates are detected and merged automatically.</div>
-        <div class="duplicate-warning" id="duplicateWarning">⚠️ <strong>Possible duplicate detected:</strong> <span id="duplicateEventName"></span>. Your details will be merged in.</div>
+      <!-- QUICK ADD TAB -->
+      <div id="formQuick">
+        <div style="text-align:center;padding:8px 0 18px;">
+          <div style="font-size:32px;margin-bottom:8px;">✨</div>
+          <div style="font-size:15px;font-weight:700;color:var(--black);margin-bottom:6px;">Paste your event link</div>
+          <div style="font-size:12.5px;color:var(--gray-500);line-height:1.65;">Works with Luma, Partiful, Eventbrite &amp; more.<br>We'll fill in all the details automatically.</div>
+        </div>
+        <div class="form-group">
+          <input type="url" id="magic-url" placeholder="https://lu.ma/your-event" style="font-size:14px;padding:12px 14px;text-align:center;" autocomplete="off" autocorrect="off" spellcheck="false">
+        </div>
+        <button class="form-submit" id="magicBtn" onclick="importFromLink()">✨ Import &amp; Add Event</button>
+        <div id="magicStatus" style="display:none;text-align:center;padding:18px 0 8px;">
+          <div style="font-size:28px;margin-bottom:8px;" id="magicStatusIcon">⏳</div>
+          <div id="magicStatusText" style="font-size:13px;color:var(--gray-500);">Fetching event details…</div>
+        </div>
+      </div>
+
+      <!-- FULL DETAILS TAB -->
+      <div id="formSubmit" style="display:none;">
+        <div class="modal-notice"><strong>Auto-approved</strong> for May 27 – June 8, 2026. Duplicates detected and merged automatically.</div>
+        <div class="duplicate-warning" id="duplicateWarning">⚠️ <strong>Possible duplicate:</strong> <span id="duplicateEventName"></span>. Your details will be merged in.</div>
         <div class="form-group"><label>Event Name <span>*</span></label><input type="text" id="sub-name" placeholder="e.g. AI Happy Hour at SoHo House" oninput="checkDuplicate()"></div>
         <div class="form-row">
           <div class="form-group"><label>Date <span>*</span></label>
@@ -1159,9 +1266,8 @@ function showSuccess(type) {
         </div>
         <div class="form-group"><label>Venue / Address</label><input type="text" id="sub-venue" placeholder="e.g. Soho House NYC, 29-35 9th Ave"></div>
         <div class="form-group">
-          <label>RSVP / Registration Link <span>*</span><span class="verify-badge checking" id="rsvpBadge" style="display:none">Checking…</span></label>
-          <input type="url" id="sub-rsvp" placeholder="https://lu.ma/..." oninput="scheduleVerify()">
-          <div class="form-hint">We'll verify this link is reachable before adding.</div>
+          <label>RSVP / Registration Link <span>*</span></label>
+          <input type="url" id="sub-rsvp" placeholder="https://lu.ma/..." oninput="checkDuplicate()">
         </div>
         <div class="form-group"><label>Ticket Type</label>
           <select id="sub-ticket">
@@ -1172,9 +1278,8 @@ function showSuccess(type) {
           </select>
         </div>
         <div class="form-group">
-          <label>Category <span>*</span></label>
-          <input type="text" id="sub-type" placeholder="e.g. Beauty Tech, Sport Tech, PropTech…" autocomplete="off" style="margin-bottom:8px;" oninput="onCatInput(this.value)">
-          <div class="form-hint" style="margin-bottom:8px;">Or pick one below — tapping a chip fills the field:</div>
+          <label>Category</label>
+          <input type="text" id="sub-type" placeholder="e.g. AI & Tech, Beauty Tech, Sport Tech…" autocomplete="off" style="margin-bottom:8px;" oninput="onCatInput(this.value)">
           <div class="cat-chips" id="catChips">
             <button type="button" class="cat-chip" data-val="AI & Tech">🤖 AI &amp; Tech</button>
             <button type="button" class="cat-chip" data-val="Fintech">💳 Fintech</button>
