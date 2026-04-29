@@ -172,6 +172,8 @@
   .submit-btn:hover { background: #222; border-color: var(--red); }
   .feature-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--gold); color: var(--black); font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 6px; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; letter-spacing: 0.01em; }
   .feature-btn:hover { background: #b8962e; }
+  .sponsor-slot { display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border:1.5px dashed #ddd;border-radius:6px;font-family:'Sora',sans-serif;font-size:11px;color:#ccc;text-decoration:none;transition:all 0.15s;white-space:nowrap; }
+.sponsor-slot:hover { border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.04); }
   .mobile-fab { display: none; }
 
   /* ── MODAL ── */
@@ -414,42 +416,36 @@
   </div>
 </div>
 
-  <!-- 🏢 SPONSOR LOGO STRIP -->
-<div style="background:white;border-bottom:1px solid var(--border);padding:14px 24px;" id="sponsorStrip">
-  <div style="max-width:900px;margin:0 auto;">
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--gray-300);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Supported by</div>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex:1;" id="sponsorLogos">
-        <a href="javascript:void(0)" onclick="openModal('feature')" id="sponsorSlot1" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #ddd;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;color:#bbb;text-decoration:none;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#C9A84C';" onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb';">⭐ Your logo here</a>
-        <a href="javascript:void(0)" onclick="openModal('feature')" id="sponsorSlot2" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #ddd;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;color:#bbb;text-decoration:none;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#C9A84C';" onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb';">⭐ Your logo here</a>
-        <a href="javascript:void(0)" onclick="openModal('feature')" id="sponsorSlot3" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #ddd;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;color:#bbb;text-decoration:none;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#C9A84C';" onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb';">⭐ Your logo here</a>
-        <a href="javascript:void(0)" onclick="openModal('feature')" id="sponsorSlot4" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #ddd;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;color:#bbb;text-decoration:none;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#C9A84C';" onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb';">⭐ Your logo here</a>
-        <a href="javascript:void(0)" onclick="openModal('feature')" id="sponsorSlot5" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #ddd;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;color:#bbb;text-decoration:none;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#C9A84C';" onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb';">⭐ Your logo here</a>
-        <a href="javascript:void(0)" onclick="openModal('feature')" id="sponsorSlot6" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #ddd;border-radius:7px;font-family:'Sora',sans-serif;font-size:11px;color:#bbb;text-decoration:none;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#C9A84C';" onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb';">⭐ Your logo here</a>
+<!-- ⭐ FEATURE MY EVENT STRIP -->
+<div style="background:#fffcf0;border-top:1px solid #e8d88a;border-bottom:1px solid #e8d88a;padding:14px 24px;">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--gold);color:#0a0a0a;padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Hosting an event?</span>
+      <div style="width:1px;height:28px;background:#e8d88a;flex-shrink:0;"></div>
+      <div>
+        <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.3;">Get top placement and promotion to thousands of founders &amp; investors.</div>
+        <div style="font-family:'Sora',sans-serif;font-size:11px;color:#999;margin-top:2px;">Hero carousel · WhatsApp blast · Newsletter · Yorkseed co-host branding</div>
       </div>
-      <div style="font-family:'Sora',sans-serif;font-size:10px;color:#bbb;white-space:nowrap;flex-shrink:0;">6 slots · from $1,000</div>
     </div>
+    <button class="feature-btn" onclick="openModal('feature')" style="flex-shrink:0;padding:8px 18px;font-size:12px;">⭐ Feature my event →</button>
   </div>
 </div>
 
-
-<!-- PASSPORT SERIES -->
-<div style="background:#0a0a0a;border-bottom:1px solid rgba(201,168,76,0.2);padding:28px 24px;" id="passportSection">
-  <div style="max-width:900px;margin:0 auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--gold);color:#0a0a0a;padding:3px 8px;border-radius:4px;letter-spacing:0.07em;text-transform:uppercase;">⭐ Passport Series</span>
-        <span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:600;color:white;">Yorkseed Events at NY Tech Week</span>
-      </div>
-      <a href="https://lu.ma/yorkseed?ref=yorkseed" target="_blank" rel="noopener" style="font-family:'Sora',sans-serif;font-size:11px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,0.4);padding:5px 12px;border-radius:20px;white-space:nowrap;">View all ↗</a>
+<!-- 🏢 SPONSOR STRIP -->
+<div style="background:white;border-bottom:1px solid var(--border);padding:12px 24px;" id="sponsorStrip">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;gap:0;flex-wrap:wrap;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--gray-300);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;padding-right:16px;margin-right:16px;border-right:1px solid var(--border);">Supported by</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1;" id="sponsorLogos">
+      <a href="javascript:void(0)" onclick="openModal('feature')" class="sponsor-slot">+ Your logo here</a>
+      <a href="javascript:void(0)" onclick="openModal('feature')" class="sponsor-slot">+ Your logo here</a>
+      <a href="javascript:void(0)" onclick="openModal('feature')" class="sponsor-slot">+ Your logo here</a>
+      <a href="javascript:void(0)" onclick="openModal('feature')" class="sponsor-slot">+ Your logo here</a>
+      <a href="javascript:void(0)" onclick="openModal('feature')" class="sponsor-slot">+ Your logo here</a>
+      <a href="javascript:void(0)" onclick="openModal('feature')" class="sponsor-slot">+ Your logo here</a>
     </div>
-    <div style="position:relative;">
-      <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;" id="passportCards"></div>
-      <div id="passportArrow" style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:linear-gradient(to left,#0a0a0a 60%,transparent);padding:8px 6px 8px 28px;pointer-events:none;display:flex;align-items:center;gap:4px;opacity:0.85;">
-        <span style="font-family:'Sora',sans-serif;font-size:11px;color:rgba(201,168,76,0.7);white-space:nowrap;">scroll</span>
-        <span style="font-size:14px;color:var(--gold);">›</span>
-      </div>
-    </div>
+    <a href="mailto:partnership@yorkseed.co" style="font-family:'Sora',sans-serif;font-size:11px;color:var(--red);text-decoration:none;white-space:nowrap;flex-shrink:0;margin-left:16px;border:1px solid rgba(255,10,10,0.25);padding:5px 12px;border-radius:20px;">Become a sponsor ↗</a>
+  </div>
+</div>
   </div>
 </div>
 
