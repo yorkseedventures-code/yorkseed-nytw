@@ -1218,11 +1218,13 @@ function submitEvent(skipValidation, ysOverride) {
 let updTargetEvent=null;
 function findEventByRsvp() {
   const rsvp=document.getElementById('upd-rsvp').value.trim(), label=document.getElementById('upd-found-label'), fields=document.getElementById('upd-fields');
-  if(!rsvp||rsvp.length<10){label.textContent='';fields.style.display='none';updTargetEvent=null;return;}
-  const clean=rsvp.replace(/[?#].*$/,'').toLowerCase();
-  const found=allEvents().find(e=>e.rsvp&&e.rsvp.replace(/[?#].*$/,'').replace(/\?ref=yorkseed/,'').toLowerCase()===clean);
+  if(!rsvp||rsvp.length<6){label.textContent='';fields.style.display='none';updTargetEvent=null;return;}
+  // Normalise: strip protocol, trailing slash, query params
+  const norm = s => s.replace(/https?:\/\//,'').replace(/[?#].*/,'').replace(/\/$/,'').toLowerCase();
+  const cleanInput = norm(rsvp);
+  const found = allEvents().find(e => e.rsvp && norm(e.rsvp) === cleanInput);
   if(found){updTargetEvent=found;label.innerHTML=`<span style="color:#1a7a40;font-weight:600;">✓ Found: ${found.name}</span>`;document.getElementById('upd-event-name').textContent=found.name;fields.style.display='block';}
-  else{updTargetEvent=null;label.innerHTML='<span style="color:#cc0000;">No matching event found for this link.</span>';fields.style.display='none';}
+  else{updTargetEvent=null;label.innerHTML='<span style="color:#cc0000;">No matching event found. Try pasting just the base URL without ?ref=...</span>';fields.style.display='none';}
 }
 async function submitUpdate() {
   if(!updTargetEvent){alert('No event found to update.');return;}
@@ -1236,8 +1238,16 @@ async function submitUpdate() {
   if(newVenue) updTargetEvent.venue=newVenue;
   if(newHost) updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;
   if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}
+  // Save if it's a submitted event
+  saveSubmitted();
   btn.disabled=false; btn.textContent='Apply Update';
-  showSuccess('updated'); render();
+  // Reset to All Days so updated event is visible regardless of date change
+  activeDay = 'all';
+  document.getElementById('dayTabs').innerHTML = '';
+  buildDayTabs();
+  showSuccess('updated');
+  render();
+  updateHeaderCount();
 }
 function showSuccess(type) {
   const icon=document.getElementById('successIcon'), title=document.getElementById('successTitle'), msg=document.getElementById('successMsg');
