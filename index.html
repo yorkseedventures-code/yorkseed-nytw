@@ -182,6 +182,34 @@
 .sponsor-slot:hover { border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.04); }
 .sponsor-slot { display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border:1.5px dashed #ddd;border-radius:6px;font-family:'Sora',sans-serif;font-size:11px;color:#ccc;text-decoration:none;transition:all 0.15s;white-space:nowrap; }
 .sponsor-slot:hover { border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.04); }
+
+  /* ── PROMO MODAL ── */
+  .promo-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 997; align-items: center; justify-content: center; padding: 20px; }
+  .promo-overlay.open { display: flex; }
+  .promo-box { background: var(--black); border: 1px solid rgba(201,168,76,0.4); border-radius: 16px; width: 100%; max-width: 460px; padding: 32px 28px 28px; font-family: 'Sora', sans-serif; position: relative; box-shadow: 0 24px 60px rgba(0,0,0,0.7); }
+  .promo-close { position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; border-radius: 50%; border: none; background: rgba(255,255,255,0.08); cursor: pointer; font-size: 14px; color: rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; }
+  .promo-close:hover { background: rgba(255,255,255,0.15); color: white; }
+  .promo-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; }
+  .promo-box h2 { font-size: 20px; font-weight: 700; color: white; margin: 0 0 8px; line-height: 1.3; }
+  .promo-box p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; margin: 0 0 20px; }
+  .promo-highlight { color: rgba(255,255,255,0.85) !important; font-weight: 600; }
+  .promo-tiers { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .promo-tier { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-decoration: none; transition: all 0.15s; }
+  .promo-tier:hover { background: rgba(255,255,255,0.08); border-color: rgba(201,168,76,0.4); transform: translateY(-1px); }
+  .promo-tier-info { flex: 1; }
+  .promo-tier-name { font-size: 12.5px; font-weight: 700; color: white; margin-bottom: 2px; }
+  .promo-tier-desc { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.4; }
+  .promo-tier-price { font-size: 14px; font-weight: 700; color: var(--gold); white-space: nowrap; flex-shrink: 0; }
+  .promo-tier-arrow { font-size: 13px; color: rgba(201,168,76,0.6); flex-shrink: 0; }
+  .promo-cta-main { display: block; width: 100%; padding: 12px; background: var(--gold); color: #0a0a0a; border: none; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 10px; transition: background 0.15s; }
+  .promo-cta-main:hover { background: #b8962e; }
+  .promo-skip { font-size: 11.5px; color: rgba(255,255,255,0.3); cursor: pointer; text-decoration: underline; background: none; border: none; font-family: 'Sora', sans-serif; display: block; margin: 0 auto; text-align: center; }
+  .promo-skip:hover { color: rgba(255,255,255,0.6); }
+  .promo-urgency { font-size: 11px; color: var(--gold); text-align: center; margin-bottom: 14px; opacity: 0.8; }
+  @media (max-width: 600px) {
+    .promo-box { padding: 24px 18px 20px; }
+    .promo-box h2 { font-size: 17px; }
+  }
   .mobile-fab { display: none; }
 
   /* ── MODAL ── */
@@ -2590,6 +2618,152 @@ function showSuccess(type) {
     initArrow('passportCards', 'passportArrow');
     initArrow('partnerCards', 'partnerArrow');
   }, 1200);
+})();
+</script>
+
+<!-- PROMO MODAL -->
+<div class="promo-overlay" id="promoOverlay">
+  <div class="promo-box">
+    <button class="promo-close" onclick="closePromo()">✕</button>
+    <div class="promo-badge" id="promoBadge">⭐ NY Tech Week 2026</div>
+    <h2 id="promoHeadline">Get your event or brand in front of thousands</h2>
+    <p id="promoBody">Founders and investors are already using this list to plan their week. The earlier you're in, the longer you're seen.</p>
+    <div class="promo-urgency" id="promoUrgency">First in, most seen — exposure starts the moment you book</div>
+    <div class="promo-tiers">
+      <a href="https://buy.stripe.com/bJe5kw18b6Sy6bS9UNbo40b" target="_blank" rel="noopener" class="promo-tier" onclick="closePromo()">
+        <div class="promo-tier-info">
+          <div class="promo-tier-name">★ Basic Featured</div>
+          <div class="promo-tier-desc">Badge · top-of-day placement · highlighted card</div>
+        </div>
+        <div class="promo-tier-price">$150</div>
+        <div class="promo-tier-arrow">↗</div>
+      </a>
+      <a href="https://buy.stripe.com/3cI5kwbMP7WC7fW8QJbo40c" target="_blank" rel="noopener" class="promo-tier" onclick="closePromo()">
+        <div class="promo-tier-info">
+          <div class="promo-tier-name">♥ Partner</div>
+          <div class="promo-tier-desc">Hero carousel · WhatsApp blast · newsletter mention</div>
+        </div>
+        <div class="promo-tier-price">$400</div>
+        <div class="promo-tier-arrow">↗</div>
+      </a>
+      <a href="https://buy.stripe.com/3cI5kw5or3Gm43K0kdbo40e" target="_blank" rel="noopener" class="promo-tier" style="border-color:rgba(201,168,76,0.35);" onclick="closePromo()">
+        <div class="promo-tier-info">
+          <div class="promo-tier-name">🏢 Logo Sponsor</div>
+          <div class="promo-tier-desc">Your logo above every listing · stays live until NYTW 2027</div>
+        </div>
+        <div class="promo-tier-price">$1,500</div>
+        <div class="promo-tier-arrow">↗</div>
+      </a>
+    </div>
+    <a href="javascript:void(0)" onclick="openModal('feature');closePromo();" class="promo-cta-main">See all packages →</a>
+    <button class="promo-skip" onclick="closePromo()">Not right now</button>
+  </div>
+</div>
+
+
+<script>
+(function() {
+  var STORAGE_KEY = 'ys_promo_shown_v1';
+  var START_DATE = new Date('2026-05-19T00:00:00');
+  var END_DATE   = new Date('2026-06-05T00:00:00');
+
+  // Phase config: [startDate, headline, body, urgency, badge]
+  var phases = [
+    {
+      start: new Date('2026-05-19T00:00:00'),
+      end:   new Date('2026-05-27T00:00:00'),
+      badge: '⭐ NYTW is almost here',
+      headline: 'Get your event or brand in front of thousands',
+      body: 'Founders and investors are already bookmarking this list. The earlier you're in, the longer you're seen — exposure starts the moment you book.',
+      urgency: 'First in, most seen'
+    },
+    {
+      start: new Date('2026-05-27T00:00:00'),
+      end:   new Date('2026-06-01T00:00:00'),
+      badge: '⭐ The week is live',
+      headline: 'Featured events are already getting eyes',
+      body: 'NY Tech Week is here. Sponsors and featured listings are live right now. Every day you're not on it is a day you're not in the room.',
+      urgency: 'First in, most seen — book now to maximise exposure'
+    },
+    {
+      start: new Date('2026-06-01T00:00:00'),
+      end:   new Date('2026-06-05T00:00:00'),
+      badge: '⭐ Still time to get in',
+      headline: 'Logo sponsors stay live until NYTW 2027',
+      body: 'Even mid-week, logo sponsors get days of exposure now — and a full year of visibility until NY Tech Week 2027. Every day you wait is a day missed.',
+      urgency: 'Book today · stays live until NYTW 2027'
+    }
+  ];
+
+  function getShownCount() {
+    try { return parseInt(localStorage.getItem(STORAGE_KEY) || '0'); } catch(e) { return 0; }
+  }
+  function markShown() {
+    try { localStorage.setItem(STORAGE_KEY, String(getShownCount() + 1)); } catch(e) {}
+  }
+
+  function getCurrentPhase() {
+    var now = new Date();
+    for (var i = 0; i < phases.length; i++) {
+      if (now >= phases[i].start && now < phases[i].end) return phases[i];
+    }
+    return null;
+  }
+
+  function shouldShow() {
+    var now = new Date();
+    if (now < START_DATE || now >= END_DATE) return false;
+    var shown = getShownCount();
+    if (shown >= 3) return false;
+    var phase = getCurrentPhase();
+    if (!phase) return false;
+    // Only show once per phase (track which phases shown)
+    try {
+      var shownPhases = JSON.parse(localStorage.getItem('ys_promo_phases') || '[]');
+      var phaseKey = phases.indexOf(phase);
+      if (shownPhases.indexOf(phaseKey) !== -1) return false;
+    } catch(e) {}
+    return true;
+  }
+
+  function markPhaseShown() {
+    try {
+      var phase = getCurrentPhase();
+      if (!phase) return;
+      var phaseKey = phases.indexOf(phase);
+      var shownPhases = JSON.parse(localStorage.getItem('ys_promo_phases') || '[]');
+      if (shownPhases.indexOf(phaseKey) === -1) shownPhases.push(phaseKey);
+      localStorage.setItem('ys_promo_phases', JSON.stringify(shownPhases));
+    } catch(e) {}
+  }
+
+  function showPromo() {
+    var phase = getCurrentPhase();
+    if (!phase) return;
+    document.getElementById('promoBadge').textContent = phase.badge;
+    document.getElementById('promoHeadline').textContent = phase.headline;
+    document.getElementById('promoBody').textContent = phase.body;
+    document.getElementById('promoUrgency').textContent = phase.urgency;
+    document.getElementById('promoOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    markShown();
+    markPhaseShown();
+  }
+
+  window.closePromo = function() {
+    document.getElementById('promoOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // Close on backdrop click
+  document.getElementById('promoOverlay').addEventListener('click', function(e) {
+    if (e.target === this) window.closePromo();
+  });
+
+  if (shouldShow()) {
+    // Delay slightly so page loads first
+    setTimeout(showPromo, 3000);
+  }
 })();
 </script>
 </body>
