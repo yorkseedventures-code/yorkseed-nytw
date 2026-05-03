@@ -695,7 +695,7 @@ const EVENTS = [
   { id:40, name:"Yorkseed Passport Series: NYTW — Flagship Dinner", host:"Yorkseed", date:"2026-06-03", day:"Tue Jun 3", time:"7:30 PM", venue:"TBD — West Village or SoHo", neighborhood:"West Village / SoHo", address:"New York, NY", types:["vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The flagship Yorkseed Passport Series NYTW dinner. A carefully curated evening of founders, investors, and operators at the midpoint of the week. Limited seats — members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
   { id:41, name:"Yorkseed Passport Series: NYTW — Closing Rooftop", host:"Yorkseed", date:"2026-06-06", day:"Fri Jun 6", time:"5:30 PM", venue:"TBD Rooftop — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The closing Yorkseed Passport Series event at NYTW. Rooftop sendoff for founders, investors, and operators. Members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
   { id:39, name:"Yorkseed Passport Series: NYTW — Post-Week Debrief Brunch", host:"Yorkseed", date:"2026-06-08", day:"Sun Jun 8", time:"11:30 AM", venue:"TBD — Brooklyn or Lower Manhattan", neighborhood:"Brooklyn / Lower Manhattan", address:"New York, NY", types:["community","vc","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The final Yorkseed Passport Series event — a relaxed post-NYTW debrief brunch. Open to Yorkseed members and passport holders.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:3, name:"AI Tinkerers NYC — Builders Meetup", host:"AI Tinkerers NYC", date:"2026-05-27", day:"Tue May 27", time:"6:30 PM", venue:"TBD — Midtown or SoHo", neighborhood:"Midtown / SoHo", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Practitioner-only meetup for LLM and generative AI builders. Live demos, engineering talks, peer networking. Community-led, no sales pitches.", rsvp:"https://nyc.aitinkerers.org/?ref=yorkseed", status:"Open" },
+  { id:3, name:"AI Tinkerers NYC — Builders Meetup", host:"AI Tinkerers NYC", date:"2026-05-27", day:"Wed May 27", time:"6:30 PM", venue:"TBD — Midtown or SoHo", neighborhood:"Midtown / SoHo", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Practitioner-only meetup for LLM and generative AI builders. Live demos, engineering talks, peer networking. Community-led, no sales pitches.", rsvp:"https://nyc.aitinkerers.org/?ref=yorkseed", status:"Open" },
   { id:7, name:"Women in VC — Cocktail Hour NY Tech Week", host:"Lowenstein Sandler", date:"2026-06-05", day:"Thu Jun 5", time:"5:00 PM", venue:"Lowenstein Sandler NYC Office", neighborhood:"Midtown", address:"New York, NY", types:["vc","women","community"], free:false, drinks:true, food:false, ticket:"Invite Only", notes:"In-person Women in VC Cocktail Hour during Tech Week. Held at Lowenstein Sandler's NYC Office.", rsvp:"https://lu.ma/mdj48l3s?ref=yorkseed", status:"Open" },
   { id:112, name:"ElevenLabs: Live from NY", host:"ElevenLabs", date:"2026-06-02", day:"Mon Jun 2", time:"6:00 PM", venue:"ElevenLabs NY Office — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"An unforgettable evening at the brand new ElevenLabs NY office.", rsvp:"https://partiful.com/e/Vamn82rpSCMY5sp1UgNG?ref=yorkseed", status:"Open" },
   { id:134, name:"Anthropic Founder Salon — AI 2.0", host:"Anthropic", date:"2026-06-03", day:"Tue Jun 3", time:"1:30 PM", venue:"TBD — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","vc","community"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"Anthropic's curated founder salon: AI 2.0. Speakers include Gamma, Factory, and CodeRabbit.", rsvp:"https://partiful.com/e/titPml1Nw0DKwGl9B6CF?ref=yorkseed", status:"Invite Only" },
@@ -1850,13 +1850,13 @@ function buildDayTabs() {
   const tabs = document.getElementById('dayTabs');
   const days = [
     {date:'all',label:'All Days'},
-    {date:'2026-05-27',label:'Tue 5/27'},{date:'2026-05-28',label:'Wed 5/28'},
-    {date:'2026-05-29',label:'Thu 5/29'},{date:'2026-05-30',label:'Fri 5/30'},
-    {date:'2026-05-31',label:'Sat 5/31'},{date:'2026-06-01',label:'Mon 6/1 ★'},
-    {date:'2026-06-02',label:'Mon 6/2'},{date:'2026-06-03',label:'Tue 6/3'},
-    {date:'2026-06-04',label:'Wed 6/4'},{date:'2026-06-05',label:'Thu 6/5'},
-    {date:'2026-06-06',label:'Fri 6/6'},{date:'2026-06-07',label:'Sat 6/7'},
-    {date:'2026-06-08',label:'Sun 6/8'},
+    {date:'2026-05-27',label:'Wed 5/27'},{date:'2026-05-28',label:'Thu 5/28'},
+    {date:'2026-05-29',label:'Fri 5/29'},{date:'2026-05-30',label:'Sat 5/30'},
+    {date:'2026-05-31',label:'Sun 5/31'},{date:'2026-06-01',label:'Mon 6/1 ★'},
+    {date:'2026-06-02',label:'Tue 6/2'},{date:'2026-06-03',label:'Wed 6/3'},
+    {date:'2026-06-04',label:'Thu 6/4'},{date:'2026-06-05',label:'Fri 6/5'},
+    {date:'2026-06-06',label:'Sat 6/6'},{date:'2026-06-07',label:'Sun 6/7'},
+    {date:'2026-06-08',label:'Mon 6/8'},
   ];
   days.forEach(d => {
     const count = d.date === 'all' ? allEvents().length : allEvents().filter(e => e.date === d.date).length;
@@ -2087,8 +2087,7 @@ function scheduleVerify() {
   },800);
 }
 function dayLabelFromISO(iso){
-  const map={'2026-05-27':'Tue May 27','2026-05-28':'Wed May 28','2026-05-29':'Thu May 29','2026-05-30':'Fri May 30','2026-05-31':'Sat May 31','2026-06-01':'Mon Jun 1','2026-06-02':'Mon Jun 2','2026-06-03':'Tue Jun 3','2026-06-04':'Wed Jun 4','2026-06-05':'Thu Jun 5','2026-06-06':'Fri Jun 6','2026-06-07':'Sat Jun 7','2026-06-08':'Sun Jun 8'};
-  return map[iso]||iso;
+const map={'2026-05-27':'Wed May 27','2026-05-28':'Thu May 28','2026-05-29':'Fri May 29','2026-05-30':'Sat May 30','2026-05-31':'Sun May 31','2026-06-01':'Mon Jun 1','2026-06-02':'Tue Jun 2','2026-06-03':'Wed Jun 3','2026-06-04':'Thu Jun 4','2026-06-05':'Fri Jun 5','2026-06-06':'Sat Jun 6','2026-06-07':'Sun Jun 7','2026-06-08':'Mon Jun 8'};  return map[iso]||iso;
 }
 function slugifyCategory(raw) {
   const map = {'ai & tech':'ai','ai':'ai','fintech':'fintech','vc & investors':'vc','vc':'vc','web3':'web3','saas':'saas','deep tech':'deeptech','women in tech':'women','women':'women','marketing':'marketing','legal':'legal','health':'health','climate':'climate','community':'community'};
