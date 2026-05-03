@@ -1853,10 +1853,10 @@ function buildDayTabs() {
     {date:'2026-05-27',label:'Tue 5/27'},{date:'2026-05-28',label:'Wed 5/28'},
     {date:'2026-05-29',label:'Thu 5/29'},{date:'2026-05-30',label:'Fri 5/30'},
     {date:'2026-05-31',label:'Sat 5/31'},{date:'2026-06-01',label:'Mon 6/1 ★'},
-    {date:'2026-06-02',label:'Mon 6/2'},{date:'2026-06-03',label:'Tue 6/3'},
-    {date:'2026-06-04',label:'Wed 6/4'},{date:'2026-06-05',label:'Thu 6/5'},
-    {date:'2026-06-06',label:'Fri 6/6'},{date:'2026-06-07',label:'Sat 6/7'},
-    {date:'2026-06-08',label:'Sun 6/8'},
+   {date:'2026-06-02',label:'Tue 6/2'},{date:'2026-06-03',label:'Wed 6/3'},
+{date:'2026-06-04',label:'Thu 6/4'},{date:'2026-06-05',label:'Fri 6/5'},
+{date:'2026-06-06',label:'Sat 6/6'},{date:'2026-06-07',label:'Sun 6/7'},
+{date:'2026-06-08',label:'Mon 6/8'},
   ];
   days.forEach(d => {
     const count = d.date === 'all' ? allEvents().length : allEvents().filter(e => e.date === d.date).length;
@@ -2087,8 +2087,11 @@ function scheduleVerify() {
   },800);
 }
 function dayLabelFromISO(iso){
-  const map={'2026-05-27':'Tue May 27','2026-05-28':'Wed May 28','2026-05-29':'Thu May 29','2026-05-30':'Fri May 30','2026-05-31':'Sat May 31','2026-06-01':'Mon Jun 1','2026-06-02':'Mon Jun 2','2026-06-03':'Tue Jun 3','2026-06-04':'Wed Jun 4','2026-06-05':'Thu Jun 5','2026-06-06':'Fri Jun 6','2026-06-07':'Sat Jun 7','2026-06-08':'Sun Jun 8'};
-  return map[iso]||iso;
+  const map={'2026-05-27':'Tue May 27','2026-05-28':'Wed May 28','2026-05-29':'Thu May 29','2026-05-30':'Fri May 30','2026-05-31':'Sat May 31','2026-06-01':'Mon Jun 1',
+'2026-06-02':'Tue Jun 2','2026-06-03':'Wed Jun 3',
+'2026-06-04':'Thu Jun 4','2026-06-05':'Fri Jun 5',
+'2026-06-06':'Sat Jun 6','2026-06-07':'Sun Jun 7',
+'2026-06-08':'Mon Jun 8'  return map[iso]||iso;
 }
 function slugifyCategory(raw) {
   const map = {'ai & tech':'ai','ai':'ai','fintech':'fintech','vc & investors':'vc','vc':'vc','web3':'web3','saas':'saas','deep tech':'deeptech','women in tech':'women','women':'women','marketing':'marketing','legal':'legal','health':'health','climate':'climate','community':'community'};
