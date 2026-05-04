@@ -1707,8 +1707,8 @@ const EVENTS_FINAL = EVENTS.filter(e => { if (seen.has(e.id)) return false; seen
 
 let activeType = 'all', activeDay = 'all', freeFilter = null, searchTerm = '';
 let submittedEvents = [];
-try { const s = sessionStorage.getItem('ys_submitted_nytw'); if (s) submittedEvents = JSON.parse(s); } catch(e) {}
-function saveSubmitted() { try { sessionStorage.setItem('ys_submitted_nytw', JSON.stringify(submittedEvents)); } catch(e) {} }
+try { const s = localStorage.getItem('ys_submitted_nytw'); if (s) submittedEvents = JSON.parse(s); } catch(e) {}
+function saveSubmitted() { try { localStorage.setItem('ys_submitted_nytw', JSON.stringify(submittedEvents)); } catch(e) {} }
 
 function tierPriority(e) {
   if (e.yorkseed === 'passport') return 0;
