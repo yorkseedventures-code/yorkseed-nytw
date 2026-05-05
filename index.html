@@ -2216,6 +2216,55 @@ function submitEvent(skipValidation, ysOverride) {
   renderPassportHero();
   updateHeaderCount();
 }
+function fillForm(evt, url) {
+  let cleanName = (evt.name || '').trim().replace(/\s*[\|\-–]\s*(Eventbrite|Luma|Partiful|Meetup)\s*$/i, '').trim();
+  const sentenceWords = /\b(is|are|we|the|it|will|our|this|that|bring|have|get|make|learn|join|come|when|once|for|and|but)\b/i;
+  const looksLikeSentence = cleanName.split(' ').length > 8 || sentenceWords.test(cleanName.substring(20));
+  document.getElementById('sub-name').value = looksLikeSentence ? '' : cleanName;
+  if (looksLikeSentence) {
+    document.getElementById('sub-name').placeholder = 'Name not detected — please enter manually';
+    document.getElementById('sub-name').style.borderColor = 'var(--red)';
+  }
+  if (evt.date) {
+    const sel = document.getElementById('sub-date');
+    for (let o of sel.options) { if (o.value === evt.date) { sel.value = evt.date; break; } }
+  }
+  if (evt.time) document.getElementById('sub-time').value = evt.time;
+  if (evt.host) {
+    const looksLikeId = evt.host.length > 14 && /^[A-Za-z0-9]+$/.test(evt.host) && /[0-9]/.test(evt.host) && /[A-Z]/.test(evt.host);
+    if (!looksLikeId) {
+      document.getElementById('sub-host').value = evt.host;
+    } else {
+      document.getElementById('sub-host').placeholder = 'Host not found — please enter manually';
+      document.getElementById('sub-host').style.borderColor = 'var(--red)';
+    }
+  } else {
+    document.getElementById('sub-host').placeholder = 'Host not found — please enter manually';
+    document.getElementById('sub-host').style.borderColor = 'var(--red)';
+  }
+  if (evt.neighborhood) document.getElementById('sub-neighborhood').value = evt.neighborhood;
+  if (evt.venue) document.getElementById('sub-venue').value = evt.venue;
+  document.getElementById('sub-rsvp').value = url;
+  if (evt.ticket) {
+    const ticketSel = document.getElementById('sub-ticket');
+    const tl = evt.ticket.toLowerCase();
+    if (tl === 'free') ticketSel.value = 'Free';
+    else if (tl.includes('invite only')) ticketSel.value = 'Invite Only';
+    else if (tl.includes('application')) ticketSel.value = 'Application Required';
+    else if (tl.startsWith('paid')) ticketSel.value = 'Paid';
+  }
+  if (evt.notes) { const n = document.getElementById('sub-notes'); if (!n.value) n.value = evt.notes; }
+  if (evt.drinks) document.getElementById('sub-drinks').checked = true;
+  if (evt.food) document.getElementById('sub-food').checked = true;
+  const ysDetected = detectYorkseed(cleanName, evt.host, evt.notes);
+  document.getElementById('sub-yorkseed').value = ysDetected;
+  if (!looksLikeSentence && cleanName.length > 3) {
+    submitEvent(true, ysDetected);
+  } else {
+    document.getElementById('magicStatusText').textContent = '⚠️ Please check the event name and submit manually.';
+    document.getElementById('form-submit') && (document.getElementById('form-submit').style.display = 'block');
+  }
+}
 async function importFromLink() {
   const url = document.getElementById('magic-url').value.trim();
   if (!url || !url.startsWith('http')) { alert('Please paste a valid event URL.'); return; }
@@ -2223,6 +2272,87 @@ async function importFromLink() {
     statusIcon=document.getElementById('magicStatusIcon'), statusText=document.getElementById('magicStatusText');
   btn.style.display='none'; status.style.display='block'; statusIcon.textContent='⏳'; statusText.textContent='Fetching event page…';
   try {
+
+    // ── PARTIFUL: fetch in browser via CORS proxy to get JS-rendered host names ──
+    if (url.includes('partiful.com')) {
+      const cleanUrl = url.split('?')[0];
+      const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(cleanUrl);
+      try {
+        const proxyResp = await fetch(proxyUrl);
+        const html = await proxyResp.text();
+
+        // Extract __NEXT_DATA__
+        const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+        if (nextDataMatch) {
+          const json = JSON.parse(nextDataMatch[1]);
+          const props = json?.props?.pageProps || json?.props || {};
+          const eventData = props?.event || props?.initialData?.event || props?.data?.event || {};
+
+          // Host
+          let host = '';
+          const hostObj = eventData?.host || eventData?.creator || {};
+          host = hostObj?.displayName || hostObj?.name || hostObj?.fullName || '';
+          if (!host && eventData?.cohosts?.length) {
+            for (const c of eventData.cohosts) {
+              const n = c?.displayName || c?.name || '';
+              if (n && n.length < 60) { host = n; break; }
+            }
+          }
+
+          // Name
+          let name = (eventData?.title || eventData?.name || '').trim();
+          if (!name) {
+            const m = html.match(/property="og:title" content="([^"]+)"/);
+            if (m) name = m[1].replace(/\s*\|\s*Partiful\s*$/i, '').trim();
+          }
+
+          // Date / time
+          let date = '', time = '', endTime = '';
+          const startRaw = eventData?.startDate || eventData?.startUtc || eventData?.startsAt || '';
+          if (startRaw) {
+            const d = new Date(startRaw);
+            date = d.toISOString().split('T')[0];
+            let h = d.getHours(), m = d.getMinutes();
+            const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+            time = h + ':' + (m < 10 ? '0' + m : m) + ' ' + ap;
+          }
+          const endRaw = eventData?.endDate || eventData?.endUtc || eventData?.endsAt || '';
+          if (endRaw) {
+            const d = new Date(endRaw);
+            let h = d.getHours(), m = d.getMinutes();
+            const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+            endTime = h + ':' + (m < 10 ? '0' + m : m) + ' ' + ap;
+          }
+
+          // Venue / neighborhood
+          const venue = eventData?.venueName || eventData?.locationName || eventData?.venue?.name || '';
+          const neighborhood = eventData?.neighborhood || eventData?.city || eventData?.address?.city || 'Manhattan';
+
+          // Notes
+          const descM = html.match(/property="og:description" content="([^"]+)"/);
+          const notes = descM ? descM[1].substring(0, 400) : '';
+
+          // Ticket
+          const isFree = eventData?.isFree === true || eventData?.free === true || !eventData?.ticketPrice;
+          const ticket = isFree ? 'Free' : 'Paid';
+
+          // Food / drinks
+          const textLow = notes.toLowerCase();
+          const drinks = ['open bar','free drinks','complimentary drinks','drinks included'].some(k => textLow.includes(k));
+          const food = ['free food','food included','complimentary food','light bites','refreshments'].some(k => textLow.includes(k));
+
+          const evt = { name, host, date, time: time && endTime ? time+' – '+endTime : time, endTime, venue, neighborhood, notes, ticket, drinks, food };
+
+          // Fill form directly
+          statusIcon.textContent='✅'; statusText.textContent='Details found! Review and submit below.';
+          setTimeout(() => { fillForm(evt, url); }, 300);
+          return;
+        }
+      } catch(proxyErr) {
+        // CORS proxy failed — fall through to Apps Script
+      }
+    }
+
     const proxyUrl=SHEETS_URL+'?action=parse_event&url='+encodeURIComponent(url);
     let response, data;
     try { response=await fetch(proxyUrl,{method:'GET',redirect:'follow'}); data=await response.json(); }
@@ -2232,103 +2362,7 @@ async function importFromLink() {
     if (!evt || !evt.name) throw new Error('No event data in response');
 
     statusIcon.textContent='✅'; statusText.textContent='Details found! Review and submit below.';
-
-    setTimeout(() => {
-      // ── NAME: sanitize — reject if it looks like a sentence (has "is","are","we","the" etc) ──
-      let cleanName = (evt.name || '').trim();
-      // Strip platform suffixes just in case Apps Script missed them
-      cleanName = cleanName
-        .replace(/\s*[\|\-–]\s*(Eventbrite|Luma|Partiful|Meetup)\s*$/i, '')
-        .trim();
-      // If name looks like a sentence fragment, clear it so user must fill in
-      const sentenceWords = /\b(is|are|we|the|it|will|our|this|that|bring|have|get|make|learn|join|come|when|once|for|and|but)\b/i;
-      const looksLikeSentence = cleanName.split(' ').length > 8 || sentenceWords.test(cleanName.substring(20));
-      document.getElementById('sub-name').value = looksLikeSentence ? '' : cleanName;
-      if (looksLikeSentence) {
-        document.getElementById('sub-name').placeholder = 'Name not detected — please enter manually';
-        document.getElementById('sub-name').style.borderColor = 'var(--red)';
-      }
-
-      // ── DATE ──
-      if(evt.date){
-        const sel=document.getElementById('sub-date');
-        for(let o of sel.options){ if(o.value===evt.date){ sel.value=evt.date; break; } }
-      }
-
-      // ── TIME ──
-      if(evt.time) document.getElementById('sub-time').value=evt.time;
-
-      // ── HOST: clear if looks like user ID ──
-      if(evt.host) {
-        const looksLikeId = evt.host.length > 14 && /^[A-Za-z0-9]+$/.test(evt.host) && /[0-9]/.test(evt.host) && /[A-Z]/.test(evt.host);
-        if (!looksLikeId) {
-          document.getElementById('sub-host').value = evt.host;
-        } else {
-          document.getElementById('sub-host').placeholder = 'Host not found — please enter manually';
-          document.getElementById('sub-host').style.borderColor = 'var(--red)';
-        }
-      }
-
-      // ── NEIGHBORHOOD / VENUE ──
-      if(evt.neighborhood) document.getElementById('sub-neighborhood').value=evt.neighborhood;
-      if(evt.venue) document.getElementById('sub-venue').value=evt.venue;
-
-      // ── RSVP ──
-      document.getElementById('sub-rsvp').value=url;
-
-      // ── TICKET: map free/paid text to dropdown options ──
-      if(evt.ticket) {
-        const ticketSel = document.getElementById('sub-ticket');
-        const ticketLower = evt.ticket.toLowerCase();
-        if (ticketLower === 'free') {
-          ticketSel.value = 'Free';
-        } else if (ticketLower.includes('invite only')) {
-          ticketSel.value = 'Invite Only';
-        } else if (ticketLower.includes('application')) {
-          ticketSel.value = 'Application Required';
-        } else if (ticketLower.startsWith('paid')) {
-          ticketSel.value = 'Paid';
-          // Put the price in notes if we have it
-          const priceMatch = evt.ticket.match(/\$[\d.–-]+/);
-          if (priceMatch) {
-            const notesEl = document.getElementById('sub-notes');
-            const priceNote = `Ticket price: ${priceMatch[0]}`;
-            notesEl.value = notesEl.value ? priceNote + ' · ' + notesEl.value : priceNote;
-          }
-        }
-      }
-
-      // ── CATEGORY ──
-      if(evt.category){
-        document.getElementById('sub-type').value=evt.category;
-        if(typeof onCatInput==='function') onCatInput(evt.category);
-      }
-
-      // ── NOTES ──
-      if(evt.notes) {
-        const notesEl = document.getElementById('sub-notes');
-        // Don't overwrite if we already put price note in there
-        if (!notesEl.value) notesEl.value = evt.notes;
-      }
-
-      // ── DRINKS / FOOD ──
-      if(evt.drinks) document.getElementById('sub-drinks').checked=true;
-      if(evt.food) document.getElementById('sub-food').checked=true;
-
-      // ── YORKSEED ──
-      const ysDetected=detectYorkseed(cleanName, evt.host, evt.notes);
-      document.getElementById('sub-yorkseed').value=ysDetected;
-
-      // ── Only auto-submit if name looks clean, otherwise let user review ──
-      if (!looksLikeSentence && cleanName.length > 3) {
-        submitEvent(true, ysDetected);
-      } else {
-        // Show the form so user can fix the name before submitting
-        statusText.textContent='⚠️ Please check the event name and submit manually.';
-        document.getElementById('form-submit') && (document.getElementById('form-submit').style.display='block');
-      }
-
-    }, 600);
+    setTimeout(() => { fillForm(evt, url); }, 600);
   } catch(err) {
     statusIcon.textContent='⚠️'; statusText.textContent='Error: '+err.message;
     const mb2=document.getElementById('magicBtn'); if(mb2) mb2.style.display='block';
