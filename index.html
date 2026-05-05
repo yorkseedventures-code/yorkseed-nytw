@@ -1736,17 +1736,17 @@ function parseCSV(text) {
 async function loadFromSheets() {
   try {
     const res = await fetch(CSV_URL);
-    const text = await res.text();
-    const rows = parseCSV(text);
-    rows.forEach(e => {
+    const data = await res.json();
+    if (!data.ok || !data.events) return;
+    data.events.forEach(e => {
       if (!e.id) return;
-      const already = submittedEvents.find(x => x.id === e.id);
+      const already = submittedEvents.find(x => String(x.id) === String(e.id));
       if (!already) {
         submittedEvents.push({
           id: e.id, name: e.name, host: e.host,
           date: e.date, day: e.day, time: e.time,
-          venue: e.venue, neighborhood: e.neighborhood || 'Manhattan',
-          address: e.address || 'New York, NY',
+          venue: e.venue, neighborhood: e.city || e.neighborhood || 'Manhattan',
+          address: 'New York, NY',
           types: e.types ? e.types.split(',') : ['community'],
           free: e.free === 'TRUE' || e.free === true,
           drinks: e.drinks === 'TRUE' || e.drinks === true,
@@ -2905,7 +2905,7 @@ function showSuccess(type) {
       end:   new Date('2026-05-27T00:00:00'),
       badge: '⭐ NYTW is almost here',
       headline: 'Get your event or brand in front of thousands',
-      body: 'Founders and investors are already bookmarking this list. The earlier you're in, the longer you're seen — exposure starts the moment you book.',
+      body: 'Founders and investors are already bookmarking this list. The earlier you\'re in, the longer you\'re seen — exposure starts the moment you book.',
       urgency: 'First in, most seen'
     },
     {
@@ -2913,7 +2913,7 @@ function showSuccess(type) {
       end:   new Date('2026-06-01T00:00:00'),
       badge: '⭐ The week is live',
       headline: 'Featured events are already getting eyes',
-      body: 'NY Tech Week is here. Sponsors and featured listings are live right now. Every day you're not on it is a day you're not in the room.',
+      body: 'NY Tech Week is here. Sponsors and featured listings are live right now. Every day you\'re not on it is a day you\'re not in the room.',
       urgency: 'First in, most seen — book now to maximise exposure'
     },
     {
