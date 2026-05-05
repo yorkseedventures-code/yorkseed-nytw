@@ -1859,7 +1859,7 @@ function render() {
     });
     const group = document.createElement('div');
     group.className = 'day-group';
-    const dayDateStr = new Date(date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    const dayDateStr = new Date(date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     group.innerHTML = `<div class="day-header"><div class="day-label">${events[0].day}</div><div class="day-date">${dayDateStr.split(',')[0].toUpperCase()}</div><div class="day-event-count">${events.length} event${events.length !== 1 ? 's' : ''}</div></div>`;
     events.forEach(e => {
       const card = document.createElement('div');
@@ -2306,27 +2306,34 @@ async function importFromLink() {
             if (m) name = m[1].replace(/\s*\|\s*Partiful\s*$/i, '').trim();
           }
 
-          // Date / time
-          let date = '', time = '', endTime = '';
+          // Date — use raw string to avoid timezone shift (all events are NYC/ET)
           const startRaw = eventData?.startDate || eventData?.startUtc || eventData?.startsAt || '';
           if (startRaw) {
+            // Always take the date portion directly from the ISO string (avoids local timezone shift)
+            date = startRaw.substring(0, 10);
+            // For time, convert to ET (UTC-4 during EDT, UTC-5 during EST)
             const d = new Date(startRaw);
-            date = d.toISOString().split('T')[0];
-            let h = d.getHours(), m = d.getMinutes();
-            const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
-            time = h + ':' + (m < 10 ? '0' + m : m) + ' ' + ap;
+            const etOffset = -4; // EDT (summer)
+            const etHour = ((d.getUTCHours() + etOffset) + 24) % 24;
+            const etMin = d.getUTCMinutes();
+            const ap = etHour >= 12 ? 'PM' : 'AM';
+            const h12 = etHour % 12 || 12;
+            time = h12 + ':' + (etMin < 10 ? '0' + etMin : etMin) + ' ' + ap;
           }
           const endRaw = eventData?.endDate || eventData?.endUtc || eventData?.endsAt || '';
           if (endRaw) {
             const d = new Date(endRaw);
-            let h = d.getHours(), m = d.getMinutes();
-            const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
-            endTime = h + ':' + (m < 10 ? '0' + m : m) + ' ' + ap;
+            const etOffset = -4;
+            const etHour = ((d.getUTCHours() + etOffset) + 24) % 24;
+            const etMin = d.getUTCMinutes();
+            const ap = etHour >= 12 ? 'PM' : 'AM';
+            const h12 = etHour % 12 || 12;
+            endTime = h12 + ':' + (etMin < 10 ? '0' + etMin : etMin) + ' ' + ap;
           }
 
-          // Venue / neighborhood
+          // Venue / neighborhood — borough/neighborhood only, not full city
           const venue = eventData?.venueName || eventData?.locationName || eventData?.venue?.name || '';
-          const neighborhood = eventData?.neighborhood || eventData?.city || eventData?.address?.city || 'Manhattan';
+          const neighborhood = eventData?.neighborhood || eventData?.borough || 'Manhattan';
 
           // Notes
           const descM = html.match(/property="og:description" content="([^"]+)"/);
@@ -2341,7 +2348,7 @@ async function importFromLink() {
           const drinks = ['open bar','free drinks','complimentary drinks','drinks included'].some(k => textLow.includes(k));
           const food = ['free food','food included','complimentary food','light bites','refreshments'].some(k => textLow.includes(k));
 
-          const evt = { name, host, date, time: time && endTime ? time+' – '+endTime : time, endTime, venue, neighborhood, notes, ticket, drinks, food };
+          const evt = { name, host, date, time: time && endTime ? time+' – '+endTime : time, endTime, venue, address: '', neighborhood, notes, ticket, drinks, food };
 
           // Fill form directly
           statusIcon.textContent='✅'; statusText.textContent='Details found! Review and submit below.';
