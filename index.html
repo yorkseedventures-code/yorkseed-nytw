@@ -2875,28 +2875,28 @@ function showSuccess(type) {
       // ── TOTAL PAGE VISIT COUNTER ──
       async function trackVisit() {
         try {
-          // Increment visit count using Supabase RPC or fallback to a simple key-value row
-          const res = await fetch(SUPABASE_URL + '/rest/v1/rpc/increment_visits', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-            },
-            body: JSON.stringify({ page: 'nytw2026' })
+          // First read current count
+          const res = await fetch(SUPABASE_URL + '/rest/v1/page_visits?page=eq.nytw2026&select=visits', {
+            headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
           });
           if (res.ok) {
-            const count = await res.json();
-            if (count) document.getElementById('totalVisitCount').textContent = Number(count).toLocaleString();
-          } else {
-            // Fallback: just read the count without incrementing
-            const res2 = await fetch(SUPABASE_URL + '/rest/v1/page_visits?page=eq.nytw2026&select=visits', {
-              headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+            const rows = await res.json();
+            const current = (rows && rows[0]) ? Number(rows[0].visits) : 0;
+            const next = current + 1;
+            // Update count
+            await fetch(SUPABASE_URL + '/rest/v1/page_visits?page=eq.nytw2026', {
+              method: 'PATCH',
+              headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify({ visits: next })
             });
-            if (res2.ok) {
-              const rows = await res2.json();
-              if (rows && rows[0]) document.getElementById('totalVisitCount').textContent = Number(rows[0].visits).toLocaleString();
-            }
+            document.getElementById('totalVisitCount').textContent = next.toLocaleString();
+          } else {
+            document.getElementById('totalVisitsPill').style.display = 'none';
           }
         } catch(e) { document.getElementById('totalVisitsPill').style.display = 'none'; }
       }
