@@ -2493,38 +2493,87 @@ function showSuccess(type) {
         <button class="form-submit" onclick="submitEvent()">Add Event to List</button>
       </div>
 
-      <!-- UPDATE -->
-      <div id="form-update" style="display:none;">
-        <div class="public-update-notice">💡 <strong>Anyone can update event info</strong> — changes go live immediately.</div>
-        <div class="modal-notice">Paste the RSVP link of the event you want to update.</div>
-        <div class="form-group">
-          <label>Event RSVP Link <span>*</span></label>
-          <input type="url" id="upd-rsvp" placeholder="https://lu.ma/..." oninput="findEventByRsvp()">
-          <div class="form-hint" id="upd-found-label"></div>
-        </div>
-        <div id="upd-fields" style="display:none;">
-          <div class="modal-notice" style="background:#e8fff0;border-color:#b0dfc0;"><strong style="color:#1a7a40;">Event found:</strong> <span id="upd-event-name"></span>. Fill in only the fields that changed.</div>
-          <div class="form-row">
-            <div class="form-group"><label>New Date (if changed)</label>
-              <select id="upd-date">
-                <option value="">No change</option>
-                <option value="2026-05-27">Tue May 27</option><option value="2026-05-28">Wed May 28</option>
-                <option value="2026-05-29">Thu May 29</option><option value="2026-05-30">Fri May 30</option>
-                <option value="2026-05-31">Sat May 31</option><option value="2026-06-01">Sun Jun 1</option>
-                <option value="2026-06-02">Mon Jun 2</option><option value="2026-06-03">Tue Jun 3</option>
-                <option value="2026-06-04">Wed Jun 4</option><option value="2026-06-05">Thu Jun 5</option>
-                <option value="2026-06-06">Fri Jun 6</option><option value="2026-06-07">Sat Jun 7</option>
-                <option value="2026-06-08">Sun Jun 8</option>
-              </select>
-            </div>
-            <div class="form-group"><label>New Time (if changed)</label><input type="text" id="upd-time" placeholder="e.g. 7:00 PM"></div>
-          </div>
-          <div class="form-group"><label>New Venue / Address</label><input type="text" id="upd-venue" placeholder="New location…"></div>
-          <div class="form-group"><label>New / Additional Host</label><input type="text" id="upd-host" placeholder="e.g. Added: Stripe"></div>
-          <div class="form-group"><label>Update Notes</label><textarea id="upd-notes" placeholder="What changed?" style="min-height:60px;"></textarea></div>
-          <button class="form-submit" id="updateBtn" onclick="submitUpdate()">Apply Update</button>
-        </div>
+    <!-- UPDATE -->
+<div id="form-update" style="display:none;">
+  <div class="public-update-notice">💡 <strong>Anyone can update event info</strong> — changes go live immediately.</div>
+  <div class="modal-notice">Paste the RSVP link of the event you want to update.</div>
+  <div class="form-group">
+    <label>Event RSVP Link <span>*</span></label>
+    <input type="url" id="upd-rsvp" placeholder="https://lu.ma/..." oninput="findEventByRsvp()">
+    <div class="form-hint" id="upd-found-label"></div>
+  </div>
+  <div id="upd-fields" style="display:none;">
+    <div class="modal-notice" style="background:#e8fff0;border-color:#b0dfc0;">
+      <strong style="color:#1a7a40;">Event found:</strong> <span id="upd-event-name"></span>. Fill in only the fields that changed.
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>New Date (if changed)</label>
+        <select id="upd-date">
+          <option value="">No change</option>
+          <option value="2026-05-27">Wed May 27</option>
+          <option value="2026-05-28">Thu May 28</option>
+          <option value="2026-05-29">Fri May 29</option>
+          <option value="2026-05-30">Sat May 30</option>
+          <option value="2026-05-31">Sun May 31</option>
+          <option value="2026-06-01">Mon Jun 1</option>
+          <option value="2026-06-02">Tue Jun 2</option>
+          <option value="2026-06-03">Wed Jun 3</option>
+          <option value="2026-06-04">Thu Jun 4</option>
+          <option value="2026-06-05">Fri Jun 5</option>
+          <option value="2026-06-06">Sat Jun 6</option>
+          <option value="2026-06-07">Sun Jun 7</option>
+          <option value="2026-06-08">Mon Jun 8</option>
+        </select>
       </div>
+      <div class="form-group"><label>New Start Time</label>
+        <input type="text" id="upd-time" placeholder="e.g. 7:00 PM">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>New End Time (if applicable)</label>
+        <input type="text" id="upd-endtime" placeholder="e.g. 10:00 PM">
+      </div>
+      <div class="form-group"><label>Ticket / Price Update</label>
+        <select id="upd-ticket">
+          <option value="">No change</option>
+          <option value="Free">Free</option>
+          <option value="Paid">Paid</option>
+          <option value="Sold Out">Sold Out</option>
+          <option value="Application Required">Application Required</option>
+          <option value="Invite Only">Invite Only</option>
+          <option value="Waitlist">Waitlist</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>New Venue / Address</label>
+      <input type="text" id="upd-venue" placeholder="New location…">
+    </div>
+    <div class="form-group"><label>New / Additional Host</label>
+      <input type="text" id="upd-host" placeholder="e.g. Stripe">
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Free Drinks?</label>
+        <select id="upd-drinks">
+          <option value="">No change</option>
+          <option value="true">Yes — drinks included</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Free Food?</label>
+        <select id="upd-food">
+          <option value="">No change</option>
+          <option value="true">Yes — food included</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Update Notes <span style="font-weight:400;color:var(--gray-300);">(e.g. "now sold out", "venue changed")</span></label>
+      <textarea id="upd-notes" placeholder="What changed? Sold out, new speaker, venue update…" style="min-height:60px;"></textarea>
+    </div>
+    <button class="form-submit" id="updateBtn" onclick="submitUpdate()">Apply Update</button>
+  </div>
+</div>
 
       <!-- ⭐ FEATURE YOUR EVENT -->
       <div id="form-feature" style="display:none;">
@@ -5274,37 +5323,86 @@ function showSuccess(type) {
       </div>
 
       <!-- UPDATE -->
-      <div id="form-update" style="display:none;">
-        <div class="public-update-notice">💡 <strong>Anyone can update event info</strong> — changes go live immediately.</div>
-        <div class="modal-notice">Paste the RSVP link of the event you want to update.</div>
-        <div class="form-group">
-          <label>Event RSVP Link <span>*</span></label>
-          <input type="url" id="upd-rsvp" placeholder="https://lu.ma/..." oninput="findEventByRsvp()">
-          <div class="form-hint" id="upd-found-label"></div>
-        </div>
-        <div id="upd-fields" style="display:none;">
-          <div class="modal-notice" style="background:#e8fff0;border-color:#b0dfc0;"><strong style="color:#1a7a40;">Event found:</strong> <span id="upd-event-name"></span>. Fill in only the fields that changed.</div>
-          <div class="form-row">
-            <div class="form-group"><label>New Date (if changed)</label>
-              <select id="upd-date">
-                <option value="">No change</option>
-                <option value="2026-05-27">Tue May 27</option><option value="2026-05-28">Wed May 28</option>
-                <option value="2026-05-29">Thu May 29</option><option value="2026-05-30">Fri May 30</option>
-                <option value="2026-05-31">Sat May 31</option><option value="2026-06-01">Sun Jun 1</option>
-                <option value="2026-06-02">Mon Jun 2</option><option value="2026-06-03">Tue Jun 3</option>
-                <option value="2026-06-04">Wed Jun 4</option><option value="2026-06-05">Thu Jun 5</option>
-                <option value="2026-06-06">Fri Jun 6</option><option value="2026-06-07">Sat Jun 7</option>
-                <option value="2026-06-08">Sun Jun 8</option>
-              </select>
-            </div>
-            <div class="form-group"><label>New Time (if changed)</label><input type="text" id="upd-time" placeholder="e.g. 7:00 PM"></div>
-          </div>
-          <div class="form-group"><label>New Venue / Address</label><input type="text" id="upd-venue" placeholder="New location…"></div>
-          <div class="form-group"><label>New / Additional Host</label><input type="text" id="upd-host" placeholder="e.g. Added: Stripe"></div>
-          <div class="form-group"><label>Update Notes</label><textarea id="upd-notes" placeholder="What changed?" style="min-height:60px;"></textarea></div>
-          <button class="form-submit" id="updateBtn" onclick="submitUpdate()">Apply Update</button>
-        </div>
+<div id="form-update" style="display:none;">
+  <div class="public-update-notice">💡 <strong>Anyone can update event info</strong> — changes go live immediately.</div>
+  <div class="modal-notice">Paste the RSVP link of the event you want to update.</div>
+  <div class="form-group">
+    <label>Event RSVP Link <span>*</span></label>
+    <input type="url" id="upd-rsvp" placeholder="https://lu.ma/..." oninput="findEventByRsvp()">
+    <div class="form-hint" id="upd-found-label"></div>
+  </div>
+  <div id="upd-fields" style="display:none;">
+    <div class="modal-notice" style="background:#e8fff0;border-color:#b0dfc0;">
+      <strong style="color:#1a7a40;">Event found:</strong> <span id="upd-event-name"></span>. Fill in only the fields that changed.
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>New Date (if changed)</label>
+        <select id="upd-date">
+          <option value="">No change</option>
+          <option value="2026-05-27">Wed May 27</option>
+          <option value="2026-05-28">Thu May 28</option>
+          <option value="2026-05-29">Fri May 29</option>
+          <option value="2026-05-30">Sat May 30</option>
+          <option value="2026-05-31">Sun May 31</option>
+          <option value="2026-06-01">Mon Jun 1</option>
+          <option value="2026-06-02">Tue Jun 2</option>
+          <option value="2026-06-03">Wed Jun 3</option>
+          <option value="2026-06-04">Thu Jun 4</option>
+          <option value="2026-06-05">Fri Jun 5</option>
+          <option value="2026-06-06">Sat Jun 6</option>
+          <option value="2026-06-07">Sun Jun 7</option>
+          <option value="2026-06-08">Mon Jun 8</option>
+        </select>
       </div>
+      <div class="form-group"><label>New Start Time</label>
+        <input type="text" id="upd-time" placeholder="e.g. 7:00 PM">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>New End Time (if applicable)</label>
+        <input type="text" id="upd-endtime" placeholder="e.g. 10:00 PM">
+      </div>
+      <div class="form-group"><label>Ticket / Price Update</label>
+        <select id="upd-ticket">
+          <option value="">No change</option>
+          <option value="Free">Free</option>
+          <option value="Paid">Paid</option>
+          <option value="Sold Out">Sold Out</option>
+          <option value="Application Required">Application Required</option>
+          <option value="Invite Only">Invite Only</option>
+          <option value="Waitlist">Waitlist</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>New Venue / Address</label>
+      <input type="text" id="upd-venue" placeholder="New location…">
+    </div>
+    <div class="form-group"><label>New / Additional Host</label>
+      <input type="text" id="upd-host" placeholder="e.g. Stripe">
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Free Drinks?</label>
+        <select id="upd-drinks">
+          <option value="">No change</option>
+          <option value="true">Yes — drinks included</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Free Food?</label>
+        <select id="upd-food">
+          <option value="">No change</option>
+          <option value="true">Yes — food included</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Update Notes <span style="font-weight:400;color:var(--gray-300);">(e.g. "now sold out", "venue changed")</span></label>
+      <textarea id="upd-notes" placeholder="What changed? Sold out, new speaker, venue update…" style="min-height:60px;"></textarea>
+    </div>
+    <button class="form-submit" id="updateBtn" onclick="submitUpdate()">Apply Update</button>
+  </div>
+</div>
 
       <!-- ⭐ FEATURE YOUR EVENT -->
       <div id="form-feature" style="display:none;">
