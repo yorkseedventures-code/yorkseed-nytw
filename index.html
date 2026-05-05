@@ -398,6 +398,9 @@
       <span class="live-dot"></span>
       <span id="liveViewerCount">1</span> online
     </div>
+    <div class="live-viewers-pill" id="totalVisitsPill" style="display:inline-flex;cursor:default;" title="Total page visits">
+      👁 <span id="totalVisitCount">—</span>
+    </div>
     <div class="event-count-pill" id="headerCount">— events</div>
   </div>
 </header>
@@ -2868,6 +2871,36 @@ function showSuccess(type) {
       document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')channel.untrack();else channel.track({joined_at:Date.now(),id:myId});});
       window.addEventListener('beforeunload',()=>channel.untrack());
       window.addEventListener('pagehide',()=>channel.untrack());
+
+      // ── TOTAL PAGE VISIT COUNTER ──
+      async function trackVisit() {
+        try {
+          // Increment visit count using Supabase RPC or fallback to a simple key-value row
+          const res = await fetch(SUPABASE_URL + '/rest/v1/rpc/increment_visits', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ page: 'nytw2026' })
+          });
+          if (res.ok) {
+            const count = await res.json();
+            if (count) document.getElementById('totalVisitCount').textContent = Number(count).toLocaleString();
+          } else {
+            // Fallback: just read the count without incrementing
+            const res2 = await fetch(SUPABASE_URL + '/rest/v1/page_visits?page=eq.nytw2026&select=visits', {
+              headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+            });
+            if (res2.ok) {
+              const rows = await res2.json();
+              if (rows && rows[0]) document.getElementById('totalVisitCount').textContent = Number(rows[0].visits).toLocaleString();
+            }
+          }
+        } catch(e) { document.getElementById('totalVisitsPill').style.display = 'none'; }
+      }
+      trackVisit();
     } catch(err){setCount(1);}
   }
   const s=document.createElement('script');
