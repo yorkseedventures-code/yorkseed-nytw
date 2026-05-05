@@ -1712,8 +1712,7 @@ let submittedEvents = [];
 try { const s = localStorage.getItem('ys_submitted_nytw'); if (s) submittedEvents = JSON.parse(s); } catch(e) {}
 function saveSubmitted() { try { localStorage.setItem('ys_submitted_nytw', JSON.stringify(submittedEvents)); } catch(e) {} }
 
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS8NnqipPUislB161YOyH83l7SyCtsPqSS7uE0dxuJUPyd8_ctIbYl-0UcJb3T5OhMC_Rb8FGp4Cl6f/pub?gid=0&single=true&output=csv';
-
+const CSV_URL = SHEETS_URL + '?action=get_events';
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
