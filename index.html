@@ -2229,26 +2229,106 @@ async function importFromLink() {
     try { response=await fetch(proxyUrl,{method:'GET',redirect:'follow'}); data=await response.json(); }
     catch(fetchErr) { throw new Error('Could not reach Apps Script: '+fetchErr.message); }
     if (!data.ok && data.status !== 200) throw new Error(data.message || data.error || JSON.stringify(data));
-    statusText.textContent='Got details, adding event…';
     const evt=data.event;
     if (!evt || !evt.name) throw new Error('No event data in response');
-    statusIcon.textContent='✅'; statusText.textContent='Details found! Adding to list…';
+
+    statusIcon.textContent='✅'; statusText.textContent='Details found! Review and submit below.';
+
     setTimeout(() => {
-      if(evt.name) document.getElementById('sub-name').value=evt.name;
-      if(evt.date){const sel=document.getElementById('sub-date');for(let o of sel.options){if(o.value===evt.date){sel.value=evt.date;break;}}}
+      // ── NAME: sanitize — reject if it looks like a sentence (has "is","are","we","the" etc) ──
+      let cleanName = (evt.name || '').trim();
+      // Strip platform suffixes just in case Apps Script missed them
+      cleanName = cleanName
+        .replace(/\s*[\|\-–]\s*(Eventbrite|Luma|Partiful|Meetup)\s*$/i, '')
+        .trim();
+      // If name looks like a sentence fragment, clear it so user must fill in
+      const sentenceWords = /\b(is|are|we|the|it|will|our|this|that|bring|have|get|make|learn|join|come|when|once|for|and|but)\b/i;
+      const looksLikeSentence = cleanName.split(' ').length > 8 || sentenceWords.test(cleanName.substring(20));
+      document.getElementById('sub-name').value = looksLikeSentence ? '' : cleanName;
+      if (looksLikeSentence) {
+        document.getElementById('sub-name').placeholder = 'Name not detected — please enter manually';
+        document.getElementById('sub-name').style.borderColor = 'var(--red)';
+      }
+
+      // ── DATE ──
+      if(evt.date){
+        const sel=document.getElementById('sub-date');
+        for(let o of sel.options){ if(o.value===evt.date){ sel.value=evt.date; break; } }
+      }
+
+      // ── TIME ──
       if(evt.time) document.getElementById('sub-time').value=evt.time;
-      if(evt.host) document.getElementById('sub-host').value=evt.host;
+
+      // ── HOST: clear if looks like user ID ──
+      if(evt.host) {
+        const looksLikeId = evt.host.length > 14 && /^[A-Za-z0-9]+$/.test(evt.host) && /[0-9]/.test(evt.host) && /[A-Z]/.test(evt.host);
+        if (!looksLikeId) {
+          document.getElementById('sub-host').value = evt.host;
+        } else {
+          document.getElementById('sub-host').placeholder = 'Host not found — please enter manually';
+          document.getElementById('sub-host').style.borderColor = 'var(--red)';
+        }
+      }
+
+      // ── NEIGHBORHOOD / VENUE ──
       if(evt.neighborhood) document.getElementById('sub-neighborhood').value=evt.neighborhood;
       if(evt.venue) document.getElementById('sub-venue').value=evt.venue;
+
+      // ── RSVP ──
       document.getElementById('sub-rsvp').value=url;
-      if(evt.ticket) document.getElementById('sub-ticket').value=evt.ticket;
-      if(evt.category){document.getElementById('sub-type').value=evt.category;onCatInput(evt.category);}
-      if(evt.notes) document.getElementById('sub-notes').value=evt.notes;
+
+      // ── TICKET: map free/paid text to dropdown options ──
+      if(evt.ticket) {
+        const ticketSel = document.getElementById('sub-ticket');
+        const ticketLower = evt.ticket.toLowerCase();
+        if (ticketLower === 'free') {
+          ticketSel.value = 'Free';
+        } else if (ticketLower.includes('invite only')) {
+          ticketSel.value = 'Invite Only';
+        } else if (ticketLower.includes('application')) {
+          ticketSel.value = 'Application Required';
+        } else if (ticketLower.startsWith('paid')) {
+          ticketSel.value = 'Paid';
+          // Put the price in notes if we have it
+          const priceMatch = evt.ticket.match(/\$[\d.–-]+/);
+          if (priceMatch) {
+            const notesEl = document.getElementById('sub-notes');
+            const priceNote = `Ticket price: ${priceMatch[0]}`;
+            notesEl.value = notesEl.value ? priceNote + ' · ' + notesEl.value : priceNote;
+          }
+        }
+      }
+
+      // ── CATEGORY ──
+      if(evt.category){
+        document.getElementById('sub-type').value=evt.category;
+        if(typeof onCatInput==='function') onCatInput(evt.category);
+      }
+
+      // ── NOTES ──
+      if(evt.notes) {
+        const notesEl = document.getElementById('sub-notes');
+        // Don't overwrite if we already put price note in there
+        if (!notesEl.value) notesEl.value = evt.notes;
+      }
+
+      // ── DRINKS / FOOD ──
       if(evt.drinks) document.getElementById('sub-drinks').checked=true;
       if(evt.food) document.getElementById('sub-food').checked=true;
-      const ysDetected=detectYorkseed(evt.name,evt.host,evt.notes);
+
+      // ── YORKSEED ──
+      const ysDetected=detectYorkseed(cleanName, evt.host, evt.notes);
       document.getElementById('sub-yorkseed').value=ysDetected;
-      submitEvent(true,ysDetected);
+
+      // ── Only auto-submit if name looks clean, otherwise let user review ──
+      if (!looksLikeSentence && cleanName.length > 3) {
+        submitEvent(true, ysDetected);
+      } else {
+        // Show the form so user can fix the name before submitting
+        statusText.textContent='⚠️ Please check the event name and submit manually.';
+        document.getElementById('form-submit') && (document.getElementById('form-submit').style.display='block');
+      }
+
     }, 600);
   } catch(err) {
     statusIcon.textContent='⚠️'; statusText.textContent='Error: '+err.message;
