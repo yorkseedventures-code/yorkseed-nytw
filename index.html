@@ -2875,29 +2875,13 @@ function showSuccess(type) {
       // ── TOTAL PAGE VISIT COUNTER ──
       async function trackVisit() {
         try {
-          // First read current count
-          const res = await fetch(SUPABASE_URL + '/rest/v1/page_visits?page=eq.nytw2026&select=visits', {
-            headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
-          });
-          if (res.ok) {
-            const rows = await res.json();
-            const current = (rows && rows[0]) ? Number(rows[0].visits) : 0;
-            const next = current + 1;
-            // Update count
-            await fetch(SUPABASE_URL + '/rest/v1/page_visits?page=eq.nytw2026', {
-              method: 'PATCH',
-              headers: {
-                'apikey': SUPABASE_ANON_KEY,
-                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-                'Content-Type': 'application/json',
-                'Prefer': 'return=minimal'
-              },
-              body: JSON.stringify({ visits: next })
-            });
-            document.getElementById('totalVisitCount').textContent = next.toLocaleString();
-          } else {
-            document.getElementById('totalVisitsPill').style.display = 'none';
+          const res = await fetch(SHEETS_URL + '?action=get_visits');
+          const data = await res.json();
+          if (data.ok && data.visits !== undefined) {
+            document.getElementById('totalVisitCount').textContent = Number(data.visits).toLocaleString();
           }
+          // Increment in background
+          fetch(SHEETS_URL + '?action=increment_visits', { method: 'GET' });
         } catch(e) { document.getElementById('totalVisitsPill').style.display = 'none'; }
       }
       trackVisit();
