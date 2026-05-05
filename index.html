@@ -1708,9 +1708,20 @@ const EVENTS_FINAL = EVENTS.filter(e => { if (seen.has(e.id)) return false; seen
 let activeType = 'all', activeDay = 'all', freeFilter = null, searchTerm = '';
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbz9EHdXBuCrIZwoX1mayuCGuW1K3j-oLBCR8ikp1gv0h5TI7Llsxxt9SBSRPkhxF7QNtQ/exec";
 
+const CACHE_VERSION = 'v' + Math.floor(Date.now() / (1000 * 60 * 5)); // busts every 5 minutes
+
 let submittedEvents = [];
-try { const s = localStorage.getItem('ys_submitted_nytw'); if (s) submittedEvents = JSON.parse(s); } catch(e) {}
-function saveSubmitted() { try { localStorage.setItem('ys_submitted_nytw', JSON.stringify(submittedEvents)); } catch(e) {} }
+try { 
+  const cached = localStorage.getItem('ys_submitted_nytw');
+  const cachedVersion = localStorage.getItem('ys_submitted_nytw_version');
+  if (cached && cachedVersion === CACHE_VERSION) submittedEvents = JSON.parse(cached); 
+} catch(e) {}
+function saveSubmitted() { 
+  try { 
+    localStorage.setItem('ys_submitted_nytw', JSON.stringify(submittedEvents)); 
+    localStorage.setItem('ys_submitted_nytw_version', CACHE_VERSION);
+  } catch(e) {} 
+}
 
 const CSV_URL = SHEETS_URL + '?action=get_events';
 function parseCSV(text) {
@@ -1735,28 +1746,30 @@ function parseCSV(text) {
 
 async function loadFromSheets() {
   try {
-    const res = await fetch(CSV_URL);
+    const res = await fetch(CSV_URL + '&_=' + CACHE_VERSION);
     const data = await res.json();
     if (!data.ok || !data.events) return;
-    data.events.forEach(e => {
-      if (!e.id) return;
-      const already = submittedEvents.find(x => String(x.id) === String(e.id));
-      if (!already) {
-        submittedEvents.push({
-          id: e.id, name: e.name, host: e.host,
-          date: e.date, day: e.day, time: e.time,
-          venue: e.venue, neighborhood: e.city || e.neighborhood || 'Manhattan',
-          address: 'New York, NY',
-          types: e.types ? e.types.split(',') : ['community'],
-          free: e.free === 'TRUE' || e.free === true,
-          drinks: e.drinks === 'TRUE' || e.drinks === true,
-          food: e.food === 'TRUE' || e.food === true,
-          ticket: e.ticket, notes: e.notes, rsvp: e.rsvp,
-          status: e.status || 'Open', submitted: true,
-          yorkseed: e.yorkseed || undefined
-        });
-      }
-    });
+
+    // Build fresh list from sheet — sheet is source of truth
+    const sheetEvents = data.events.filter(e => e.id).map(e => ({
+      id: e.id, name: e.name, host: e.host,
+      date: e.date, day: e.day, time: e.time,
+      venue: e.venue, neighborhood: e.neighborhood || e.city || 'Manhattan',
+      address: e.address || '',
+      types: e.types ? e.types.split(',') : ['community'],
+      free: e.ticket === 'Free' || e.free === 'TRUE' || e.free === true,
+      drinks: e.drinks === 'TRUE' || e.drinks === true,
+      food: e.food === 'TRUE' || e.food === true,
+      ticket: e.ticket || 'Free', notes: e.notes, rsvp: e.rsvp,
+      status: e.status || 'Open', submitted: true,
+      yorkseed: e.yorkseed || undefined
+    }));
+
+    // Merge: keep locally-submitted events not yet in sheet, replace everything else
+    const sheetIds = new Set(sheetEvents.map(e => String(e.id)));
+    const localOnly = submittedEvents.filter(e => !sheetIds.has(String(e.id)));
+    submittedEvents = [...sheetEvents, ...localOnly];
+
     saveSubmitted();
     render();
     updateHeaderCount();
