@@ -2344,20 +2344,48 @@ function findEventByRsvp() {
   const found=allEvents().find(e=>e.rsvp&&norm(e.rsvp)===cleanInput);
   if(found){updTargetEvent=found;label.innerHTML=`<span style="color:#1a7a40;font-weight:600;">✓ Found: ${found.name}</span>`;document.getElementById('upd-event-name').textContent=found.name;fields.style.display='block';}
   else{updTargetEvent=null;label.innerHTML='<span style="color:#cc0000;">No matching event found. Try pasting just the base URL without ?ref=...</span>';fields.style.display='none';}
-}
-async function submitUpdate() {
+}async function submitUpdate() {
   if(!updTargetEvent){alert('No event found to update.');return;}
-  const newDate=document.getElementById('upd-date').value, newTime=document.getElementById('upd-time').value.trim(),
-    newVenue=document.getElementById('upd-venue').value.trim(), newHost=document.getElementById('upd-host').value.trim(),
+  const newDate=document.getElementById('upd-date').value,
+    newTime=document.getElementById('upd-time').value.trim(),
+    newEndTime=document.getElementById('upd-endtime').value.trim(),
+    newVenue=document.getElementById('upd-venue').value.trim(),
+    newHost=document.getElementById('upd-host').value.trim(),
+    newTicket=document.getElementById('upd-ticket').value,
+    newDrinks=document.getElementById('upd-drinks').value,
+    newFood=document.getElementById('upd-food').value,
     newNotes=document.getElementById('upd-notes').value.trim();
-  if(!newDate&&!newTime&&!newVenue&&!newHost&&!newNotes){alert('Please fill in at least one field to update.');return;}
-  const btn=document.getElementById('updateBtn'); btn.disabled=true; btn.textContent='Applying…';
+  if(!newDate&&!newTime&&!newEndTime&&!newVenue&&!newHost&&!newTicket&&!newDrinks&&!newFood&&!newNotes){
+    alert('Please fill in at least one field to update.');return;
+  }
+  const btn=document.getElementById('updateBtn');
+  btn.disabled=true; btn.textContent='Applying…';
   if(newDate){updTargetEvent.date=newDate;updTargetEvent.day=dayLabelFromISO(newDate);}
-  if(newTime) updTargetEvent.time=newTime;
+  if(newTime||newEndTime){
+    const start=newTime||(updTargetEvent.time?updTargetEvent.time.split(' – ')[0]:'');
+    const end=newEndTime||(updTargetEvent.time?updTargetEvent.time.split(' – ')[1]:'');
+    updTargetEvent.time=start&&end?`${start} – ${end}`:start||end;
+  }
   if(newVenue) updTargetEvent.venue=newVenue;
-  if(newHost) updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;
-  if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}
+  if(newHost){
+    const oldHost=updTargetEvent.host||'';
+    const looksLikeId=oldHost.length>14&&/^[A-Za-z0-9]+$/.test(oldHost)&&/[0-9]/.test(oldHost);
+    updTargetEvent.host=looksLikeId?newHost:(oldHost?oldHost+' & '+newHost:newHost);
+  }
+  if(newTicket){
+    updTargetEvent.ticket=newTicket;
+    updTargetEvent.free=newTicket==='Free';
+    if(newTicket==='Sold Out') updTargetEvent.status='Sold Out';
+    if(newTicket==='Waitlist') updTargetEvent.status='Waitlist';
+  }
+  if(newDrinks!=='') updTargetEvent.drinks=newDrinks==='true';
+  if(newFood!=='') updTargetEvent.food=newFood==='true';
+  if(newNotes){
+    updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · '+newNotes:newNotes;
+    updTargetEvent.status=updTargetEvent.status||'Updated';
+  }
   saveSubmitted();
+  postToSheets(updTargetEvent);
   btn.disabled=false; btn.textContent='Apply Update';
   activeDay='all';
   document.getElementById('dayTabs').innerHTML='';
@@ -2365,6 +2393,7 @@ async function submitUpdate() {
   showSuccess('updated');
   render();
   updateHeaderCount();
+}
 }
 function showSuccess(type) {
   const icon=document.getElementById('successIcon'), title=document.getElementById('successTitle'), msg=document.getElementById('successMsg');
@@ -5173,20 +5202,48 @@ function findEventByRsvp() {
   const found=allEvents().find(e=>e.rsvp&&norm(e.rsvp)===cleanInput);
   if(found){updTargetEvent=found;label.innerHTML=`<span style="color:#1a7a40;font-weight:600;">✓ Found: ${found.name}</span>`;document.getElementById('upd-event-name').textContent=found.name;fields.style.display='block';}
   else{updTargetEvent=null;label.innerHTML='<span style="color:#cc0000;">No matching event found. Try pasting just the base URL without ?ref=...</span>';fields.style.display='none';}
-}
-async function submitUpdate() {
+}async function submitUpdate() {
   if(!updTargetEvent){alert('No event found to update.');return;}
-  const newDate=document.getElementById('upd-date').value, newTime=document.getElementById('upd-time').value.trim(),
-    newVenue=document.getElementById('upd-venue').value.trim(), newHost=document.getElementById('upd-host').value.trim(),
+  const newDate=document.getElementById('upd-date').value,
+    newTime=document.getElementById('upd-time').value.trim(),
+    newEndTime=document.getElementById('upd-endtime').value.trim(),
+    newVenue=document.getElementById('upd-venue').value.trim(),
+    newHost=document.getElementById('upd-host').value.trim(),
+    newTicket=document.getElementById('upd-ticket').value,
+    newDrinks=document.getElementById('upd-drinks').value,
+    newFood=document.getElementById('upd-food').value,
     newNotes=document.getElementById('upd-notes').value.trim();
-  if(!newDate&&!newTime&&!newVenue&&!newHost&&!newNotes){alert('Please fill in at least one field to update.');return;}
-  const btn=document.getElementById('updateBtn'); btn.disabled=true; btn.textContent='Applying…';
+  if(!newDate&&!newTime&&!newEndTime&&!newVenue&&!newHost&&!newTicket&&!newDrinks&&!newFood&&!newNotes){
+    alert('Please fill in at least one field to update.');return;
+  }
+  const btn=document.getElementById('updateBtn');
+  btn.disabled=true; btn.textContent='Applying…';
   if(newDate){updTargetEvent.date=newDate;updTargetEvent.day=dayLabelFromISO(newDate);}
-  if(newTime) updTargetEvent.time=newTime;
+  if(newTime||newEndTime){
+    const start=newTime||(updTargetEvent.time?updTargetEvent.time.split(' – ')[0]:'');
+    const end=newEndTime||(updTargetEvent.time?updTargetEvent.time.split(' – ')[1]:'');
+    updTargetEvent.time=start&&end?`${start} – ${end}`:start||end;
+  }
   if(newVenue) updTargetEvent.venue=newVenue;
-  if(newHost) updTargetEvent.host=updTargetEvent.host?updTargetEvent.host+' & '+newHost:newHost;
-  if(newNotes){updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · Update: '+newNotes:newNotes;updTargetEvent.status='Updated';}
+  if(newHost){
+    const oldHost=updTargetEvent.host||'';
+    const looksLikeId=oldHost.length>14&&/^[A-Za-z0-9]+$/.test(oldHost)&&/[0-9]/.test(oldHost);
+    updTargetEvent.host=looksLikeId?newHost:(oldHost?oldHost+' & '+newHost:newHost);
+  }
+  if(newTicket){
+    updTargetEvent.ticket=newTicket;
+    updTargetEvent.free=newTicket==='Free';
+    if(newTicket==='Sold Out') updTargetEvent.status='Sold Out';
+    if(newTicket==='Waitlist') updTargetEvent.status='Waitlist';
+  }
+  if(newDrinks!=='') updTargetEvent.drinks=newDrinks==='true';
+  if(newFood!=='') updTargetEvent.food=newFood==='true';
+  if(newNotes){
+    updTargetEvent.notes=updTargetEvent.notes?updTargetEvent.notes+' · '+newNotes:newNotes;
+    updTargetEvent.status=updTargetEvent.status||'Updated';
+  }
   saveSubmitted();
+  postToSheets(updTargetEvent);
   btn.disabled=false; btn.textContent='Apply Update';
   activeDay='all';
   document.getElementById('dayTabs').innerHTML='';
@@ -5194,6 +5251,7 @@ async function submitUpdate() {
   showSuccess('updated');
   render();
   updateHeaderCount();
+}
 }
 function showSuccess(type) {
   const icon=document.getElementById('successIcon'), title=document.getElementById('successTitle'), msg=document.getElementById('successMsg');
