@@ -1842,7 +1842,7 @@ async function loadFromSheets() {
       food: e.food === 'TRUE' || e.food === true,
       ticket: e.ticket || 'Free', notes: e.notes, rsvp: e.rsvp,
       status: e.status || 'Open', submitted: true,
-      yorkseed: e.yorkseed || undefined
+      yorkseed: normalizeYorkseedTier(e.yorkseed || detectYorkseed(e.name, e.host, e.notes)) || undefined
     }));
 
     // Merge: keep locally-submitted events not yet in sheet, replace everything else
@@ -1852,6 +1852,7 @@ async function loadFromSheets() {
 
     saveSubmitted();
     render();
+    renderPassportHero();
     updateHeaderCount();
   } catch(err) { console.warn('Sheets load failed:', err); }
 }
@@ -1877,10 +1878,24 @@ async function postToSheets(event) {
   } catch(err) { console.warn('Sheets save failed:', err); }
 }
 
+function normalizeYorkseedTier(value) {
+  const v = String(value || '').toLowerCase().trim();
+  if (!v) return '';
+  if (['passport','headline','all-access','all access','partner 3-pack','3-pack','yorkseed co-host','yorkseed cohost','co-host','cohost','yorkseed event','hosted by yorkseed'].some(t => v.includes(t))) return 'passport';
+  if (['partner','media partner','community partner','supported','powered'].some(t => v.includes(t))) return 'partner';
+  if (['featured','basic'].some(t => v.includes(t))) return 'featured';
+  return v;
+}
+function isYorkseedPassport(e) {
+  return normalizeYorkseedTier(e.yorkseed) === 'passport' || detectYorkseed(e.name, e.host, e.notes) === 'passport';
+}
+function isYorkseedPartner(e) {
+  return !isYorkseedPassport(e) && (normalizeYorkseedTier(e.yorkseed) === 'partner' || detectYorkseed(e.name, e.host, e.notes) === 'partner');
+}
 function tierPriority(e) {
-  if (e.yorkseed === 'passport') return 0;
-  if (e.yorkseed === 'partner')  return 1;
-  if (e.featured === true)       return 2;
+  if (isYorkseedPassport(e)) return 0;
+  if (isYorkseedPartner(e))  return 1;
+  if (e.featured === true || normalizeYorkseedTier(e.yorkseed) === 'featured') return 2;
   return 3;
 }
 function timeToMinutes(t) {
@@ -1956,9 +1971,9 @@ function render() {
     group.innerHTML = `<div class="day-header"><div class="day-label">${events[0].day}</div><div class="day-date">${dayDateStr.split(',')[0].toUpperCase()}</div><div class="day-event-count">${events.length} event${events.length !== 1 ? 's' : ''}</div></div>`;
     events.forEach(e => {
       const card = document.createElement('div');
-      const isPassport = e.yorkseed === 'passport';
-      const isPartner  = e.yorkseed === 'partner';
-      const isFeatured = e.featured === true;
+      const isPassport = isYorkseedPassport(e);
+      const isPartner  = isYorkseedPartner(e);
+      const isFeatured = e.featured === true || normalizeYorkseedTier(e.yorkseed) === 'featured';
       let cardClass = 'event-card';
       if (isPassport) cardClass += ' ys-passport';
       else if (isPartner) cardClass += ' ys-partner';
@@ -2058,7 +2073,7 @@ function renderPassportHero() {
   const passportContainer = document.getElementById('passportCards');
   const passportSection = document.getElementById('passportSection');
   if (passportContainer) {
-    const pe = allEvents().filter(e => e.yorkseed === 'passport').sort((a,b) => a.date.localeCompare(b.date));
+    const pe = allEvents().filter(isYorkseedPassport).sort((a,b) => a.date.localeCompare(b.date));
     passportSection.style.display = pe.length ? 'block' : 'none';
     passportContainer.innerHTML = pe.map(e => `
       <a class="passport-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
@@ -2071,7 +2086,7 @@ function renderPassportHero() {
   const partnerContainer = document.getElementById('partnerCards');
   const partnerSection = document.getElementById('partnerSection');
   if (partnerContainer) {
-    const pe2 = allEvents().filter(e => e.yorkseed === 'partner').sort((a,b) => a.date.localeCompare(b.date));
+    const pe2 = allEvents().filter(isYorkseedPartner).sort((a,b) => a.date.localeCompare(b.date));
     partnerSection.style.display = pe2.length ? 'block' : 'none';
     partnerContainer.innerHTML = pe2.map(e => `
       <a class="partner-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
@@ -2265,9 +2280,19 @@ function detectYorkseed(name, host, notes) {
   const allText = ((name||'')+' '+(host||'')+' '+(notes||'')).toLowerCase();
   const hostText = (host||'').toLowerCase();
   if (!allText.includes('yorkseed')) return '';
-  const cohostTerms = ['co-host','cohost','co host','hosted by yorkseed','yorkseed host','yorkseed presents','x yorkseed','& yorkseed','yorkseed &','yorkseed x','yorkseed global','yorkseed connect'];
-  if (cohostTerms.some(t => allText.includes(t))) return 'passport';
+
+  // Rule: anything hosted by Yorkseed, titled as Yorkseed, or co-hosted with Yorkseed
+  // should receive full Passport Series treatment: black + gold card, top placement, and hero carousel.
+  const passportTerms = [
+    'yorkseed passport', 'passport series', 'hosted by yorkseed', 'yorkseed host',
+    'yorkseed presents', 'yorkseed event', 'yorkseed connect', 'yorkseed global',
+    'x yorkseed', 'yorkseed x', '& yorkseed', 'yorkseed &',
+    'co-host', 'cohost', 'co host', 'co-presented', 'co presented'
+  ];
   if (hostText.includes('yorkseed')) return 'passport';
+  if ((name||'').toLowerCase().includes('yorkseed')) return 'passport';
+  if (passportTerms.some(t => allText.includes(t))) return 'passport';
+
   const partnerTerms = ['community partner','media partner','in partnership','supported by yorkseed','powered by yorkseed'];
   if (partnerTerms.some(t => allText.includes(t))) return 'partner';
   return 'partner';
@@ -2293,7 +2318,7 @@ function submitEvent(skipValidation, ysOverride) {
     time,venue,neighborhood,address:'New York, NY',types:[type||'community'],
     free:ticket==='Free',drinks,food,ticket,notes,
     rsvp:rsvp.includes('?')?rsvp+'&ref=yorkseed':rsvp+'?ref=yorkseed',
-    status:'Open',submitted:true,yorkseed:yorkseed||undefined
+    status:'Open',submitted:true,yorkseed:normalizeYorkseedTier(yorkseed)||undefined
   };
   submittedEvents.push(newEvent);
   saveSubmitted();
