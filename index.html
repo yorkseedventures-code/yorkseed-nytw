@@ -771,10 +771,70 @@
 
 <script>
 const EVENTS = [
-  { id:12, name:"Yorkseed Passport Series: NYTW — Pre-Week Drinks", host:"Yorkseed", date:"2026-05-30", day:"Sat May 30", time:"6:00 PM", venue:"TBD — SoHo or Flatiron", neighborhood:"SoHo / Flatiron", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Paid", yorkseed:"passport", notes:"Yorkseed Passport Series pre-week edition. Founders, investors and operators in one room before the week kicks off. Members get priority access. RSVP via Luma.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:40, name:"Yorkseed Passport Series: NYTW — Flagship Dinner", host:"Yorkseed", date:"2026-06-03", day:"Wed Jun 3", time:"7:30 PM", venue:"TBD — West Village or SoHo", neighborhood:"West Village / SoHo", address:"New York, NY", types:["vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The flagship Yorkseed Passport Series NYTW dinner. A carefully curated evening of founders, investors, and operators at the midpoint of the week. Limited seats — members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:41, name:"Yorkseed Passport Series: NYTW — Closing Rooftop", host:"Yorkseed", date:"2026-06-06", day:"Sat Jun 6", time:"5:30 PM", venue:"TBD Rooftop — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The closing Yorkseed Passport Series event at NYTW. Rooftop sendoff for founders, investors, and operators. Members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
-  { id:39, name:"Yorkseed Passport Series: NYTW — Post-Week Debrief Brunch", host:"Yorkseed", date:"2026-06-08", day:"Sun Jun 8", time:"11:30 AM", venue:"TBD — Brooklyn or Lower Manhattan", neighborhood:"Brooklyn / Lower Manhattan", address:"New York, NY", types:["community","vc","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The final Yorkseed Passport Series event — a relaxed post-NYTW debrief brunch. Open to Yorkseed members and passport holders.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 📌 HOW TO ADD A NEW EVENT — READ THIS FIRST
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//
+// STEP 1 — Copy the right template below (Yorkseed event or regular event)
+// STEP 2 — Fill in ALL fields. Do NOT leave any field blank or delete it.
+// STEP 3 — The DATE field controls which day it appears under. 
+//           Format: "2026-06-03"  ← YYYY-MM-DD. Get this right or it shows on wrong day.
+//           The DAY field is just the display label: "Wed Jun 3"
+// STEP 4 — Paste your new event ANYWHERE in the list. Order doesn't matter —
+//           events are sorted by date automatically.
+// STEP 5 — Give it a unique ID. Use any number not already in the list. 
+//           Check existing IDs and pick one higher than the highest.
+//
+// ─── YORKSEED PASSPORT EVENT TEMPLATE ────────────────────────────────────────
+// Use this when Yorkseed is hosting or co-hosting. Shows black+gold Passport card.
+//
+//  { id:XXXXX, name:"Event Name Here", host:"Yorkseed, Co-Host Name",
+//    date:"2026-06-03", day:"Wed Jun 3", time:"7:00 PM",
+//    venue:"Venue Name", neighborhood:"SoHo", address:"New York, NY",
+//    types:["vc","community"],
+//    free:false, drinks:true, food:true,
+//    ticket:"Application Required",
+//    rsvp:"https://lu.ma/XXXXXX",
+//    yorkseed:"passport",   ← REQUIRED for Passport badge. Never remove this.
+//    notes:"Optional description here.",
+//    status:"Open" },
+//
+// ─── REGULAR (NON-YORKSEED) EVENT TEMPLATE ───────────────────────────────────
+// Use this for third-party events you're listing.
+//
+//  { id:XXXXX, name:"Event Name Here", host:"Host Name",
+//    date:"2026-06-03", day:"Wed Jun 3", time:"7:00 PM",
+//    venue:"Venue Name", neighborhood:"Midtown", address:"New York, NY",
+//    types:["ai","community"],
+//    free:false, drinks:false, food:false,
+//    ticket:"Application Required",
+//    rsvp:"https://partiful.com/e/XXXXXX",
+//    status:"Open" },
+//
+// ─── TYPE OPTIONS ─────────────────────────────────────────────────────────────
+// "ai", "fintech", "vc", "web3", "saas", "deeptech", "marketing",
+// "legal", "health", "climate", "community", "dinner", "rooftop", "breakfast"
+//
+// ─── TICKET OPTIONS ───────────────────────────────────────────────────────────
+// "Free" / "Paid" / "Application Required" / "Invite Only"
+//
+// ─── NEXT AVAILABLE ID ────────────────────────────────────────────────────────
+// Check the highest id in the list and use the next number.
+// Current highest is around 6000+. Use 6100, 6101, 6102... for new Yorkseed events.
+//
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// YORKSEED EVENTS ARE LISTED FIRST BELOW FOR EASY REFERENCE:
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{ id:12, name:"Yorkseed Passport Series: NYTW — Pre-Week Drinks", host:"Yorkseed", date:"2026-05-30", day:"Sat May 30", time:"6:00 PM", venue:"TBD — SoHo or Flatiron", neighborhood:"SoHo / Flatiron", address:"New York, NY", types:["vc","community"], free:false, drinks:true, food:false, ticket:"Paid", yorkseed:"passport", notes:"Yorkseed Passport Series pre-week edition. Founders, investors and operators in one room before the week kicks off. Members get priority access. RSVP via Luma.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+{ id:5044, name:"Global Expansion & Cross-Border Investing", host:"Yorkseed", date:"2026-06-01", day:"Mon Jun 1", time:"4:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", rsvp:"https://partiful.com/e/M05fTDt8E8MbWXkEHO6a?ref=yorkseed", status:"Open" },
+{ id:5055, name:"Women VC Dinner", host:"Yorkseed", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["women","community"], free:false, drinks:false, food:true, ticket:"Application Required", yorkseed:"passport", rsvp:"https://partiful.com/e/uikRyS2dekXcz1wNKKzy?ref=yorkseed", status:"Open" },
+{ id:40, name:"Yorkseed Passport Series: NYTW — Flagship Dinner", host:"Yorkseed", date:"2026-06-03", day:"Wed Jun 3", time:"7:30 PM", venue:"TBD — West Village or SoHo", neighborhood:"West Village / SoHo", address:"New York, NY", types:["vc","community","dinner"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The flagship Yorkseed Passport Series NYTW dinner. A carefully curated evening of founders, investors, and operators at the midpoint of the week. Limited seats — members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+{ id:5879, name:"Ugly Talk: Can Your Brand Thrive in Agentic Commerce?", host:"Yorkseed, Ugly Talk", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["marketing","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/G1Rqksr7pQb3T5sGRCPp?ref=yorkseed", yorkseed:"passport", status:"Open" },
+{ id:4287, name:"Venture Salon: Founders & Investors", host:"Yorkseed, In Pulse", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/AIjt9GNmqfJGNSGsOECn?ref=yorkseed", yorkseed:"passport", status:"Open" },
+{ id:41, name:"Yorkseed Passport Series: NYTW — Closing Rooftop", host:"Yorkseed", date:"2026-06-06", day:"Sat Jun 6", time:"5:30 PM", venue:"TBD Rooftop — Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["vc","community","rooftop"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The closing Yorkseed Passport Series event at NYTW. Rooftop sendoff for founders, investors, and operators. Members get priority access.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+{ id:39, name:"Yorkseed Passport Series: NYTW — Post-Week Debrief Brunch", host:"Yorkseed", date:"2026-06-08", day:"Sun Jun 8", time:"11:30 AM", venue:"TBD — Brooklyn or Lower Manhattan", neighborhood:"Brooklyn / Lower Manhattan", address:"New York, NY", types:["community","vc","breakfast"], free:false, drinks:true, food:true, ticket:"Paid", yorkseed:"passport", notes:"The final Yorkseed Passport Series event — a relaxed post-NYTW debrief brunch. Open to Yorkseed members and passport holders.", rsvp:"https://lu.ma/yorkseed?ref=yorkseed", status:"Open" },
+
+// ─── ALL OTHER EVENTS ────────────────────────────────────────────────────────
   { id:3, name:"AI Tinkerers NYC — Builders Meetup", host:"AI Tinkerers NYC", date:"2026-05-27", day:"Wed May 27", time:"6:30 PM", venue:"TBD — Midtown or SoHo", neighborhood:"Midtown / SoHo", address:"New York, NY", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Practitioner-only meetup for LLM and generative AI builders. Live demos, engineering talks, peer networking. Community-led, no sales pitches.", rsvp:"https://nyc.aitinkerers.org/?ref=yorkseed", status:"Open" },
   { id:7, name:"Women in VC — Cocktail Hour NY Tech Week", host:"Lowenstein Sandler", date:"2026-06-05", day:"Fri Jun 5", time:"5:00 PM", venue:"Lowenstein Sandler NYC Office", neighborhood:"Midtown", address:"New York, NY", types:["vc","women","community"], free:false, drinks:true, food:false, ticket:"Invite Only", notes:"In-person Women in VC Cocktail Hour during Tech Week. Held at Lowenstein Sandler's NYC Office.", rsvp:"https://lu.ma/mdj48l3s?ref=yorkseed", status:"Open" },
   { id:112, name:"ElevenLabs: Live from NY", host:"ElevenLabs", date:"2026-06-02", day:"Tue Jun 2", time:"6:00 PM", venue:"ElevenLabs NY Office — SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Application Required", notes:"An unforgettable evening at the brand new ElevenLabs NY office.", rsvp:"https://partiful.com/e/Vamn82rpSCMY5sp1UgNG?ref=yorkseed", status:"Open" },
@@ -846,7 +906,6 @@ const EVENTS = [
   { id:4399, name:"Rebuilding American Manufacturing BVP JPM Orrick", host:"Orrick", date:"2026-06-01", day:"Mon Jun 1", time:"4:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["hackathon","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/njEyaExp13kVvFeCxSQ0?ref=yorkseed", status:"Open" },
   { id:4526, name:"Founders Landing", host:"Deel", date:"2026-06-01", day:"Mon Jun 1", time:"4:00 PM", venue:"Manhattan", neighborhood:"Manhattan", address:"New York, NY", types:["community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/Lzs3GJd3dscd60ZHfliX?ref=yorkseed", status:"Open" },
   { id:4883, name:"Unlocking Entrepreneurship in Travel", host:"Fora Travel", date:"2026-06-01", day:"Mon Jun 1", time:"4:00 PM", venue:"SoHo", neighborhood:"SoHo", address:"New York, NY", types:["community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/RrTyygZKuHP4KAmVi2QS?ref=yorkseed", status:"Open" },
-  { id:5044, name:"Global Expansion & Cross-Border Investing", host:"Yorkseed", date:"2026-06-01", day:"Mon Jun 1", time:"4:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", rsvp:"https://partiful.com/e/M05fTDt8E8MbWXkEHO6a?ref=yorkseed", status:"Open" },
   { id:5161, name:"Cofounder Matchmaking", host:"Relationality", date:"2026-06-01", day:"Mon Jun 1", time:"4:00 PM", venue:"East Village", neighborhood:"East Village", address:"New York, NY", types:["community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/nMHSe5NbSjJJLWaJJeDl?ref=yorkseed", status:"Open" },
   { id:5967, name:"Crypto x AI Happy Hour", host:"Sei Labs", date:"2026-06-01", day:"Mon Jun 1", time:"4:30 PM", venue:"East Village", neighborhood:"East Village", address:"New York, NY", types:["web3"], free:false, drinks:true, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/P6WLaUwmRr1d6sWZks7O?ref=yorkseed", status:"Open" },
   { id:4015, name:"From Ticketing to Intelligence: AI Events Industry", host:"AES NYC", date:"2026-06-01", day:"Mon Jun 1", time:"5:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/pApvNad0HXI8rB7YoP2C?ref=yorkseed", status:"Open" },
@@ -1130,7 +1189,6 @@ const EVENTS = [
   { id:4781, name:"The AI Economy and the New Human Performance Benchmark", host:"Atlas Primer", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Union Square", neighborhood:"Union Square", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/I8n2nZDvvQZvMcpwPZWx?ref=yorkseed", status:"Open" },
   { id:4815, name:"The Trust Layer — What AI products get wrong about humans", host:"Flllo", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Central Park", neighborhood:"Central Park", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/twZNq3DY0qXL1a83Ychf?ref=yorkseed", status:"Open" },
   { id:4944, name:"Tech & Tranquility", host:"Practice with Paola", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["community","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/TPCmxLhGC9iLmCdOVNKQ?ref=yorkseed", status:"Open" },
-  { id:5055, name:"Women VC Dinner", host:"Yorkseed", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["women","community"], free:false, drinks:false, food:true, ticket:"Application Required", yorkseed:"passport", rsvp:"https://partiful.com/e/uikRyS2dekXcz1wNKKzy?ref=yorkseed", status:"Open" },
   { id:5221, name:"Who Wins in the Age of AI? Labor Markets and Capital in Transition", host:"Haystack Hub", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Chelsea", neighborhood:"Chelsea", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/e2hNOd2jIzhnHQujwMqu?ref=yorkseed", status:"Open" },
   { id:5261, name:"Storytelling Dinner Series with Hype", host:"Hype", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["dinner","community"], free:false, drinks:false, food:true, ticket:"Application Required", rsvp:"https://partiful.com/e/zKGNln8TEJmzb742z5CC?ref=yorkseed", status:"Open" },
   { id:5621, name:"Healthcare AI fireside chat & dinner with a16z", host:"Stealth Health AI Startup", date:"2026-06-02", day:"Tue Jun 2", time:"6:30 PM", venue:"Union Square", neighborhood:"Union Square", address:"New York, NY", types:["health","community"], free:false, drinks:false, food:true, ticket:"Application Required", rsvp:"https://partiful.com/e/PNOXO4w98uJrjj4hgfCi?ref=yorkseed", status:"Open" },
@@ -1327,7 +1385,6 @@ const EVENTS = [
   { id:5866, name:"No Wine Left Behind: Blind Tasting Meets Consumer Data", host:"No Wine Left Behind", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"West Village", neighborhood:"West Village", address:"New York, NY", types:["community","community"], free:false, drinks:true, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/1fVvsQZUFf7Dohot0Ed9?ref=yorkseed", status:"Open" },
   { id:5873, name:"Is Your Brand Ready for AI Search?", host:"Capgemini", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"Union Square", neighborhood:"Union Square", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/v9ySMNeHZ3lYMWjhvqCO?ref=yorkseed", status:"Open" },
   { id:5874, name:"Scaling Value-Based Care in the Age of Health Tech", host:"Columbia Venture Community", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["health","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/6FmuBjS60nrpePXnGWhC?ref=yorkseed", status:"Open" },
-  { id:5879, name:"Ugly Talk: Can Your Brand Thrive in Agentic Commerce?", host:"Ugly Talk", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["marketing","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/G1Rqksr7pQb3T5sGRCPp?ref=yorkseed", status:"Open" },
   { id:5883, name:"Translate Your BA into an In-Demand Tech Career", host:"Translating Your BA", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"Virtual (NYC)", neighborhood:"Virtual (NYC)", address:"New York, NY", types:["community","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/8BbHXWQWQwaQnAUlrwur?ref=yorkseed", status:"Open" },
   { id:5887, name:"AI builders night", host:"Braintrust", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"East Village", neighborhood:"East Village", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/OeZ0CvpvEpvi9lrEYIeb?ref=yorkseed", status:"Open" },
   { id:6198, name:"Pitch Roast Live", host:"Pitch Roast Live", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"Lower East Side", neighborhood:"Lower East Side", address:"New York, NY", types:["community","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/NhoyBpx8rlyJGJXOWbwG?ref=yorkseed", status:"Open" },
@@ -1700,7 +1757,6 @@ const EVENTS = [
   { id:250, name:"YouCode AI Salon", host:"You.com", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Brooklyn", neighborhood:"Brooklyn", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/kvGpuFMeACW7ZWPYtxTP?ref=yorkseed", status:"Open" },
   { id:4091, name:"Founder Feud", host:"Forecastr", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Flatiron", neighborhood:"Flatiron", address:"New York, NY", types:["community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/g2e6kS6GPDm0icQCC14A?ref=yorkseed", status:"Open" },
   { id:4239, name:"Pmai: The Demo", host:"Pioneering Minds AI", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"SoHo", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/ktoXGoRYxuJrZwxM1KWq?ref=yorkseed", status:"Open" },
-  { id:4287, name:"Venture Salon: Founders & Investors", host:"In Pulse", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/AIjt9GNmqfJGNSGsOECn?ref=yorkseed", status:"Open" },
   { id:4445, name:"[Immigrant Founders&Investors Mixer]", host:"OneRise", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/mKW3TVj7dKZWNHi8X37B?ref=yorkseed", status:"Open" },
   { id:4701, name:"The Future of Trans Talent in Tech", host:"Cool Trans Girl", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Tribeca", neighborhood:"Tribeca", address:"New York, NY", types:["community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/iym9LN4KS0uf1UV9BaB8?ref=yorkseed", status:"Open" },
   { id:5126, name:"AI & Robotics Capital Forum - Allocators, Founders & Frontier GPs", host:"Geek Ventures", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["ai","vc"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/XFVFlVvd7oHLoxAu8IkK?ref=yorkseed", status:"Open" },
