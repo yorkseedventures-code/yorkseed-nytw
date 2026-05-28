@@ -144,6 +144,7 @@
   .day-tab { padding: 8px 16px 10px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--gray-500); border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; user-select: none; letter-spacing: 0.01em; }
   .day-tab:hover { color: var(--black); }
   .day-tab.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
+  .day-tab.today-tab::after { content: 'TODAY'; font-size: 8px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; background: var(--red); border-radius: 3px; padding: 1px 4px; margin-left: 5px; vertical-align: middle; letter-spacing: 0.05em; }
   .day-tab .count { display: inline-block; background: var(--gray-100); color: var(--gray-500); font-size: 10px; font-family: 'JetBrains Mono', monospace; padding: 1px 6px; border-radius: 10px; margin-left: 4px; }
   .day-tab.active .count { background: var(--red-light); color: var(--red); }
   .stats-bar { background: var(--red-light); border-bottom: 1px solid var(--red-mid); padding: 8px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
@@ -239,6 +240,10 @@
   .detail-item label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-300); font-weight: 600; display: block; margin-bottom: 3px; }
   .detail-item p { font-size: 12.5px; color: var(--gray-700); line-height: 1.4; }
   .event-notes { font-size: 12.5px; color: var(--gray-500); line-height: 1.5; padding: 10px 12px; background: var(--gray-100); border-radius: 6px; margin-bottom: 10px; font-style: italic; }
+  .promo-pill { display: block; margin-top: 2px; font-size: 14px; font-weight: 600; font-family: 'Sora', sans-serif; color: var(--black); font-style: normal; line-height: 1.3; }
+  .promo-pill strong { font-weight: 600; color: inherit; }
+  .event-card.ys-passport .promo-pill { color: white; }
+  .event-card.ys-passport .promo-pill strong { color: inherit; }
   .rsvp-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
   .rsvp-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--red); color: white; font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; font-family: 'Sora', sans-serif; }
   .rsvp-btn:hover { background: var(--red-dark); }
@@ -355,12 +360,16 @@
   .passport-hero-card .phc-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.04em; }
   .passport-hero-card .phc-name { font-size: 12.5px; font-weight: 600; color: white; line-height: 1.35; margin-bottom: 6px; }
   .passport-hero-card .phc-meta { font-size: 11px; color: rgba(201,168,76,0.7); }
-  .passport-hero-card .phc-rsvp { display: inline-block; margin-top: 10px; font-size: 10.5px; font-weight: 600; color: #0a0a0a; background: var(--gold); padding: 4px 10px; border-radius: 20px; }
+  .passport-hero-card .phc-promo { display: block; margin-top: 2px; font-size: 10px; font-weight: 500; font-family: 'JetBrains Mono', monospace; color: #555; letter-spacing: 0.03em; line-height: 1.35; }
+  .phc-promo strong { font-size: 10px; font-weight: 600; color: #555; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+  .phc-rsvp { display: inline-block; margin-top: 10px; font-size: 10.5px; font-weight: 600; color: #0a0a0a; background: var(--gold); padding: 4px 10px; border-radius: 20px; }
   .partner-hero-card { flex-shrink: 0; width: 220px; background: #fff8f8; border: 1.5px solid #e8e8e8; border-left: 4px solid var(--red); border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.18s; text-decoration: none; }
   .partner-hero-card:hover { border-color: rgba(201,168,76,0.4); border-left-color: var(--red); box-shadow: 0 3px 16px rgba(255,10,10,0.08); transform: translateY(-2px); }
   .partner-hero-card .phc-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); margin-bottom: 6px; letter-spacing: 0.04em; }
   .partner-hero-card .phc-name { font-size: 12.5px; font-weight: 600; color: #0a0a0a; line-height: 1.35; margin-bottom: 6px; }
   .partner-hero-card .phc-meta { font-size: 11px; color: #888; }
+  .partner-hero-card .phc-promo { font-size: 10px; font-weight: 500; color: #555; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.03em; }
+  .partner-hero-card .phc-promo strong { font-size: 10px; font-weight: 500; color: #555; font-family: 'JetBrains Mono', monospace; }
   .partner-hero-card .phc-rsvp { display: inline-block; margin-top: 10px; font-size: 10.5px; font-weight: 600; color: white; background: var(--red); padding: 4px 10px; border-radius: 20px; }
 
   .verify-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
@@ -709,6 +718,11 @@
       <a href="javascript:void(0)" onclick="openModal('feature')" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;cursor:pointer;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Advertise in This Spreadsheet</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">Put your logo and company in front of thousands of founders and investors</div></div></a>
       <a href="http://anywaypay.link/pay/jsw" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Support Yorkseed ♥</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;">If you appreciated our hard work, click here to donate</div></div></a>
       <a href="https://tally.so/r/ODJeYk" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #FF0A0A;border-radius:8px;text-decoration:none;background:#fff8f8;" onmouseover="this.style.background='#fff1f1'" onmouseout="this.style.background='#fff8f8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;"><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Strategic Partner — Milan · New York · Paris</div><span style="font-family:'Sora',sans-serif;font-size:9px;font-weight:700;color:#FF0A0A;background:#ffe0e0;padding:2px 6px;border-radius:4px;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;">Limited</span></div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;line-height:1.45;">Partner with Yorkseed across Milan AI Week, NY Tech Week &amp; VivaTech Paris — curated events, platform integration, and direct access to a vetted founder &amp; investor network</div></div></a>
+
+      <a href="https://yorkseedhouse.com/" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">Yorkseed House</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;line-height:1.45;">A curated gathering space for global founders, investors, and ecosystem leaders — at the world's most important events</div></div></a>
+
+      <a href="https://yorkseedhouse.com/nytw2026" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid #e8e8e8;border-radius:8px;text-decoration:none;" onmouseover="this.style.borderColor='#FF0A0A'" onmouseout="this.style.borderColor='#e8e8e8'"><div style="width:8px;height:8px;border-radius:50%;background:#FF0A0A;margin-top:4px;flex-shrink:0;"></div><div><div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:#0a0a0a;">NYTW Yorkseed House Pop-Up</div><div style="font-family:'Sora',sans-serif;font-size:11px;color:#888;margin-top:2px;line-height:1.45;">Events get crowded, schedules shift, and the best conversations often happen between official programming. Yorkseed House gives founders, investors, operators, and organizers one intentional place to flow through throughout the week</div></div></a>
+
     </div>
   </div>
 </div>
@@ -746,12 +760,6 @@
 </div>
 <div class="stats-bar">
   <div class="stat">Showing <strong id="visibleCount">0</strong> events</div>
-  <span class="stat-sep">·</span>
-  <div class="stat">🍹 <strong id="drinksCount">0</strong> with drinks</div>
-  <span class="stat-sep">·</span>
-  <div class="stat">🍽 <strong id="foodCount">0</strong> with food</div>
-  <span class="stat-sep">·</span>
-  <div class="stat">Free: <strong id="freeCount">0</strong></div>
   <span class="stat-sep">·</span>
   <button class="submit-btn" onclick="openModal('submit')" style="background:var(--red);border-color:var(--red);font-size:11px;padding:4px 10px;flex-shrink:0;">+ Submit Event</button>
   <button onclick="openModal('feature')" style="display:inline-flex;align-items:center;gap:5px;background:var(--gold);color:#0a0a0a;font-family:'Sora',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;white-space:nowrap;">⭐ Feature My Event</button>
@@ -2054,6 +2062,7 @@ function render() {
             <div class="event-name">${e.name}</div>
             ${e.host ? `<div class="event-host">Hosted by <span>${e.host}</span></div>` : ''}
             <div class="event-tags">${getTypeTags(e.types)}${getPerks(e)}</div>
+            ${(() => { const m = (e.notes||'').match(/🎟[^:]*:\s*([A-Z0-9]+)/); return m ? `<div class="promo-pill">🎟 Promo code: <strong>${m[1]}</strong></div>` : ''; })()}
           </div>
           <div class="event-right">
             <div class="event-venue-short">${e.neighborhood}</div>
@@ -2080,9 +2089,6 @@ function render() {
   });
   const vis = allEvents().filter(matchesFilters);
   document.getElementById('visibleCount').textContent = vis.length;
-  document.getElementById('drinksCount').textContent = vis.filter(e => e.drinks).length;
-  document.getElementById('foodCount').textContent = vis.filter(e => e.food).length;
-  document.getElementById('freeCount').textContent = vis.filter(e => e.free).length;
 }
 
 function buildDayTabs() {
@@ -2145,13 +2151,17 @@ function renderPassportHero() {
   if (partnerContainer) {
     const pe2 = allEvents().filter(isYorkseedPartner).sort((a,b) => a.date.localeCompare(b.date));
     partnerSection.style.display = pe2.length ? 'block' : 'none';
-    partnerContainer.innerHTML = pe2.map(e => `
-      <a class="partner-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
+    partnerContainer.innerHTML = pe2.map(e => {
+      const promoMatch = (e.notes||'').match(/🎟[^:]*:\s*([A-Z0-9]+)/);
+      const promoPill = promoMatch ? `<div class="phc-promo">🎟 Promo code: <strong>${promoMatch[1]}</strong></div>` : '';
+      return `<a class="partner-hero-card" href="${e.rsvp||'#'}" target="_blank" rel="noopener">
         <div class="phc-date">${e.day} · ${e.time}</div>
         <div class="phc-name">${e.name}</div>
         <div class="phc-meta">${e.neighborhood||'New York'}</div>
+        ${promoPill}
         <span class="phc-rsvp">RSVP ↗</span>
-      </a>`).join('');
+      </a>`;
+    }).join('');
   }
 }
 
@@ -2198,6 +2208,45 @@ document.querySelectorAll('.filter-chip[data-free]').forEach(chip => {
 document.getElementById('searchInput').addEventListener('input', function() { searchTerm = this.value.trim(); render(); });
 
 buildDayTabs();
+
+// Auto-select current day on load
+(function() {
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD in local time
+  const todayLocal = (() => {
+    const d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth()+1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0');
+  })();
+  const validDates = [
+    '2026-05-27','2026-05-28','2026-05-29','2026-05-30','2026-05-31',
+    '2026-06-01','2026-06-02','2026-06-03','2026-06-04','2026-06-05',
+    '2026-06-06','2026-06-07','2026-06-08'
+  ];
+  // Find today's tab, or the closest upcoming day if today is within range
+  let targetDate = null;
+  if (validDates.includes(todayLocal)) {
+    targetDate = todayLocal;
+  } else if (todayLocal < validDates[0]) {
+    targetDate = null; // before event — stay on All Days
+  } else if (todayLocal > validDates[validDates.length - 1]) {
+    targetDate = null; // after event — stay on All Days
+  }
+  if (targetDate) {
+    const tab = document.querySelector('.day-tab[data-date="' + targetDate + '"]');
+    if (tab) {
+      activeDay = targetDate;
+      document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      tab.classList.add('today-tab');
+      // Scroll tab into view in the tab bar
+      setTimeout(() => {
+        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }, 100);
+    }
+  }
+})();
+
 render();
 renderPassportHero();
 document.getElementById('headerCount').textContent = allEvents().length + ' events';
