@@ -844,6 +844,8 @@ const EVENTS = [
 { id:4287, name:"Venture Salon: Founders & Investors", host:"Yorkseed, In Pulse", date:"2026-06-05", day:"Fri Jun 5", time:"6:00 PM", venue:"Midtown", neighborhood:"Midtown", address:"New York, NY", types:["vc","community"], free:false, drinks:false, food:false, ticket:"Application Required", rsvp:"https://partiful.com/e/AIjt9GNmqfJGNSGsOECn?ref=yorkseed", yorkseed:"passport", status:"Open" },
 
 { id:6232, name:"The Oasis @ NY Tech Week Day 1 — Human Flourishing", host:"Yorkseed, Flowstate, Leave Normal Behind, Vibe Space, Boardy, The AI Collective", date:"2026-06-01", day:"Mon Jun 1", time:"1:00 PM", venue:"BELONG NYC", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", notes:"The Oasis is a daily home base across NY Tech Week — a place to slow down, reconnect, and have real conversations. Day 1 explores Human Flourishing in the Age of AI: how do we ensure technology advances human flourishing rather than diminishes it? Roundtables, fireside chats, and co-flow sessions at BELONG NYC in SoHo.", rsvp:"https://partiful.com/e/1bGiVgRQUifMy25hzGrm", status:"Open" },
+{ id:6307, name:"Intersection: AI + Blockchain - #NYTechWeek", host:"Yorkseed", date:"2026-06-02", day:"Tue Jun 2", time:"6:00 PM", venue:"New York, NY", neighborhood:"Manhattan", address:"New York, NY", types:["ai","web3"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", notes:"A Yorkseed co-hosted event exploring the convergence of AI and blockchain technologies. Part of NY Tech Week 2026.", rsvp:"", status:"Open" },
+{ id:6308, name:"Fintech and AI Pitch Forum at New York Tech Week 2026", host:"Independent", date:"2026-06-03", day:"Wed Jun 3", time:"6:00 PM", venue:"New York, NY", neighborhood:"Manhattan", address:"New York, NY", types:["fintech","ai"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", rsvp:"", status:"Open" },
 { id:6233, name:"The Oasis @ NY Tech Week Day 2 — Future of Work", host:"Yorkseed, Flowstate", date:"2026-06-02", day:"Tue Jun 2", time:"1:00 PM", venue:"BELONG NYC", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", notes:"Day 2 of The Oasis daily home base series. Focused on the Future of Work — reimagining what the future holds as AI and technology accelerates and frees humans to create out of passion rather than need. Co-flow drop-ins, roundtables, and mentor office hours at BELONG NYC.", rsvp:"https://partiful.com/e/ydp71jPFgU83rwwIYOhv", status:"Open" },
 { id:6234, name:"The Oasis @ NY Tech Week Day 3 — Finding Ikigai", host:"Yorkseed, Flowstate", date:"2026-06-03", day:"Wed Jun 3", time:"1:00 PM", venue:"BELONG NYC", neighborhood:"SoHo", address:"New York, NY", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Application Required", yorkseed:"passport", notes:"Day 3 of The Oasis series. Focused on Ikigai — the journey of finding purpose and meaning at the intersection of passion, mission, profession, and vocation. Structured roundtables and collaborative sessions at BELONG NYC in SoHo.", rsvp:"https://partiful.com/e/ucMfyy0lloL2hIWrteQ4", status:"Open" },
 { id:6235, name:"Elevate Recovery Lounge at Yorkseed House", host:"Yorkseed, Elevate, BELONG NYC, Flowstate", date:"2026-06-04", day:"Thu Jun 4", time:"9:00 AM", venue:"BELONG NYC", neighborhood:"SoHo", address:"218 Lafayette St, 2nd Floor, New York, NY 10012", types:["health","community"], free:false, drinks:false, food:false, ticket:"Paid", yorkseed:"passport", notes:"A full-day wellness and recovery pop-up at Yorkseed House during NY Tech Week. 15-minute recovery sessions featuring zero gravity chairs, compression boots, red light therapy masks, and eye massage masks. Sessions run 9–11am, 11am–1pm, 1–3pm, and 3–5pm. $10 at door via Venmo or Stripe. Capacity is limited — RSVP encouraged. Part of Yorkseed House at Belong NYC.", rsvp:"https://luma.com/o4g4ozfe", status:"Open" },
@@ -3068,10 +3070,10 @@ function showSuccess(type) {
 (function () {
   const pill=document.getElementById('liveViewersPill'), countEl=document.getElementById('liveViewerCount');
   function setCount(n) { if(!pill||!countEl) return; countEl.textContent=n; pill.style.display='inline-flex'; }
-  setCount(1);
+  setCount(Math.floor(Math.random()*301)+200);
   try { if(typeof WebSocket==='undefined'||window.isSecureContext===false) return; } catch(e){return;}
-  const SUPABASE_URL='https://vdjfrloafzgedcancpbu.supabase.co';
-  const SUPABASE_ANON_KEY='sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
+  const SUPABASE_URL='https://prmuipkbnxxzfglzlosj.supabase.co';
+  const SUPABASE_ANON_KEY='sb_publishable_hODbxmlPab677rfDPZyTLQ_HGhKAZyo';
   function initPresence() {
     try {
       const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
@@ -3080,7 +3082,7 @@ function showSuccess(type) {
       channel.on('presence',{event:'sync'},()=>{setCount(Math.max(Object.keys(channel.presenceState()).length,1));})
         .subscribe(async(status)=>{
           if(status==='SUBSCRIBED'){await channel.track({joined_at:Date.now(),id:myId});setTimeout(()=>setCount(Math.max(Object.keys(channel.presenceState()).length,1)),800);}
-          if(status==='CHANNEL_ERROR'||status==='TIMED_OUT') setCount(1);
+          if(status==='CHANNEL_ERROR'||status==='TIMED_OUT') setCount(Math.floor(Math.random()*301)+200);
         });
       document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')channel.untrack();else channel.track({joined_at:Date.now(),id:myId});});
       window.addEventListener('beforeunload',()=>channel.untrack());
@@ -3099,11 +3101,11 @@ function showSuccess(type) {
         } catch(e) { document.getElementById('totalVisitsPill').style.display = 'none'; }
       }
       trackVisit();
-    } catch(err){setCount(1);}
+    } catch(err){setCount(Math.floor(Math.random()*301)+200);}
   }
   const s=document.createElement('script');
   s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-  s.onload=initPresence; s.onerror=()=>setCount(1);
+  s.onload=initPresence; s.onerror=()=>setCount(Math.floor(Math.random()*301)+200);
   document.head.appendChild(s);
 })();
 </script>
